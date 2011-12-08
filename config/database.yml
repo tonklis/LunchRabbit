@@ -5,6 +5,7 @@ development:
   host: localhost
   user: root
   password: root
+  database: lunch_dev
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -14,9 +15,11 @@ test:
   host: localhost
   user: root
   password: root
+  database: lunch_test
 
 production:
   adapter: mysql
   host: localhost
   user: root
   password: root
+  database: lunch_prod

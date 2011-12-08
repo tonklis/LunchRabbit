@@ -1,7 +1,7 @@
 class CreateUsuarios < ActiveRecord::Migration
   def self.up
     create_table :usuarios do |t|
-      t.integer :facebook_id
+      t.integer :facebook_id, :limit => 8
       t.string :genero
       t.string :nombre
       t.integer :hora_lunch_inicio
