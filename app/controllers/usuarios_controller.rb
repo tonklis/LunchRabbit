@@ -18,6 +18,7 @@ class UsuariosController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @usuario }
+      format.json { render :json => @usuario }
     end
   end
 
@@ -80,4 +81,33 @@ class UsuariosController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # GET /usuarios/encuentra_o_crea/[facebook_id]
+  def encuentra_o_crea
+    facebook_id = params[:id]
+    @usuario = Usuario.encuentra_o_crea(facebook_id)
+    respond_to do |format|
+      format.xml  { render :xml => @usuario }
+      format.json {render :json => @usuario}
+    end
+  end
+
+  # GET /usuarios/actualiza/[facebook_id]
+  def actualiza
+    @usuario = Usuario.actualiza params
+    respond_to do |format|
+      format.xml {render :xml => @usuario}
+      format.json {render :json => @usuario}
+    end
+  end
+
+  # GET /usuarios/busqueda/[facebook_id]
+  def busqueda
+    @usuarios = Usuario.busqueda params[:id]
+    respond_to do |format|
+      format.xml {render :xml => @usuarios}
+      format.json {render :json => @usuarios}
+    end
+  end
+
 end
