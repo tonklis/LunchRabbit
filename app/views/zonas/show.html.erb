@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @zona.usuario_id %>
+</p>
+
+<p>
+  <b>Nombre:</b>
+  <%= @zona.nombre %>
+</p>
+
+<p>
+  <b>Longitud:</b>
+  <%= @zona.longitud %>
+</p>
+
+<p>
+  <b>Latitud:</b>
+  <%= @zona.latitud %>
+</p>
+
+<p>
+  <b>Radio:</b>
+  <%= @zona.radio %>
+</p>
+
+
+<%= link_to 'Edit', edit_zona_path(@zona) %> |
+<%= link_to 'Back', zonas_path %>

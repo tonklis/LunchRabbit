@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Facebook:</b>
+  <%= @usuario.facebook_id %>
+</p>
+
+<p>
+  <b>Genero:</b>
+  <%= @usuario.genero %>
+</p>
+
+<p>
+  <b>Nombre:</b>
+  <%= @usuario.nombre %>
+</p>
+
+<p>
+  <b>Hora lunch inicio:</b>
+  <%= @usuario.hora_lunch_inicio %>
+</p>
+
+<p>
+  <b>Hora lunch fin:</b>
+  <%= @usuario.hora_lunch_fin %>
+</p>
+
+<p>
+  <b>Thumbnail:</b>
+  <%= @usuario.thumbnail %>
+</p>
+
+
+<%= link_to 'Edit', edit_usuario_path(@usuario) %> |
+<%= link_to 'Back', usuarios_path %>

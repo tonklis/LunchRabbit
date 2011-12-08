@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  aceptada: false
+  usuario_desde: 1
+  usuario_para: 1
+
+two:
+  aceptada: false
+  usuario_desde: 1
+  usuario_para: 1

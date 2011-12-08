@@ -1,0 +1,33 @@
+<h1>Listing usuarios</h1>
+
+<table>
+  <tr>
+    <th>Facebook</th>
+    <th>Genero</th>
+    <th>Nombre</th>
+    <th>Hora lunch inicio</th>
+    <th>Hora lunch fin</th>
+    <th>Thumbnail</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @usuarios.each do |usuario| %>
+  <tr>
+    <td><%= usuario.facebook_id %></td>
+    <td><%= usuario.genero %></td>
+    <td><%= usuario.nombre %></td>
+    <td><%= usuario.hora_lunch_inicio %></td>
+    <td><%= usuario.hora_lunch_fin %></td>
+    <td><%= usuario.thumbnail %></td>
+    <td><%= link_to 'Show', usuario %></td>
+    <td><%= link_to 'Edit', edit_usuario_path(usuario) %></td>
+    <td><%= link_to 'Destroy', usuario, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Usuario', new_usuario_path %>

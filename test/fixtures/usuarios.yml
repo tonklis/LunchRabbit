@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  facebook_id: 1
+  genero: MyString
+  nombre: MyString
+  hora_lunch_inicio: 1
+  hora_lunch_fin: 1
+  thumbnail: MyString
+
+two:
+  facebook_id: 1
+  genero: MyString
+  nombre: MyString
+  hora_lunch_inicio: 1
+  hora_lunch_fin: 1
+  thumbnail: MyString

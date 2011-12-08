@@ -1,4 +1,14 @@
 LunchRabbit::Application.routes.draw do
+  resources :invitaciones
+
+  resources :intereses
+
+  resources :grupos
+
+  resources :zonas
+
+  resources :usuarios
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
