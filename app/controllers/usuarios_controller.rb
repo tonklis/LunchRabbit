@@ -18,7 +18,7 @@ class UsuariosController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @usuario }
-      format.json { render :json => @usuario }
+      format.json { render :json => @usuario, :include => [ :intereses, :invitaciones_enviadas, :invitaciones_recibidas] }
     end
   end
 
@@ -88,7 +88,7 @@ class UsuariosController < ApplicationController
     @usuario = Usuario.encuentra_o_crea(facebook_id)
     respond_to do |format|
       format.xml  { render :xml => @usuario }
-      format.json {render :json => @usuario}
+      format.json {render :json => @usuario,  :include => [ :intereses, :invitaciones_enviadas, :invitaciones_recibidas] }
     end
   end
 
@@ -101,9 +101,9 @@ class UsuariosController < ApplicationController
     end
   end
 
-  # GET /usuarios/busqueda/[facebook_id]
+  # GET /usuarios/busqueda/[facebook_id]&limit=[limit]
   def busqueda
-    @usuarios = Usuario.busqueda params[:id]
+    @usuarios = Usuario.busqueda(params[:id], params[:limit])
     respond_to do |format|
       format.xml {render :xml => @usuarios}
       format.json {render :json => @usuarios}

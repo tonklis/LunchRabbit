@@ -9,6 +9,10 @@ LunchRabbit::Application.routes.draw do
 
   resources :usuarios
 
+  match 'usuarios/encuentra_o_crea/:id' => 'usuarios#encuentra_o_crea', :as => :encuentra_o_crea
+
+  match 'usuarios/busqueda/:id' => 'usuarios#busqueda', :as => :busqueda
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

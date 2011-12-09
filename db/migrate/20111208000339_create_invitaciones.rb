@@ -2,8 +2,8 @@ class CreateInvitaciones < ActiveRecord::Migration
   def self.up
     create_table :invitaciones do |t|
       t.boolean :aceptada
-      t.integer :usuario_desde
-      t.integer :usuario_para
+      t.integer :usuario_desde_id
+      t.integer :usuario_para_id
 
       t.timestamps
     end

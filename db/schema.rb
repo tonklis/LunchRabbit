@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(:version => 20111208213423) do
 
   create_table "invitaciones", :force => true do |t|
     t.boolean  "aceptada"
-    t.integer  "usuario_desde"
-    t.integer  "usuario_para"
+    t.integer  "usuario_desde_id"
+    t.integer  "usuario_para_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
