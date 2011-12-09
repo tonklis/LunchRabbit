@@ -3,6 +3,7 @@ class Usuario < ActiveRecord::Base
   has_and_belongs_to_many :grupos
   has_many :invitaciones_enviadas, :class_name => "Invitacion", :foreign_key => "usuario_desde_id", :order => ["created_at desc limit 10"]
   has_many :invitaciones_recibidas, :class_name => "Invitacion", :foreign_key => "usuario_para_id", :order => ["created_at desc limit 10"]
+  has_many :zonas
 
   def Usuario.encuentra_o_crea (facebook_id)
     usuario = Usuario.find_by_facebook_id facebook_id

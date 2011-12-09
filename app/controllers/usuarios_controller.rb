@@ -18,7 +18,7 @@ class UsuariosController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @usuario }
-      format.json { render :json => @usuario, :include => [ :intereses, :invitaciones_enviadas, :invitaciones_recibidas] }
+      format.json { render :json => @usuario, :include => [ :intereses, :zonas, :invitaciones_enviadas, :invitaciones_recibidas] }
     end
   end
 
