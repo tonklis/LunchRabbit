@@ -13,8 +13,8 @@
 <% @invitaciones.each do |invitacion| %>
   <tr>
     <td><%= invitacion.aceptada %></td>
-    <td><%= invitacion.usuario_desde %></td>
-    <td><%= invitacion.usuario_para %></td>
+    <td><%= invitacion.usuario_desde_id %></td>
+    <td><%= invitacion.usuario_para_id %></td>
     <td><%= link_to 'Show', invitacion %></td>
     <td><%= link_to 'Edit', edit_invitacion_path(invitacion) %></td>
     <td><%= link_to 'Destroy', invitacion, :confirm => 'Are you sure?', :method => :delete %></td>
