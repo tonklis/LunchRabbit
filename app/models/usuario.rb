@@ -29,27 +29,32 @@ class Usuario < ActiveRecord::Base
     usuario.save
   end
 
-  # todo: incluir zona
   def Usuario.busqueda (facebook_id, limit = nil)
 
     usuario_origen = Usuario.find_by_facebook_id (facebook_id)
     consulta = "id <> ? and ((hora_lunch_inicio >= ? and hora_lunch_fin <= ?) or (hora_lunch_inicio <= ? and hora_lunch_fin >= ?))"
     order_by = "RAND()"
 
-    # limitar el result set con limit
+    # todo: incluir zona
 
     usuarios_destino = Usuario.find(:all, :conditions => [consulta, usuario_origen.id, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin], :order => order_by)
 
-    usuarios = []
-    usuarios_destino.each do |usuario|
-      usuario.intereses.each do |interes|
-        if usuario_origen.intereses.include?(interes)
-          usuarios << usuario
-          break
-        end
-      end
+    # todo: inteligencia de intereses (prioridad a los que se tienen en comun)
+    #usuarios = []
+    #usuarios_destino.each do |usuario|
+    #  usuario.intereses.each do |interes|
+    #    if usuario_origen.intereses.include?(interes)
+    #      usuarios << usuario
+    #      break
+    #    end
+    #  end
+    #end
+    
+    # todo: revisar desempeño para limit
+    if limit
+      usuarios_destino = usuarios_destino[0..2]
     end
-    return usuarios
+    return usuarios_destino
   end
 
 end
