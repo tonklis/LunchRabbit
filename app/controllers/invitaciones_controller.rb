@@ -81,4 +81,27 @@ class InvitacionesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+
+  # GET /invitaciones/por_usuario/1.json
+  def por_usuario
+    @invitaciones = Invitacion.por_usuario(params[:id])
+    respond_to do |format|
+      format.xml {render :xml => @invitaciones}
+      format.json {render :json => @invitaciones}
+    end
+
+  end
+
+  # GET /invitaciones/desde_para/1.json?para=2
+  def desde_para
+
+    @invitacion = Invitacion.desde_para(params[:id], params[:para])
+    respond_to do |format|
+      format.xml {render :xml => @invitacion}
+      format.json {render :json => @invitacion}
+    end
+
+  end
+
 end

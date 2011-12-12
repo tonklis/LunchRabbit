@@ -14,6 +14,11 @@ LunchRabbit::Application.routes.draw do
   match 'usuarios/busqueda/:id' => 'usuarios#busqueda', :as => :busqueda
 
   match 'usuarios/actualiza/:id' => 'usuarios#actualiza', :as => :actualiza
+
+  match 'invitaciones/por_usuario/:id' => 'invitaciones#por_usuario', :as => :por_usuario
+
+  match 'invitaciones/desde_para/:id' => 'invitaciones#desde_para', :as => :desde_para
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
