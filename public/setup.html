@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">
+	<head>
+		<title>Lunch Rabbit - Setup</title>
+		<meta property="og:title" content="Lunch Rabbit" />
+		<meta property="og:type" content="social" />
+		<meta property="og:url" content="http://swdf.in2teck.com/" />
+		
+	 	<!-- Include support librarys first -->
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+		<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>	
+		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
+		
+		<script type="text/javascript">
+			var APP_ID = "316932864999658";			
+			document.domain = "in2teck.com";
+			
+			function registraUsuario() {
+				FB.api('/me', function(response) {
+					top.location = 'http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/' + response.id + '.json';
+				});
+			}
+		</script>
+  </head>
+  
+	<body>
+		<div id="fb-root"></div>
+		<script type="text/javascript">
+			window.fbAsyncInit = function() {
+				FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
+				FB.getLoginStatus(function(response) {
+						if (response.session) {
+							registraUsuario();
+						}
+					});
+			};
+			(function() {
+				var e = document.createElement('script');
+				e.type = 'text/javascript';
+				e.src = document.location.protocol +
+					'//connect.facebook.net/en_US/all.js';
+				e.async = true;
+				document.getElementById('fb-root').appendChild(e);
+			}());
+		</script>
+	</body>
+</html>
