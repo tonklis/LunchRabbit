@@ -1,3 +1,35 @@
-<div style="float: left"> <img height="230" src="http://a6.sphotos.ak.fbcdn.net/hphotos-ak-ash4/304246_256876421027927_256875991027970_687621_275817708_n.jpg" alt="lunch rabbit logo" title="Lunch Rabbit" />
-  <iframe width="398" height="299" frameborder="0" src="http://player.vimeo.com/video/32129225?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></iframe>
-</div>
+  <div style="float: left"> <img height="230" src="http://a6.sphotos.ak.fbcdn.net/hphotos-ak-ash4/304246_256876421027927_256875991027970_687621_275817708_n.jpg" alt="lunch rabbit logo" title="Lunch Rabbit" />
+    <iframe width="398" height="299" frameborder="0" src="http://player.vimeo.com/video/32129225?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></iframe>
+  </div>
+  <div id="fb-root"></div>
+  <script type="text/javascript">
+    var APP_ID = "316932864999658";
+
+    document.domain = "heroku.com";
+
+    function loginResult() {
+      top.location = 'http://glowing-moon-5161.heroku.com/setup.html';
+    }
+    
+    window.fbAsyncInit = function() {
+      FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
+      FB.Event.subscribe('auth.login', function(response) {
+        loginResult();
+      });
+      FB.Event.subscribe('auth.logout', function(response) {
+        //window.location.reload();
+      });
+    };
+    
+    (function() {
+      var e = document.createElement('script');
+      e.type = 'text/javascript';
+      e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+      e.async = true;
+      document.getElementById('fb-root').appendChild(e);
+    }());
+  </script>
+  <div class="fb-login-button" data-perms="publish_stream,email,user_interests,user_birthday">
+    Login with Facebook
+  </div>
+
