@@ -3,6 +3,12 @@ LunchRabbit::Application.routes.draw do
 
   get "display/index"
 
+  get "display/home"
+
+  get "display/myprofile"
+
+  get "display/help"
+
   resources :invitaciones
 
   resources :intereses
