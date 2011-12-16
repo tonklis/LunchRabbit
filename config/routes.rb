@@ -31,9 +31,9 @@ LunchRabbit::Application.routes.draw do
 
   match 'invitaciones/desde_para/:id' => 'invitaciones#desde_para', :as => :desde_para
 
-  match "/oauth/create", :to => "oauth#create", :via => "get", :as => "oauth_callback"
+  match '/oauth/create', :to => 'oauth#create', :via => 'get', :as => 'oauth_callback'
   
-  
+  match '/oauth/show', :to => 'oauth#show', :via => 'get', :as => :show
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
