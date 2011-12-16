@@ -14,10 +14,10 @@
 			});
 						
 			function registraUsuario() {
-				$.getJSON("http://swdf.in2teck.com/usuarios/encuentra_o_crea/702141098.json", function(data) {
+				$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/702141098.json", function(data) {
 					var usuario = data;
 					data.nombre = 'diego';
-					$.post("http://swdf.in2teck.com/usuarios/actualiza/702141098.json", data, function(result) {
+					$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/702141098.json", data, function(result) {
 						alert('success');
 					});
 				});
