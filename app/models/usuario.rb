@@ -26,7 +26,8 @@ class Usuario < ActiveRecord::Base
         usuario.intereses << Interes.find(interes[:id])
       end
     end
-    usuario.save
+    usuario.save!
+    usuario
   end
 
   def Usuario.busqueda (facebook_id, limit = nil)
