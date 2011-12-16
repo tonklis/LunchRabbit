@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">
+	<head>
+		<title>Test</title>
+		<meta property="og:title" content="Lunch Rabbit" />
+		<meta property="og:type" content="social" />
+		<meta property="og:url" content="http://swdf.in2teck.com/" />
+		
+	 	<!-- Include support librarys first -->
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>	
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				registraUsuario();
+			});
+						
+			function registraUsuario() {
+				$.getJSON("http://swdf.in2teck.com/usuarios/encuentra_o_crea/702141098.json", function(data) {
+					var usuario = data;
+					data.nombre = 'diego';
+					$.post("http://swdf.in2teck.com/usuarios/actualiza/702141098.json", data, function(result) {
+						alert('success');
+					});
+				});
+			}
+		</script>
+  </head>
+  
+	<body>
+		<div id="box"></div>
+	</body>
+</html>
