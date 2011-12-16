@@ -16,14 +16,13 @@
 				var usuarioFB;
 				FB.api('/me', function(response) {
 					usuarioFB = response;
-					alert(usuarioFB.name);
-					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/702141098.json", function(data) {
-						data.usuario.nombre = 'diego';
+					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + usuarioFB.id + ".json", function(data) {
+						data.usuario.nombre = usuarioFB.name;
+						
 						/*$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/702141098.json", data, function(result) {
 							alert('success');
 						});*/
 					});
-					
 				});
 			}
 		</script>
