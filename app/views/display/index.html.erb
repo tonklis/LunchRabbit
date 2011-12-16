@@ -15,7 +15,11 @@
       FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
       FB.getLoginStatus(function(response) {
 						if (response.session) {
+							alert('in');
 							loginResult();
+						}
+						else {
+							alert('no');
 						}
 	  });
 	  FB.Event.subscribe('auth.login', function(response) {
