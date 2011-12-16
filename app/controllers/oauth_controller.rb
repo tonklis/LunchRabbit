@@ -7,7 +7,7 @@ class OauthController < ApplicationController
   def create
     mogli_client = Mogli::Client.create_from_code_and_authenticator(params[:code], authenticator)
     session[:at]=mogli_client.access_token
-    redirect_to "/"
+    redirect_to "display#index"
   end
 
   def index
