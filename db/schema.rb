@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(:version => 20111208213423) do
 
   create_table "intereses", :force => true do |t|
     t.string   "nombre"
+    t.integer  "facebook_id", :limit => 8
+    t.string   "categoria"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,5 +1,9 @@
 source 'http://rubygems.org'
 
+# gemas de ruby on rails para Facebook
+gem 'mogli'
+gem 'json'
+
 gem 'rails', '3.0.4'
 
 # Bundle edge Rails instead:
