@@ -15,9 +15,8 @@
 						
 			function registraUsuario() {
 				$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/702141098.json", function(data) {
-					var usuario = data.usuario;
-					usuario.nombre = 'diego';
-					$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/702141098.json", usuario, function(result) {
+					data.usuario.nombre = 'diego';
+					$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/702141098.json", data, function(result) {
 						alert('success');
 					});
 				});
