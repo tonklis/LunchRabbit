@@ -1,5 +1,5 @@
   <div style="float: left"> <img height="230" src="http://a6.sphotos.ak.fbcdn.net/hphotos-ak-ash4/304246_256876421027927_256875991027970_687621_275817708_n.jpg" alt="lunch rabbit logo" title="Lunch Rabbit" />
-    <iframe width="398" height="299" frameborder="0" src="http://player.vimeo.com/video/32129225?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></iframe>
+    <iframe width="398" height="299" frameborder="0" src="http://player.vimeo.com/video/32129225?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0"></iframe>
   </div>
   <div id="fb-root"></div>
   <script type="text/javascript">
@@ -12,8 +12,13 @@
     }
     
     window.fbAsyncInit = function() {
-      FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
-      FB.Event.subscribe('auth.login', function(response) {
+      FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
+      FB.getLoginStatus(function(response) {
+		if (response.status == 'connected') {
+			loginResult();
+		}
+	  });
+	  FB.Event.subscribe('auth.login', function(response) {
         loginResult();
       });
       FB.Event.subscribe('auth.logout', function(response) {
@@ -29,7 +34,7 @@
       document.getElementById('fb-root').appendChild(e);
     }());
   </script>
-  <div class="fb-login-button" data-perms="publish_stream,email,user_interests,user_birthday">
+  <div class="fb-login-button" scope="publish_stream,email,user_interests,user_birthday">
     Login with Facebook
   </div>
 

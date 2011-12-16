@@ -10,12 +10,20 @@
 		<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
 		
 		<script type="text/javascript">
-			var APP_ID = "316932864999658";			
-			document.domain = "in2teck.com";
+			var APP_ID = "316932864999658";	
 			
 			function registraUsuario() {
+				var usuarioFB;
 				FB.api('/me', function(response) {
-					top.location = 'http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/' + response.id + '.json';
+					usuarioFB = response;
+					alert(usuarioFB.name);
+					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/702141098.json", function(data) {
+						data.usuario.nombre = 'diego';
+						/*$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/702141098.json", data, function(result) {
+							alert('success');
+						});*/
+					});
+					
 				});
 			}
 		</script>
@@ -27,7 +35,7 @@
 			window.fbAsyncInit = function() {
 				FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
 				FB.getLoginStatus(function(response) {
-						if (response.session) {
+						if (response.status == 'connected') {
 							registraUsuario();
 						}
 					});
