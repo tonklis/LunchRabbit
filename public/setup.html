@@ -35,6 +35,7 @@
 				FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
 				FB.getLoginStatus(function(response) {
 						if (response.session) {
+							alert('diego');
 							registraUsuario();
 						}
 					});
