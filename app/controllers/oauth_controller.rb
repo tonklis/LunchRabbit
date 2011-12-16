@@ -11,7 +11,7 @@ class OauthController < ApplicationController
   end
 
   def index
-    redirect_to new_oauth_path and return unless session[:at]
+    redirect_to "display#index" and return unless session[:at]
     user = Mogli::User.find("me", Mogli::Client.new(session[:at]))
     @user = user
     @posts = user.posts
