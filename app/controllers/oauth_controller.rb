@@ -21,4 +21,13 @@ class OauthController < ApplicationController
     @authenticator ||= Mogli::Authenticator.new('316932864999658', '25b7c93ff48f139e55984887babf1351', oauth_callback_url)
   end
 
+  def show
+    @user = Mogli::User.find("me", Mogli::Client.new(session[:at]))
+
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+
+  end
+
 end
