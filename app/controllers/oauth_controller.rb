@@ -22,6 +22,7 @@ class OauthController < ApplicationController
   end
 
   def show
+    redirect_to "/display/index" and return unless session[:at]
     @user = Mogli::User.find("me", Mogli::Client.new(session[:at]))
 
     respond_to do |format|

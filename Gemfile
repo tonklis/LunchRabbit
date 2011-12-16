@@ -5,6 +5,7 @@ gem 'mogli'
 gem 'json'
 
 gem 'rails', '3.0.4'
+gem 'jquery-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
