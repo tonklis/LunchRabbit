@@ -23,7 +23,7 @@
 						data.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";
 						
 						FB.api('/me/likes', function(likes) {
-							for (like in likes) {
+							for (like in likes.data) {
 								if (like.category == "Tv show" || like.category == "Musician/band" || like.category == "Movie" ||
 									like.category == "Book" || like.category == "Interest") {
 									var interest;
