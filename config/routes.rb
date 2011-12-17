@@ -19,6 +19,8 @@ LunchRabbit::Application.routes.draw do
 
   resources :usuarios
 
+  resources :oauth
+
   match 'usuarios/encuentra_o_crea/:id' => 'usuarios#encuentra_o_crea', :as => :encuentra_o_crea
 
   match 'usuarios/busqueda/:id' => 'usuarios#busqueda', :as => :busqueda
@@ -29,6 +31,9 @@ LunchRabbit::Application.routes.draw do
 
   match 'invitaciones/desde_para/:id' => 'invitaciones#desde_para', :as => :desde_para
 
+  match "/oauth/create", :to => "oauth#create", :via => "get", :as => "oauth_callback"
+  
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -78,7 +83,8 @@ LunchRabbit::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "display#index"
+  # root :to => "display#index"
+  root :to => "oauth#index"
 
   # See how all your routes lay out with "rake routes"
 
