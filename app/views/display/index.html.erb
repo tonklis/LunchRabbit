@@ -27,12 +27,6 @@
 			loginResult();
 		}
       });
-	  FB.Event.subscribe('auth.statusChange', function(response) {
-        alert(response.status);
-		if (response.status == 'connected') {
-			loginResult();
-		}
-      });
       FB.Event.subscribe('auth.logout', function(response) {
         //window.location.reload();
       });
