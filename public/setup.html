@@ -13,14 +13,30 @@
 			
 			function registraUsuario() {
 				var usuarioFB;
+				var interests = new Array();
 				FB.api('/me', function(response) {
 					usuarioFB = response;
 					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + usuarioFB.id + ".json", function(data) {
 						data.usuario.nombre = usuarioFB.name;
 						data.usuario.genero = usuarioFB.gender;
 						data.usuario.email = usuarioFB.email;
-						$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", data, function(result) {
-							alert('success');
+						data.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";
+						
+						FB.api('/me/likes', function(likes) {
+							for (like in likes) {
+								if (like.category == "Tv show" || like.category == "Musician/band" || like.category == "Movie" ||
+									like.category == "Book" || like.category == "Interest") {
+									var interest;
+									interest.id = like.id;
+									interest.nombre = like.name;
+									interest.categoria = like.category;
+									interests.push(interest);
+								}
+							}
+							data.usuario.intereses = interests;
+							$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", data, function(result) {
+								alert('success');
+							});
 						});
 					});
 				});
