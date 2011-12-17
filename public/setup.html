@@ -26,7 +26,7 @@
 							$.each(likes.data, function(index, value) { 
 							  if (value.category == "Tv show" || value.category == "Musician/band" || value.category == "Movie" ||
 									value.category == "Book" || value.category == "Interest") {
-									var interest = {};
+									var interest = {interes:{}};
 									interest.interes.id = value.id;
 									interest.interes.nombre = value.name;
 									interest.interes.categoria = value.category;
