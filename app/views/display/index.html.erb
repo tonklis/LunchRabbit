@@ -13,17 +13,17 @@
     
     window.fbAsyncInit = function() {
       FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
-      FB.getLoginStatus(function(response) {
-		alert(response.status);
+      /*FB.getLoginStatus(function(response) {
 		if (response.status == 'connected') {
 			loginResult();
 		}
-	  });
+	  });*/
 	  FB.Event.subscribe('auth.login', function(response) {
         loginResult();
       });
 	  FB.Event.subscribe('auth.authResponseChange', function(response) {
-        if (response.status == 'connected') {
+        alert(response.status);
+		if (response.status == 'connected') {
 			loginResult();
 		}
       });
