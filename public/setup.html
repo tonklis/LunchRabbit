@@ -26,7 +26,7 @@
 							$.each(likes.data, function(index, value) { 
 							  if (value.category == "Tv show" || value.category == "Musician/band" || value.category == "Movie" ||
 									value.category == "Book" || value.category == "Interest") {
-									interests.push({id:value.id, nombre:value.name, categoria:value.category});
+									interests.push({"id":value.id, "nombre":value.name, "categoria":value.category});
 								}
 							});
 							data.usuario.intereses = interests;
