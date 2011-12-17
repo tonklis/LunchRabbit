@@ -12,18 +12,19 @@
     }
     
     window.fbAsyncInit = function() {
-      FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
-      FB.getLoginStatus(function(response) {
-						if (response.session) {
-							alert('in');
-							loginResult();
-						}
-						else {
-							alert('no');
-						}
-	  });
+      FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
+      /*FB.getLoginStatus(function(response) {
+		if (response.status == 'connected') {
+			loginResult();
+		}
+	  });*/
 	  FB.Event.subscribe('auth.login', function(response) {
         loginResult();
+      });
+	  FB.Event.subscribe('auth.authResponseChange', function(response) {
+        if (response.status == 'connected') {
+			loginResult();
+		}
       });
       FB.Event.subscribe('auth.logout', function(response) {
         //window.location.reload();
