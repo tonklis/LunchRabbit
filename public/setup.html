@@ -23,18 +23,16 @@
 						data.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";
 						
 						FB.api('/me/likes', function(likes) {
-							//alert(likes.data);
-							for (var like in likes.data) {
-								if (like.category == "Tv show" || like.category == "Musician/band" || like.category == "Movie" ||
-									like.category == "Book" || like.category == "Interest") {
+							$.each(likes.data, function(index, value) { 
+							  if (value.category == "Tv show" || value.category == "Musician/band" || value.category == "Movie" ||
+									value.category == "Book" || value.category == "Interest") {
 									var interest;
-									interest.id = like.id;
-									interest.nombre = like.name;
-									interest.categoria = like.category;
+									interest.id = value.id;
+									interest.nombre = value.name;
+									interest.categoria = value.category;
 									interests.push(interest);
 								}
-							}
-							alert(like);
+							});
 							data.usuario.intereses = interests;
 							$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", data, function(result) {
 								alert('success');
