@@ -13,11 +13,12 @@
     
     window.fbAsyncInit = function() {
       FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
-      /*FB.getLoginStatus(function(response) {
+      FB.getLoginStatus(function(response) {
+		alert(response.status);
 		if (response.status == 'connected') {
 			loginResult();
 		}
-	  });*/
+	  });
 	  FB.Event.subscribe('auth.login', function(response) {
         loginResult();
       });
