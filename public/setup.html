@@ -13,6 +13,7 @@
 			
 			function registraUsuario() {
 				var usuarioFB;
+				var diego;
 				var interests = new Array();
 				FB.api('/me', function(response) {
 					usuarioFB = response;
@@ -23,7 +24,7 @@
 						data.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";
 						
 						FB.api('/me/likes', function(likes) {
-							var diego = likes;
+							diego = likes;
 							/*for (like in likes.data) {
 								if (like.category == "Tv show" || like.category == "Musician/band" || like.category == "Movie" ||
 									like.category == "Book" || like.category == "Interest") {
