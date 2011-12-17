@@ -34,12 +34,8 @@
 			window.fbAsyncInit = function() {
 				FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
 				FB.getLoginStatus(function(response) {
-						if (response.session) {
-							alert('yes');
+						if (response.status == 'connected') {
 							registraUsuario();
-						}
-						else {
-							alert('no');
 						}
 					});
 			};
