@@ -23,7 +23,11 @@ class Usuario < ActiveRecord::Base
     usuario.intereses = []
     if intereses
       intereses.each do |interes|
-        usuario.intereses << Interes.find(interes[:id])
+        interes = Interes.find(interes[:id])
+        if not interes
+          interes = Interes.new(:id => interes[:id], :nombre => interes[:nombre], :categoria => interes[:categoria])
+        end      
+        usuario.intereses << interes
       end
     end
     usuario.save!
