@@ -13,7 +13,7 @@
 			
 			function registraUsuario() {
 				var usuarioFB;
-				var interests = [];
+				var interests = "[]";
 				FB.api('/me', function(response) {
 					usuarioFB = response;
 					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + usuarioFB.id + ".json", function(data) {
@@ -27,6 +27,7 @@
 							  if (value.category == "Tv show" || value.category == "Musician/band" || value.category == "Movie" ||
 									value.category == "Book" || value.category == "Interest") {
 									interests.push({"id":value.id, "nombre":value.name, "categoria":value.category});
+									//interests += '{"id":' + value.id + ', "nombre":' + value.name + ', "categoria":' + value.category +'}';
 								}
 							});
 							data.usuario.intereses = interests;
