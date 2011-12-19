@@ -3,6 +3,7 @@ class CreateUsuarios < ActiveRecord::Migration
     create_table :usuarios do |t|
       t.integer :facebook_id, :limit => 8
       t.string :genero
+      t.string :email
       t.string :nombre
       t.integer :hora_lunch_inicio
       t.integer :hora_lunch_fin
