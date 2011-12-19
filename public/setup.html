@@ -27,7 +27,7 @@
 							$.each(likes.data, function(index, value) { 
 							  if (value.category == "Tv show" || value.category == "Musician/band" || value.category == "Movie" ||
 									value.category == "Book" || value.category == "Interest") {
-									interests.push({"interes":{"id":value.id, "nombre":value.name, "categoria":value.category}});
+									interests.push({"interes":{"facebook_id":value.id, "nombre":value.name, "categoria":value.category}});
 									//interests += '{"id":' + value.id + ', "nombre":' + value.name + ', "categoria":' + value.category +'}';
 								}
 							});
