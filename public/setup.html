@@ -13,7 +13,7 @@
 			
 			function registraUsuario() {
 				var usuarioFB;
-				var interests = "[]";
+				var interests = [];
 				FB.api('/me', function(response) {
 					usuarioFB = response;
 					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + usuarioFB.id + ".json", function(data) {
