@@ -7,6 +7,7 @@
 		
 	 	<!-- Include support librarys first -->
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="javascripts/jquery.json-2.3.min.js"></script>
 		
 		<script type="text/javascript">
 			var APP_ID = "316932864999658";	
@@ -30,7 +31,7 @@
 									//interests += '{"id":' + value.id + ', "nombre":' + value.name + ', "categoria":' + value.category +'}';
 								}
 							});
-							data.usuario.intereses = interests;
+							data.usuario.intereses = $.toJSON(interests);
 							$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", data, function(result) {
 								alert('success');
 							});
