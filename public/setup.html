@@ -31,7 +31,8 @@
 									//interests += '{"id":' + value.id + ', "nombre":' + value.name + ', "categoria":' + value.category +'}';
 								}
 							});
-							data.intereses = eval($.toJSON(interests));
+							data.intereses = eval('(' + $.toJSON(interests) + ')');
+							//data.intereses = eval(""+$.toJSON(interests)+".value");
 							//alert($.toJSON(interests));
 							$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", data, function(result) {
 								alert('success');
