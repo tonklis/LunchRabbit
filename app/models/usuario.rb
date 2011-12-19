@@ -20,6 +20,9 @@ class Usuario < ActiveRecord::Base
     usuario = Usuario.find_by_facebook_id (params[:id])
     usuario.update_attributes(params[:usuario])
     intereses = params[:intereses]
+    if not intereses.respond_to?('each')
+      intereses = ActiveSupport::JSON.decode(intereses)
+    end
     usuario.intereses = []
     if intereses
       intereses.each do |interes|
