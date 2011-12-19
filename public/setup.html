@@ -21,6 +21,7 @@
 						data.usuario.nombre = usuarioFB.name;
 						data.usuario.genero = usuarioFB.gender;
 						data.usuario.email = usuarioFB.email;
+						data.usuario.intereses = null;
 						data.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";
 						
 						FB.api('/me/likes', function(likes) {
