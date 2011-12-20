@@ -8,6 +8,8 @@
 	 	<!-- Include support librarys first -->
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="javascripts/jquery.json-2.3.min.js"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
+
 		
 		<script type="text/javascript">
 			var APP_ID = "316932864999658";	
@@ -40,6 +42,18 @@
 					});
 				});
 			}
+			
+			
+			function init() {
+				var mapDiv = document.getElementById('map-canvas');
+				var map = new google.maps.Map(mapDiv, {
+					center: new google.maps.LatLng(37.790234970864, -122.39031314844),
+					zoom: 8,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				});
+			}
+
+			google.maps.event.addDomListener(window, 'load', init);
 
 		</script>
   </head>
@@ -51,7 +65,7 @@
 				FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
 				FB.getLoginStatus(function(response) {
 						if (response.status == 'connected') {
-							registraUsuario();
+							//registraUsuario();
 						}
 					});
 			};
@@ -66,7 +80,7 @@
 		</script>
 		
 		<form>
-			Lunch Starts: <select name="lunchStart">
+			My lunch starts at: <select name="lunchStart">
 							<option value="10">10:00</option>
 							<option value="11">11:00</option>
 							<option value="12">12:00</option>
@@ -76,8 +90,9 @@
 							<option value="16">16:00</option>
 							<option value="17">17:00</option>
 							<option value="18">18:00</option>
-						 </select> 
-			Lunch Ends: <select name="lunchEnd">
+						 </select>
+			<br/>
+			My lunch ends at: <select name="lunchEnd">
 							<option value="10">10:00</option>
 							<option value="11">11:00</option>
 							<option value="12">12:00</option>
@@ -89,6 +104,7 @@
 							<option value="18">18:00</option>
 						 </select> 
 		</form>
-		
+		Select your location: <br/>
+		<div id="map-canvas"></div>
 	</body>
 </html>
