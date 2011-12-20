@@ -9,7 +9,6 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="javascripts/jquery.json-2.3.min.js"></script>
 		<script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
-
 		
 		<script type="text/javascript">
 			var APP_ID = "316932864999658";	
@@ -45,6 +44,7 @@
 			
 			
 			function init() {
+				alert('diego');
 				var mapDiv = document.getElementById('map-canvas');
 				var map = new google.maps.Map(mapDiv, {
 					center: new google.maps.LatLng(37.790234970864, -122.39031314844),
