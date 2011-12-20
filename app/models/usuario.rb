@@ -26,7 +26,6 @@ class Usuario < ActiveRecord::Base
     usuario.intereses = []
     if intereses
       intereses.each do |interes|
-        interes = interes["interes"]
         interes = Interes.find_or_create_by_facebook_id(interes["facebook_id"]){|u|
                                                                                  u.nombre = interes["nombre"]
                                                                                  u.categoria = interes["categoria"]}
