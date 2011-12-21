@@ -50,6 +50,8 @@
 				});
 			}
 			
+			var distanceWidget;
+			
 			function init() {
 				var mapDiv = document.getElementById('map-canvas');
 				var map = new google.maps.Map(mapDiv, {
@@ -57,7 +59,8 @@
 					zoom: 8,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				});
-				var distanceWidget = new DistanceWidget({
+				
+				distanceWidget = new DistanceWidget({
 					map: map,
 					distance: 3,
 					maxDistance: 15
