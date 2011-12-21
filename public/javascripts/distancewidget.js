@@ -48,7 +48,6 @@ function RadiusWidget(opt_distance) {
   circle.bindTo('center', this);
   circle.bindTo('zIndex', this);
   circle.bindTo('map', this);
-  circle.bindTo('strokeColor', this);
   circle.bindTo('radius', this);
 
   this.addSizer_();
@@ -75,7 +74,7 @@ RadiusWidget.prototype.addSizer_ = function() {
   var me = this;
   google.maps.event.addListener(sizer, 'drag', function() {
     // Set the circle distance (radius)
-    me.setDistance_();
+    me.setDistance();
   });
 };
 
