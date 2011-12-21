@@ -1,3 +1,11 @@
+/**
+ * A distance widget that will display a circle that can be resized and will
+ * provide the radius in km.
+ *
+ * @param {Object} opt_options Options such as map, position etc.
+ *
+ * @constructor
+ */
 function DistanceWidget(opt_options) {
 	var options = opt_options || {};
 	//this.setValues(options);
@@ -27,7 +35,7 @@ function DistanceWidget(opt_options) {
 	this.bindTo('distance', radiusWidget);
 	// Bind to the radiusWidgets' bounds property
 	this.bindTo('bounds', radiusWidget);
-	}	
+}	
 DistanceWidget.prototype = new google.maps.MVCObject();
 
 function RadiusWidget(opt_distance) {
