@@ -1,4 +1,4 @@
-function DistanceWidget (opt_options) {
+function DistanceWidget(opt_options) {
 	var options = opt_options || {};
 	this.setValues(options);
 	
