@@ -1,6 +1,6 @@
 function DistanceWidget(opt_options) {
 	var options = opt_options || {};
-	this.setValues(options);
+	//this.setValues(options);
 	
 	if (!this.get('position')) {
 		this.set('position', map.getCenter());
