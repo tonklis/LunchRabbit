@@ -5,6 +5,13 @@
 		<meta property="og:type" content="social" />
 		<meta property="og:url" content="http://swdf.in2teck.com/" />
 		
+		<style type="text/css">
+			#map-canvas {
+				height: 500px;
+			}
+		</style>
+
+		
 	 	<!-- Include support librarys first -->
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="javascripts/jquery.json-2.3.min.js"></script>
@@ -44,13 +51,13 @@
 			
 			
 			function init() {
-				alert('diego');
 				var mapDiv = document.getElementById('map-canvas');
 				var map = new google.maps.Map(mapDiv, {
 					center: new google.maps.LatLng(37.790234970864, -122.39031314844),
 					zoom: 8,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				});
+				alert(map);
 			}
 
 			google.maps.event.addDomListener(window, 'load', init);
