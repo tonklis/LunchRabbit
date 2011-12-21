@@ -79,14 +79,19 @@ RadiusWidget.prototype.addSizer_ = function() {
 };
 
 RadiusWidget.prototype.center_changed = function() {
-  var bounds = this.get('bounds');
+  var sizerPos = this.get('sizer_position');
+  var position;
+  if (sizerPos) {
+    position = this.getSnappedPosition(sizerPos);
+  } else {
+    var bounds = this.get('bounds');
+    if (bounds) {
+      var lng = bounds.getNorthEast().lng();
+      position = new google.maps.LatLng(this.get('center').lat(), lng);
+    }
+  }
 
-  // Bounds might not always be set so check that it exists first.
-  if (bounds) {
-    var lng = bounds.getNorthEast().lng();
-
-    // Put the sizer at center, right on the circle.
-    var position = new google.maps.LatLng(this.get('center').lat(), lng);
+  if (position) {
     this.set('sizer_position', position);
   }
 };
@@ -125,4 +130,25 @@ RadiusWidget.prototype.setDistance = function() {
 
   // Set the distance property for any objects that are bound to it
   this.set('distance', distance);
+  
+  var newPos = this.getSnappedPosition(pos);
+  this.set('sizer_position', newPos);
  };
+ 
+RadiusWidget.prototype.getSnappedPosition = function(pos) {
+  var bounds = this.get('bounds');
+  var center = this.get('center');
+  var left = new google.maps.LatLng(center.lat(),
+      bounds.getSouthWest().lng());
+  var right = new google.maps.LatLng(center.lat(),
+      bounds.getNorthEast().lng());
+
+  var leftDist = this.distanceBetweenPoints_(pos, left);
+  var rightDist = this.distanceBetweenPoints_(pos, right);
+
+  if (leftDist < rightDist) {
+    return left;
+  } else {
+    return right;
+  }
+};
