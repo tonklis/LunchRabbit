@@ -1,48 +1,56 @@
-function DistanceWidget(map) {
-  this.set('map', map);
-  this.set('position', map.getCenter());
+function DistanceWidget(opt_options) {
+  var options = opt_options || {};
 
+  this.setValues(options);
+
+  if (!this.get('position')) {
+    this.set('position', map.getCenter());
+  }
+
+  // Add a marker to the page at the map center or specified position
   var marker = new google.maps.Marker({
     draggable: true,
     title: 'Move me!'
   });
 
-  // Bind the marker map property to the DistanceWidget map property
   marker.bindTo('map', this);
-  // Bind the marker position property to the DistanceWidget position property
+  marker.bindTo('zIndex', this);
   marker.bindTo('position', this);
-  
+  marker.bindTo('icon', this);
+
   // Create a new radius widget
-  var radiusWidget = new RadiusWidget();
-  // Bind the radiusWidget map to the DistanceWidget map
-  radiusWidget.bindTo('map', this);
-  // Bind the radiusWidget center to the DistanceWidget position
+  var radiusWidget = new RadiusWidget(options['distance'] || 3);
+
+  // Bind the radius widget properties.
   radiusWidget.bindTo('center', this, 'position');
-  
-  // Bind to the radiusWidgets' distance property
+  radiusWidget.bindTo('map', this);
+  radiusWidget.bindTo('zIndex', marker);
+  radiusWidget.bindTo('maxDistance', this);
+  radiusWidget.bindTo('minDistance', this);
+
+  // Bind to the radius widget distance property
   this.bindTo('distance', radiusWidget);
-  // Bind to the radiusWidgets' bounds property
+  // Bind to the radius widget bounds property
   this.bindTo('bounds', radiusWidget);
 }
 DistanceWidget.prototype = new google.maps.MVCObject();
 
 
-function RadiusWidget() {
+function RadiusWidget(opt_distance) {
   var circle = new google.maps.Circle({
     strokeWeight: 2
   });
 
-  this.set('distance', 3);
-  // Bind the RadiusWidget bounds property to the circle bounds property.
+  this.set('distance', opt_distance);
+  this.set('active', false);
   this.bindTo('bounds', circle);
-  
-  // Bind the circle center to the RadiusWidget center property
+
   circle.bindTo('center', this);
-  // Bind the circle map to the RadiusWidget map
+  circle.bindTo('zIndex', this);
   circle.bindTo('map', this);
-  // Bind the circle radius property to the RadiusWidget radius property
+  circle.bindTo('strokeColor', this);
   circle.bindTo('radius', this);
-  
+
   this.addSizer_();
 }
 RadiusWidget.prototype = new google.maps.MVCObject();
@@ -55,16 +63,19 @@ RadiusWidget.prototype.distance_changed = function() {
 RadiusWidget.prototype.addSizer_ = function() {
   var sizer = new google.maps.Marker({
     draggable: true,
-    title: 'Drag me!'
+    title: 'Drag me!',
+    raiseOnDrag: false
   });
 
+  sizer.bindTo('zIndex', this);
   sizer.bindTo('map', this);
+  sizer.bindTo('icon', this);
   sizer.bindTo('position', this, 'sizer_position');
-  
+
   var me = this;
   google.maps.event.addListener(sizer, 'drag', function() {
-	// Set the circle distance (radius)
-	me.setDistance();
+    // Set the circle distance (radius)
+    me.setDistance_();
   });
 };
 
@@ -105,6 +116,14 @@ RadiusWidget.prototype.setDistance = function() {
   var center = this.get('center');
   var distance = this.distanceBetweenPoints_(center, pos);
 
+  if (this.get('maxDistance') && distance > this.get('maxDistance')) {
+    distance = this.get('maxDistance');
+  }
+
+  if (this.get('minDistance') && distance < this.get('minDistance')) {
+    distance = this.get('minDistance');
+  }
+
   // Set the distance property for any objects that are bound to it
   this.set('distance', distance);
-};
+ };
