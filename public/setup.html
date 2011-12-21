@@ -52,10 +52,11 @@
 			}
 			
 			var distanceWidget;
+			var map;
 			
 			function init() {
 				var mapDiv = document.getElementById('map-canvas');
-				var map = new google.maps.Map(mapDiv, {
+				map = new google.maps.Map(mapDiv, {
 					center: new google.maps.LatLng(37.790234970864, -122.39031314844),
 					zoom: 8,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
