@@ -2,10 +2,8 @@ function DistanceWidget(opt_options) {
 	var options = opt_options || {};
 	//this.setValues(options);
 	
-	if (!this.get('position')) {
-		this.set('position', map.getCenter());
-	}
-
+	this.set('position', map.getCenter());
+	
 	var marker = new google.maps.Marker({
 		draggable: true,
 		title: 'Place me at your location'
