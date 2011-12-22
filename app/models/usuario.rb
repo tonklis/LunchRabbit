@@ -39,7 +39,7 @@ class Usuario < ActiveRecord::Base
     end
       
     if zona = params[:zona]
-      usuario.zonas.clear
+      usuario.zonas.destroy_all
       usuario.zonas << Zona.new(zona) 
     end
 
