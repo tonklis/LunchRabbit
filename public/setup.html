@@ -40,7 +40,6 @@
 							  if (value.category == "Tv show" || value.category == "Musician/band" || value.category == "Movie" ||
 									value.category == "Book" || value.category == "Interest") {
 									interests.push({"facebook_id":value.id, "nombre":value.name, "categoria":value.category});
-									//interests += '{"id":' + value.id + ', "nombre":' + value.name + ', "categoria":' + value.category +'}';
 								}
 							});
 							data.intereses = $.toJSON(interests);
@@ -201,9 +200,9 @@
 			}
 			
 			function displayInfo(widget) {
-				var info = document.getElementById('info');
+				/*var info = document.getElementById('info');
 				info.innerHTML = 'Position: ' + widget.get('position') + ', distance: ' +
-				widget.get('distance');
+				widget.get('distance');*/
 			}
 
 			function errorMessage(error) {
@@ -226,7 +225,7 @@
 				FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
 				FB.getLoginStatus(function(response) {
 						if (response.status == 'connected') {
-							//registraUsuario();
+							registraUsuario();
 						}
 					});
 			};
@@ -267,6 +266,5 @@
 		</form>
 		Select your location: <br/><br/>
 		<div id="map-canvas"></div>
-		<div id="info"></div>
 	</body>
 </html>
