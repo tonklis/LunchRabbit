@@ -102,6 +102,8 @@
 								}
 							});
 							post.intereses = $.toJSON(interests);
+							post.zona = {"latitud":distanceWidget.get('position').lat(), "longitud":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance'),
+								"usuario_id":data.usuario.id};
 							$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", post, function(result) {
 								alert('success');
 							});
@@ -120,7 +122,7 @@
 				FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
 				FB.getLoginStatus(function(response) {
 						if (response.status == 'connected') {
-							registraUsuario();
+							//registraUsuario();
 						}
 					});
 			};
