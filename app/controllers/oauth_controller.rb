@@ -1,7 +1,7 @@
 class OauthController < ApplicationController
   def new
     session[:at]=nil
-    redirect_to authenticator.authorize_url(:scope => 'publish_stream,offline_access,email', :display => 'page')
+    redirect_to authenticator.authorize_url(:scope => 'publish_stream,email,user_interests,user_birthday', :display => 'page')
   end
 
   def create
@@ -9,13 +9,7 @@ class OauthController < ApplicationController
     session[:at]=mogli_client.access_token
     user = Mogli::User.find("me", Mogli::Client.new(session[:at]))
     session[:usuario] = Usuario.encuentra_o_crea(user.id)
-    redirect_to "/"
-  end
-
-  def index
-    redirect_to "/oauth/new" and return unless session[:at]
-    user = Mogli::User.find("me", Mogli::Client.new(session[:at]))
-    session[:usuario] = Usuario.encuentra_o_crea(user.id)
+    redirect_to home_path
   end
 
   def authenticator

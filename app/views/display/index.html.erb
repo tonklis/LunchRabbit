@@ -4,11 +4,15 @@
   <div id="fb-root"></div>
   <script type="text/javascript">
     var APP_ID = "316932864999658";
+    //var APP_ID = "185077511587462";
+    var HOST = "http://glowing-moon-5161.heroku.com"
+    //var HOST = "http://localhost:3000"
 
-    document.domain = "heroku.com";
+    document.domain = "heroku.com"
+    //document.domain = "localhost";
 
     function loginResult() {
-      top.location = 'http://glowing-moon-5161.heroku.com/setup.html';
+      top.location = HOST + '/setup.html';
     }
     
     window.fbAsyncInit = function() {
@@ -19,8 +23,9 @@
 		}
 	  });
 	  FB.Event.subscribe('auth.login', function(response) {
-        loginResult();
-      });
+            top.location = HOST + $("#facebook_button")[0].getAttribute("data-oauth-path");
+            //loginResult();
+          });
       FB.Event.subscribe('auth.logout', function(response) {
         //window.location.reload();
       });
@@ -34,7 +39,6 @@
       document.getElementById('fb-root').appendChild(e);
     }());
   </script>
-  <div class="fb-login-button" scope="publish_stream,email,user_interests,user_birthday">
+  <div id="facebook_button" class="fb-login-button" data-oauth-path="<%= oauth_new_path %>" scope="publish_stream,email,user_interests,user_birthday">
     Login with Facebook
   </div>
-

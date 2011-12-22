@@ -5,7 +5,6 @@
     <meta property="og:title" content="Lunch Rabbit" />
     <meta property="og:type" content="social" />
     <meta property="og:url" content="http://glowing-moon-5161.heroku.com/" />
-    <%= stylesheet_link_tag :all %>
     <%= javascript_include_tag :defaults %>
     <%= csrf_meta_tag %>
 
@@ -14,10 +13,19 @@
     <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
 </head>
 <body>
 
-<%= yield %>
+<div class="content">
+
+  <%= yield %>
+
+  <footer>
+    <p>&copy; Lunch Rabbit 2011</p>
+  </footer>
+
+</div>
 
 </body>
 </html>

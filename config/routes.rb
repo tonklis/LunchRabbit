@@ -3,11 +3,11 @@ LunchRabbit::Application.routes.draw do
 
   get "display/index"
 
-  get "display/home"
+  get "display/home", :as => :home
 
-  get "display/myprofile"
+  get "display/myprofile", :as => :myprofile
 
-  get "display/help"
+  get "display/help", :as => :help
 
   resources :invitaciones
 
@@ -19,25 +19,23 @@ LunchRabbit::Application.routes.draw do
 
   resources :usuarios
 
-  match 'usuarios/encuentra_o_crea/:id' => 'usuarios#encuentra_o_crea', :as => :encuentra_o_crea
+  match 'usuarios/encuentra_o_crea/:id' => 'usuarios#encuentra_o_crea'
 
-  match 'usuarios/busqueda/:id' => 'usuarios#busqueda', :as => :busqueda
+  match 'usuarios/busqueda/:id' => 'usuarios#busqueda'
 
-  match 'usuarios/actualiza/:id' => 'usuarios#actualiza', :as => :actualiza
+  match 'usuarios/actualiza/:id' => 'usuarios#actualiza'
 
-  match 'invitaciones/por_usuario/:id' => 'invitaciones#por_usuario', :as => :por_usuario
+  match 'invitaciones/por_usuario/:id' => 'invitaciones#por_usuario'
 
-  match 'invitaciones/desde_para/:id' => 'invitaciones#desde_para', :as => :desde_para
+  match 'invitaciones/desde_para/:id' => 'invitaciones#desde_para'
 
-  match 'invitaciones/acepta/:id' => 'invitaciones#acepta', :as => :acepta
+  match 'invitaciones/acepta/:id' => 'invitaciones#acepta'
 
-  match 'invitaciones/rechaza/:id' => 'invitaciones#rechaza', :as => :rechaza
+  match 'invitaciones/rechaza/:id' => 'invitaciones#rechaza'
 
-  get 'oauth/index'
+  get 'oauth/new', :as => :oauth_new
 
-  get 'oauth/new'
-
-  get 'oauth/create', :to => 'oauth#create', :as => 'oauth_callback'
+  get 'oauth/create', :to => 'oauth#create', :as => :oauth_callback
   
   #match '/oauth/show', :to => 'oauth#show', :via => 'get', :as => :show
 
