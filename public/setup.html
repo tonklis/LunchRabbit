@@ -175,8 +175,9 @@
 			}
 			
 			function init(position) {
-				var lat = position.coords.latitude;//position ? position.coords.latitude : 37.790234970864;
-				var lon = position.coords.longitude;//position ? position.coords.longitude : -122.39031314844; 
+				alert(position.coords.latitude+','+position.coords.longitude);
+				var lat = position ? position.coords.latitude : 37.790234970864;
+				var lon = position ? position.coords.longitude : -122.39031314844; 
 				var mapDiv = document.getElementById('map-canvas');
 				map = new google.maps.Map(mapDiv, {
 					center: new google.maps.LatLng(lat, lon),
