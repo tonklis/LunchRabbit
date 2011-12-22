@@ -167,8 +167,8 @@
 			
 			if (navigator.geolocation) {
 				var timeoutVal = 8000;
-				navigator.geolocation.getCurrentPosition(init, errorMessage,
-				{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 });
+				navigator.geolocation.getCurrentPosition(init, errorMessage);/*,*/
+				/*{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 });*/
 			}
 			else {
 				init();
@@ -198,6 +198,7 @@
 				  3: 'Request timeout'
 			   };
 			   alert("Error: " + errors[error.code]);
+			   init();
 			}
 			
 			//google.maps.event.addDomListener(window, 'load', init);
