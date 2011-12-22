@@ -77,7 +77,7 @@
 			
 			function registraUsuario() {
 				var usuarioFB;
-				var post = {"usuario":null};
+				var post = {"usuario":undefined};
 				var interests = [];
 				FB.api('/me', function(response) {
 					usuarioFB = response;
