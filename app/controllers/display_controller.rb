@@ -10,6 +10,7 @@ class DisplayController < ApplicationController
 
   def home
     @home_active = ACTIVE
+    @usuario = session[:usuario]
   end
 
   def myprofile

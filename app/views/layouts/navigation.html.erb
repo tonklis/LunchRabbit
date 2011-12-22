@@ -5,7 +5,6 @@
     <meta property="og:title" content="Lunch Rabbit" />
     <meta property="og:type" content="social" />
     <meta property="og:url" content="http://glowing-moon-5161.heroku.com/" />
-    <%= stylesheet_link_tag :all %>
     <%= javascript_include_tag :defaults %>
     <%= csrf_meta_tag %>
 
@@ -26,24 +25,23 @@
 
   <div>      
         <div class="container-fluid">
-        	<img class="brand" height="100" src="http://a6.sphotos.ak.fbcdn.net/hphotos-ak-ash4/304246_256876421027927_256875991027970_687621_275817708_n.jpg">
-		<div class="middle">
-			<button class="btn">FIND A LUNCH NOW  &raquo;</button>
-		</div>
-		<div class="menu-pull-right">
-			
+        	<img class="brand" src="http://swdf.in2teck.com/images/lunch_logo_thumb.jpg">
+		<div style="float: right; margin-right: 300px;">
+                <button class="btn" style="margin-top: 30px;">FIND A LUNCH NOW  &raquo;</button>
+                <div class="menu-pull-right">
     			<span class="left"></span>
     			<ul>
       				<li><a href="/display/home" <%= @home_active =%> target="_self">Home</a></li>
 				<li><a href="/display/myprofile" <%= @myprofile_active =%> target="_self">My Profile</a></li>
       				<li><a href="">&#8595;</a>
         			<div class="sub">
-          				<ul>
-            					<li><a href="/display/help" <%= @help_active =%> target="_self">Help</a></li>
-            					<li><a href="/display/logout" target="_self">Logout</a></li>
-          				</ul>
+          	      		<ul>
+              				<li><a href="/display/help" <%= @help_active =%> target="_self">Help</a></li>
+      					<li><a href="/display/logout" target="_self">Logout</a></li>
+       				</ul>
+                        </ul>
   		</div>
-	
+	        </div>
         </div>
       
     </div>
@@ -51,17 +49,49 @@
     <div class="container-fluid">
       <div class="sidebar">
         <div class="well">
-          <h5>Recent lunches</h5>
-          <ul>
-
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-	   <br />
-	   <p> <a>view all</a> </p>
+          <h5>My Lunch Requests</h5> </br>
+          <p>Received</p>
+          <ul class="unstyled" style="margin-left: 10px;">
+            <% @usuario.invitaciones_recibidas.each do |invitacion|%>
+            <li>
+              <div style="float:left;">
+                <a href=""><%= Usuario.find(invitacion.usuario_desde_id).nombre %></a>
+              </div>
+              <div style="float:right; width: 50px; height: 15px;">
+              <% if invitacion.aceptada %>
+                Confirmed
+              <% else %>
+                <%= link_to '', "/invitaciones/acepta/#{invitacion.id}", :method => :acepta, :class => 'inv_acepta' %>
+                <%= link_to '', "/invitaciones/rechaza/#{invitacion.id}", :confirm => 'Are you sure?', :method => :rechaza, :class => "inv_niega" %>
+              <% end %>
+              </div>
+            <br/>
+            </li>
+            <% end %>  
+          </ul>
+          <br/>
+          <p>Sent</p>
+          <ul class="unstyled" style="margin-left: 10px;">
+            <% @usuario.invitaciones_enviadas.each do |invitacion|%>
+            <li>
+              <div style="float: left;">
+                <a href=""><%= Usuario.find(invitacion.usuario_para_id).nombre %></a>
+              </div>
+              <div style="float: right; width: 50px;">
+                <% if invitacion.aceptada %>
+                  Confirmed
+                <% else %>
+                  Pending
+                <% end %>  
+              </div>
+              <br/>
+            </li>
+            <% end %>
+          </ul>
+          <br/>
+          <div style="text-align: center;">
+            <a href="">view all</a>
+          </div>
         </div>
       </div>
       <div class="content">

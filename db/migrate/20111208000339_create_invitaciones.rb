@@ -7,6 +7,7 @@ class CreateInvitaciones < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :invitaciones, [:usuario_desde_id, :usuario_para_id], :unique => true
   end
 
   def self.down

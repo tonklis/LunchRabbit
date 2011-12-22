@@ -101,7 +101,24 @@ class InvitacionesController < ApplicationController
       format.xml {render :xml => @invitacion}
       format.json {render :json => @invitacion}
     end
+  end
+
+  def acepta
+    @invitacion = Invitacion.acepta(params[:id])
+    respond_to do |format|
+      format.html { redirect_to("/display/home") }
+      format.xml  { render :xml => @invitacion }
+      format.json { render :json => @invitacion }
+    end
 
   end
+
+  def rechaza
+    @invitacion = Invitacion.rechaza(params[:id])
+   respond_to do |format|
+      format.html { redirect_to("/display/home") }
+    end
+ 
+  end 
 
 end

@@ -5,6 +5,11 @@ class Usuario < ActiveRecord::Base
   has_many :invitaciones_recibidas, :class_name => "Invitacion", :foreign_key => "usuario_para_id", :order => ["created_at desc limit 10"]
   has_many :zonas
 
+  def invitaciones_mezcladas
+    invitaciones = self.invitaciones_enviadas + self.invitaciones_recibidas
+    invitaciones.sort!{|a,b| b.updated_at <=> a.updated_at}[0..9]    
+  end
+
   def Usuario.encuentra_o_crea (facebook_id)
     usuario = Usuario.find_by_facebook_id facebook_id
     if not usuario
@@ -23,8 +28,8 @@ class Usuario < ActiveRecord::Base
     if not intereses.respond_to?('each')
       intereses = ActiveSupport::JSON.decode(intereses)
     end
-    usuario.intereses = []
     if intereses
+      usuario.intereses = []
       intereses.each do |interes|
         interes = Interes.find_or_create_by_facebook_id(interes["facebook_id"]){|u|
                                                                                  u.nombre = interes["nombre"]
@@ -32,6 +37,12 @@ class Usuario < ActiveRecord::Base
         usuario.intereses << interes
       end
     end
+      
+    if zona = params[:zona]
+      usuario.zonas.clear
+      usuario.zonas << zona 
+    end
+
     usuario.save!
     usuario
   end

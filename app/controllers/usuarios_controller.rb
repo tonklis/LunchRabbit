@@ -88,7 +88,7 @@ class UsuariosController < ApplicationController
     @usuario = Usuario.encuentra_o_crea(facebook_id)
     respond_to do |format|
       format.xml  { render :xml => @usuario }
-      format.json {render :json => @usuario,  :include => [ :intereses, :invitaciones_enviadas, :invitaciones_recibidas] }
+      format.json {render :json => @usuario,  :include => [ :intereses, :invitaciones_enviadas, :invitaciones_recibidas, :zonas] }
     end
   end
 
