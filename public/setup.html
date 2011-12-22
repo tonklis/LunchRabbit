@@ -83,8 +83,8 @@
 						post.usuario.genero = usuarioFB.gender;
 						post.usuario.email = usuarioFB.email;
 						post.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";
-						post.usuario.hora_lunch_inicio = $("#lunchStart").value;
-						post.usuario.hora_lunch_fin = $("#lunchEnd").value;
+						post.usuario.hora_lunch_inicio = document.getElementById("lunchStart").value;
+						post.usuario.hora_lunch_fin = document.getElementById("lunchEnd").value;
 						
 						FB.api('/me/likes', function(likes) {
 							$.each(likes.data, function(index, value) { 
