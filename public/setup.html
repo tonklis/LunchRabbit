@@ -189,8 +189,22 @@
 					minDistance: 1,
 					maxDistance: 15
 				});
+				
+				google.maps.event.addListener(distanceWidget, 'distance_changed', function() {
+					displayInfo(distanceWidget);
+				});
+
+				google.maps.event.addListener(distanceWidget, 'position_changed', function() {
+					displayInfo(distanceWidget);
+				});
 			}
 			
+			function displayInfo(widget) {
+				var info = document.getElementById('info');
+				info.innerHTML = 'Position: ' + widget.get('position') + ', distance: ' +
+				widget.get('distance');
+			}
+
 			function errorMessage(error) {
 			   var errors = { 
 				  1: 'Permission denied',
@@ -200,7 +214,6 @@
 			   alert("Error: " + errors[error.code]);
 			   init();
 			}
-			
 			//google.maps.event.addDomListener(window, 'load', init);
 		</script>
   </head>
@@ -253,5 +266,6 @@
 		</form>
 		Select your location: <br/><br/>
 		<div id="map-canvas"></div>
+		<div id="info"></div>
 	</body>
 </html>
