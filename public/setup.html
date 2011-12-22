@@ -77,7 +77,7 @@
 			
 			function registraUsuario() {
 				var usuarioFB;
-				var usuario = {};
+				var post = {"usuario":null};
 				var interests = [];
 				FB.api('/me', function(response) {
 					usuarioFB = response;
@@ -88,10 +88,10 @@
 						data.usuario.intereses = Array.new;
 						data.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";*/
 						
-						usuario.nombre = usuarioFB.name;
-						usuario.genero = usuarioFB.gender;
-						usuario.email = usuarioFB.email;
-						usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";
+						post.usuario.nombre = usuarioFB.name;
+						post.usuario.genero = usuarioFB.gender;
+						post.usuario.email = usuarioFB.email;
+						post.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";
 						
 						FB.api('/me/likes', function(likes) {
 							$.each(likes.data, function(index, value) { 
@@ -100,8 +100,8 @@
 									interests.push({"facebook_id":value.id, "nombre":value.name, "categoria":value.category});
 								}
 							});
-							data.intereses = $.toJSON(interests);
-							$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", usuario, function(result) {
+							post.intereses = $.toJSON(interests);
+							$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", post, function(result) {
 								alert('success');
 							});
 						});
