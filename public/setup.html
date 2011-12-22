@@ -165,10 +165,21 @@
 			var map;
 			var distanceWidget;
 			
-			function init() {
+			if (navigator.geolocation) {
+				var timeoutVal = 8000;
+				navigator.geolocation.getCurrentPosition(init, errorMessage,
+				{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 });
+			}
+			else {
+				init();
+			}
+			
+			function init(position) {
+				var lat = position ? position.coords.latitude : 37.790234970864;
+				var lon = position ? position.coords.longitude : -122.39031314844; 
 				var mapDiv = document.getElementById('map-canvas');
 				map = new google.maps.Map(mapDiv, {
-					center: new google.maps.LatLng(37.790234970864, -122.39031314844),
+					center: new google.maps.LatLng(lat, lon),
 					zoom: 12,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				});
@@ -180,7 +191,7 @@
 				});
 			}
 			
-			google.maps.event.addDomListener(window, 'load', init);
+			//google.maps.event.addDomListener(window, 'load', init);
 		</script>
   </head>
   
@@ -230,7 +241,7 @@
 							<option value="18">18:00</option>
 						 </select> 
 		</form>
-		Select your location: <br/>
+		Select your location: <br/><br/>
 		<div id="map-canvas"></div>
 	</body>
 </html>
