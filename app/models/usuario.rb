@@ -40,7 +40,7 @@ class Usuario < ActiveRecord::Base
       
     if zona = params[:zona]
       usuario.zonas.clear
-      usuario.zonas << zona 
+      usuario.zonas << Zona.new(zona) 
     end
 
     usuario.save!
