@@ -7,8 +7,8 @@
 		
 		<style type="text/css">
 			#map-canvas {
-				height: 500px;
-				width:	800px;
+				height: 400px;
+				width:	500px;
 			}
 		</style>
 
@@ -28,7 +28,7 @@
 			var distanceWidget;
 			
 			$(document).ready(function(){
-				//$("#saveBtn").click(saveUser);
+				$("#saveBtn").click(saveUser);
 			});
 			
 			function loadUser() {
@@ -37,9 +37,8 @@
 					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + fbData.id + ".json", function(data) {
 						usuario = data.usuario;
 						$("#profilePic").attr("src",usuario.thumbnail);
-						$("#profilePic").append(usuario.nombre);
-						$("#lunchStartSlct").val(usuario.hora_lunch_inicio);
-						$("#lunchEndSlct").val(usuario.hora_lunch_fin);
+						$("#lunchStart").val(usuario.hora_lunch_inicio);
+						$("#lunchEnd").val(usuario.hora_lunch_fin);
 						setupMap(usuario.zonas[0]);
 					});
 				});
@@ -63,6 +62,18 @@
 				});
 			}
 			
+			function saveUser() {
+				var post = {};
+				var interests = [];				
+				post.usuario = {};
+				post.usuario.hora_lunch_inicio = document.getElementById("lunchStart").value;
+				post.usuario.hora_lunch_fin = document.getElementById("lunchEnd").value;
+				post.zona = {"latitud":distanceWidget.get('position').lat(), "longitud":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance'),
+					"usuario_id":data.usuario.id};
+				$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/" + usuarioFB.id + ".json", post, function(result) {
+					//
+				});
+			}
 		</script>
   </head>
   
@@ -90,7 +101,7 @@
 		<form>
 			<img id="profilePic" width="250" height"250"/>
 			<br/><br/>
-			My lunch starts at: <select id="lunchStartSlct">
+			My lunch starts at: <select id="lunchStart">
 							<option value="10">10:00</option>
 							<option value="11">11:00</option>
 							<option value="12">12:00</option>
@@ -102,7 +113,7 @@
 							<option value="18">18:00</option>
 						 </select>
 			<br/><br/>
-			My lunch ends at: <select id="lunchEndSlct">
+			My lunch ends at: <select id="lunchEnd">
 							<option value="10">10:00</option>
 							<option value="11">11:00</option>
 							<option value="12">12:00</option>
