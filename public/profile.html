@@ -37,7 +37,7 @@
 					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + fbData.id + ".json", function(data) {
 						usuario = data.usuario;
 						$("#profilePic").attr("src",usuario.thumbnail);
-						$("#profilePic").appemnd(usuario.nombre);
+						$("#profilePic").append(usuario.nombre);
 						$("#lunchStartSlct").val(usuario.hora_lunch_inicio);
 						$("#lunchEndSlct").val(usuario.hora_lunch_fin);
 						setupMap(usuario.zonas[0]);
