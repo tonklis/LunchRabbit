@@ -38,9 +38,9 @@
 					fbData = response;
 					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + fbData.id + ".json", function(data) {
 						usuario = data.usuario;
-						$("#profilePic").src = usuario.thumbnail;
-						$("#lunchStartLbl").value = usuario.hora_lunch_inicio;
-						$("#lunchEndLbl").value = usuario.hora_lunch_fin;
+						$("#profilePic").attr("src",usuario.thumbnail);
+						$("#lunchStartLbl").text(usuario.hora_lunch_inicio);
+						$("#lunchEndLbl").text(usuario.hora_lunch_fin);
 					});
 				});
 			}
