@@ -38,8 +38,27 @@
 						usuario = data.usuario;
 						$("#profilePic").attr("src",usuario.thumbnail);
 						$("#lunchStartSlct").val(usuario.hora_lunch_inicio);
-						$("#lunchEndSlct").val(usuario.hora_lunch_fin);
+						$("#lunchEndSlct").val(usuario.hora_lunch_fin
+						setupMap(usuario.zonas[0]);
 					});
+				});
+			}
+
+			function setupMap(zona) {
+				var lat = zona.latitud;
+				var lon = zona.longitud;
+				var radius = zona.radio;
+				var mapDiv = document.getElementById('map-canvas');
+				map = new google.maps.Map(mapDiv, {
+					center: new google.maps.LatLng(lat, lon),
+					zoom: 12,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				});
+				distanceWidget = new DistanceWidget({
+					map: map,
+					distance: radius,
+					minDistance: 1,
+					maxDistance: 15
 				});
 			}
 			
@@ -93,7 +112,7 @@
 							<option value="17">17:00</option>
 							<option value="18">18:00</option>
 						 </select> 
-		</form><br/><br/>
+		</form>
 		Select your location: <br/><br/>
 		<div id="map-canvas"></div>
 		<form>
