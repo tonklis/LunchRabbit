@@ -39,8 +39,8 @@
 					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + fbData.id + ".json", function(data) {
 						usuario = data.usuario;
 						$("#profilePic").attr("src",usuario.thumbnail);
-						$("#lunchStartLbl").text(usuario.hora_lunch_inicio + ":00");
-						$("#lunchEndLbl").text(usuario.hora_lunch_fin + ":00");
+						$("#lunchStartLbl").value(usuario.hora_lunch_inicio + ":00");
+						$("#lunchEndLbl").value(usuario.hora_lunch_fin + ":00");
 					});
 				});
 			}
@@ -83,7 +83,7 @@
 							<option value="17">17:00</option>
 							<option value="18">18:00</option>
 						 </select>
-			<br/><br/>
+			<br/>
 			My lunch ends at: <label id="lunchEndLbl"> <select id="lunchEndSlct">
 							<option value="10">10:00</option>
 							<option value="11">11:00</option>
