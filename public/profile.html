@@ -38,6 +38,7 @@
 					fbData = response;
 					$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/" + fbData.id + ".json", function(data) {
 						usuario = data.usuario;
+						$("#profilePic").src = usuario.thumbnail;
 						$("#lunchStartLbl").value = usuario.hora_lunch_inicio;
 						$("#lunchEndLbl").value = usuario.hora_lunch_fin;
 					});
@@ -69,6 +70,8 @@
 		</script>
 		
 		<form>
+			<img id="profilePic"/>
+			<br/><br/>
 			My lunch starts at: <label id="lunchStartLbl"> <select id="lunchStartSlct">
 							<option value="10">10:00</option>
 							<option value="11">11:00</option>
@@ -92,7 +95,7 @@
 							<option value="17">17:00</option>
 							<option value="18">18:00</option>
 						 </select> 
-		</form>
+		</form><br/>
 		Select your location: <br/><br/>
 		<div id="map-canvas"></div>
 		<form>
