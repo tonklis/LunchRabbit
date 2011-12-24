@@ -1,0 +1,19 @@
+<div class="row">
+  <% @recomendados.each do |recomendado| %> 
+    <div class="span5">
+      <div id="imagen_centrada_outer">
+        <div id="imagen_centrada_inner">
+        <%= image_tag recomendado.thumbnail %>
+        </div>
+      </div>
+      <br/>
+      <div class="texto_centrado">
+        <p><a href=""><%= recomendado.nombre %></a></p>
+        <p><%= recomendado.hora_lunch_inicio.to_s + ":00" %> - <%= recomendado.hora_lunch_fin.to_s + ":00" %></p>
+        <% recomendado.intereses_comun.each do |key, value| %>
+          <p><%= value %></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

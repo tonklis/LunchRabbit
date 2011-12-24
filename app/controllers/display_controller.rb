@@ -14,6 +14,7 @@ class DisplayController < ApplicationController
     @home_active = ACTIVE
     user = Mogli::User.find("me", Mogli::Client.new(session[:at]))
     @usuario = Usuario.encuentra_o_crea(user.id)
+    @recomendados = Usuario.busqueda(@usuario.facebook_id, 3)
   end
 
   def myprofile

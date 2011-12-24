@@ -25,10 +25,11 @@ class Usuario < ActiveRecord::Base
     usuario = Usuario.find_by_facebook_id (params[:id])
     usuario.update_attributes(params[:usuario])
     intereses = params[:intereses]
-    if not intereses.respond_to?('each')
-      intereses = ActiveSupport::JSON.decode(intereses)
-    end
+    
     if intereses
+      if not intereses.respond_to?('each')
+        intereses = ActiveSupport::JSON.decode(intereses)
+      end
       usuario.intereses = []
       intereses.each do |interes|
         interes = Interes.find_or_create_by_facebook_id(interes["facebook_id"]){|u|
@@ -56,21 +57,22 @@ class Usuario < ActiveRecord::Base
     # todo: incluir zona
 
     usuarios_destino = Usuario.find(:all, :conditions => [consulta, usuario_origen.id, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin], :order => order_by)
-
-    # todo: inteligencia de intereses (prioridad a los que se tienen en comun)
-    #usuarios = []
-    #usuarios_destino.each do |usuario|
-    #  usuario.intereses.each do |interes|
-    #    if usuario_origen.intereses.include?(interes)
-    #      usuarios << usuario
-    #      break
-    #    end
-    #  end
-    #end
     
-    # todo: revisar desempeño para limit
+    usuarios_destino.each do |usuario_destino|
+      usuario_destino[:intereses_comun] = {}
+      usuario_destino.intereses.each do |interes_destino|
+        if usuario_destino[:intereses_comun].size < 3 and usuario_origen.intereses.include?(interes_destino)
+          usuario_destino[:intereses_comun][interes_destino.id] = interes_destino.nombre
+        end
+      end
+      while usuario_destino[:intereses_comun].size < 3 and usuario_destino[:intereses_comun].size < usuario_destino.intereses.size
+        interes = usuario_destino.intereses[0..10].sort_by{rand}[0]
+        usuario_destino[:intereses_comun][interes.id] = interes.nombre
+      end
+    end
+
     if limit
-      usuarios_destino = usuarios_destino[0..2]
+      usuarios_destino = usuarios_destino[0..(limit-1)]
     end
     return usuarios_destino
   end

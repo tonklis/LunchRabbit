@@ -55,7 +55,7 @@
             <% @usuario.invitaciones_recibidas.each do |invitacion|%>
             <li>
               <div style="float:left;">
-                <a href=""><%= Usuario.find(invitacion.usuario_desde_id).nombre %></a>
+                <a href=""><%= Usuario.find(invitacion.usuario_desde_id).nombre[0..14] %></a>
               </div>
               <div style="float:right; width: 50px; height: 15px;">
               <% if invitacion.aceptada %>
@@ -75,7 +75,7 @@
             <% @usuario.invitaciones_enviadas.each do |invitacion|%>
             <li>
               <div style="float: left;">
-                <a href=""><%= Usuario.find(invitacion.usuario_para_id).nombre %></a>
+                <a href=""><%= Usuario.find(invitacion.usuario_para_id).nombre[0..14] %></a>
               </div>
               <div style="float: right; width: 50px;">
                 <% if invitacion.aceptada %>
