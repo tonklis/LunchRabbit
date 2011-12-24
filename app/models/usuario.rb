@@ -52,7 +52,7 @@ class Usuario < ActiveRecord::Base
 
     usuario_origen = Usuario.find_by_facebook_id (facebook_id)
     consulta = "id <> ? and ((hora_lunch_inicio >= ? and hora_lunch_fin <= ?) or (hora_lunch_inicio <= ? and hora_lunch_fin >= ?))"
-    order_by = "RAND()"
+    # order_by = "RAND()"
 
     # todo: incluir zona
 
