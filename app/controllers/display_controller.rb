@@ -22,9 +22,7 @@ class DisplayController < ApplicationController
     @usuario = Usuario.find(session[:usuario_id])
     client = Mogli::User.find("me", Mogli::Client.new(session[:at]))
     @intereses = client.likes
-    zona = @usuario.zonas.first
-    @map = zona.to_gmaps4rails
-    @circle = "[{'lng': #{zona.longitude},'lat': #{zona.latitude},'radius': #{zona.radio*1000}}]"
+    @zona = @usuario.zonas.first
   end
 
   def help

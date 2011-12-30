@@ -19,7 +19,7 @@ function DistanceWidget(opt_options) {
   marker.bindTo('icon', this);
 
   // Create a new radius widget
-  var radiusWidget = new RadiusWidget(options['distance'] || 3);
+  var radiusWidget = new RadiusWidget(options['distance']);
 
   // Bind the radius widget properties.
   radiusWidget.bindTo('center', this, 'position');

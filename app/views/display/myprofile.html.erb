@@ -13,17 +13,23 @@
     </div>
     <div class="row">
       <div class="span3">
-        <div id="map-canvas"></div>
+        <div id="map-canvas" data-longitude="<%= @zona.longitude %>" data-latitude="<%= @zona.latitude %>" data-radius="<%= @zona.radio %>"></div>
         <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
         <script type="text/javascript" src="/javascripts/jquery.json-2.3.min.js"></script>
 	<script type="text/javascript" src="/javascripts/distancewidget.js"></script>
         <script>
                         var map;
 			var distanceWidget;
-					
-			function init(position) {
+                        var lectura_radius = $("#map-canvas")[0].getAttribute("data-radius");
+                        var radius = (lectura_radius != "" && lectura_radius != null) ? lectura_radius : 3;
+				
+                        function init_geolocation(position){
 				var lat = position ? position.coords.latitude : 37.790234970864;
-				var lon = position ? position.coords.longitude : -122.39031314844; 
+				var lon = position ? position.coords.longitude : -122.39031314844;
+                                pinta_mapa(lat, lon, radius);
+                        }
+	
+			function pinta_mapa(lat, lon, rad) {
 				var mapDiv = document.getElementById('map-canvas');
 				map = new google.maps.Map(mapDiv, {
 					center: new google.maps.LatLng(lat, lon),
@@ -32,7 +38,7 @@
 				});
 				distanceWidget = new DistanceWidget({
 					map: map,
-					distance: 3,
+					distance: rad,
 					minDistance: 1,
 					maxDistance: 15
 				});
@@ -48,13 +54,17 @@
 			   init();
 			}
 			
-                        if ()
+                        if (lectura_radius != null && lectura_radius != ""){
+                          var latitude = $("#map-canvas")[0].getAttribute("data-latitude"); 
+                          var longitude = $("#map-canvas")[0].getAttribute("data-longitude");
+                          pinta_mapa(latitude, longitude, radius); 
+                        }
                         else if (navigator.geolocation) {
 			  var timeoutVal = 8000;
-			  navigator.geolocation.getCurrentPosition(init, errorMessage);
+			  navigator.geolocation.getCurrentPosition(init_geolocation, errorMessage);
 			}
 			else {
-			  init();
+			  init_geolocation();
 			}
 
         </script> 
