@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="span8"> 
+    <div class="row">
+      <div class="span3">
+        <%= image_tag @usuario.thumbnail %> 
+        <p><a href="">Change</a></p>
+      </div>
+      <div class="span5">
+        <h3><%= @usuario.nombre %> </h3>
+        <p>Lunch starts at: <%= select_tag "hora_lunch_inicio", options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
+        <p>Lunch ends at: <%= select_tag "hora_lunch_fin", options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span3">
+        <div id="map-canvas"></div>
+        <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
+        <script type="text/javascript" src="/javascripts/jquery.json-2.3.min.js"></script>
+	<script type="text/javascript" src="/javascripts/distancewidget.js"></script>
+        <script>
+                        var map;
+			var distanceWidget;
+					
+			function init(position) {
+				var lat = position ? position.coords.latitude : 37.790234970864;
+				var lon = position ? position.coords.longitude : -122.39031314844; 
+				var mapDiv = document.getElementById('map-canvas');
+				map = new google.maps.Map(mapDiv, {
+					center: new google.maps.LatLng(lat, lon),
+					zoom: 12,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				});
+				distanceWidget = new DistanceWidget({
+					map: map,
+					distance: 3,
+					minDistance: 1,
+					maxDistance: 15
+				});
+			}
+			
+			function errorMessage(error) {
+			   var errors = { 
+				  1: 'Permission denied',
+				  2: 'Position unavailable',
+				  3: 'Request timeout'
+			   };
+			   alert("Error: " + errors[error.code]);
+			   init();
+			}
+			
+                        if ()
+                        else if (navigator.geolocation) {
+			  var timeoutVal = 8000;
+			  navigator.geolocation.getCurrentPosition(init, errorMessage);
+			}
+			else {
+			  init();
+			}
+
+        </script> 
+      </div>
+    </div>
+  </div>
+  <div class="span4">
+  <h5>Interests</h5>
+    <ul>
+    <% @intereses.each do |interes|%>
+      <% if ["Tv show", "Musician/band", "Movie", "Book", "Interest"].index(interes.category) %>
+      <li><%= interes.name %></li>
+      <% end %> 
+    <% end %>
+    </ul>
+  </div>
+</div>

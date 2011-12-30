@@ -12,13 +12,19 @@ class DisplayController < ApplicationController
   def home
     redirect_to "/" and return unless session[:at]
     @home_active = ACTIVE
-    user = Mogli::User.find("me", Mogli::Client.new(session[:at]))
-    @usuario = Usuario.encuentra_o_crea(user.id)
+    @usuario = Usuario.find(session[:usuario_id])
     @recomendados = Usuario.busqueda(@usuario.facebook_id, 3)
   end
 
   def myprofile
+    redirect_to "/" and return unless session[:at]
     @myprofile_active = ACTIVE
+    @usuario = Usuario.find(session[:usuario_id])
+    client = Mogli::User.find("me", Mogli::Client.new(session[:at]))
+    @intereses = client.likes
+    zona = @usuario.zonas.first
+    @map = zona.to_gmaps4rails
+    @circle = "[{'lng': #{zona.longitude},'lat': #{zona.latitude},'radius': #{zona.radio*1000}}]"
   end
 
   def help

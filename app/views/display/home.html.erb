@@ -10,9 +10,12 @@
       <div class="texto_centrado">
         <p><a href=""><%= recomendado.nombre %></a></p>
         <p><%= recomendado.hora_lunch_inicio.to_s + ":00" %> - <%= recomendado.hora_lunch_fin.to_s + ":00" %></p>
+        <ul>
         <% recomendado.intereses_comun.each do |key, value| %>
-          <p><%= value %></p>
+          <li><%= value %></li>
         <% end %>
+        </ul>
+        <p><button class="btn primary">Let's have lunch!</button></p>
       </div>
     </div>
   <% end %>
