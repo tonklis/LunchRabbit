@@ -99,7 +99,7 @@
 								}
 							});
 							post.intereses = $.toJSON(interests);
-							post.zona = {"latitud":distanceWidget.get('position').lat(), "longitud":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance'),
+							post.zona = {"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance'),
 								"usuario_id":data.usuario.id};
 							$.post(HOST + "usuarios/actualiza/" + usuarioFB.id + ".json", post, function(result) {
 								//
