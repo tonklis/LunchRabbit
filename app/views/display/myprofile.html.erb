@@ -1,3 +1,4 @@
+<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post} do |usuario| %>
 <div class="row">
   <div class="span8"> 
     <div class="row">
@@ -7,8 +8,9 @@
       </div>
       <div class="span5">
         <h3><%= @usuario.nombre %> </h3>
-        <p>Lunch starts at: <%= select_tag "hora_lunch_inicio", options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
-        <p>Lunch ends at: <%= select_tag "hora_lunch_fin", options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
+        <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
+        <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
+        <!-- aqui va el hidden field de zonas-->
       </div>
     </div>
     <div class="row">
@@ -82,3 +84,6 @@
     </ul>
   </div>
 </div>
+<br/>
+<p><%= submit_tag "Save", :class => "btn primary" %></p>
+<% end %>

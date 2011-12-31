@@ -69,7 +69,7 @@ class UsuariosController < ApplicationController
       end
     end
   end
-
+  
   # DELETE /usuarios/1
   # DELETE /usuarios/1.xml
   def destroy
@@ -96,6 +96,7 @@ class UsuariosController < ApplicationController
   def actualiza
     @usuario = Usuario.actualiza params
     respond_to do |format|
+      format.html { redirect_to(myprofile_path)}
       format.xml {render :xml => @usuario}
       format.json {render :json => @usuario, :include => [ :intereses, :invitaciones_enviadas, :invitaciones_recibidas, :zonas]}
     end

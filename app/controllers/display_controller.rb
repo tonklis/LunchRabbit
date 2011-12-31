@@ -15,7 +15,7 @@ class DisplayController < ApplicationController
     @usuario = Usuario.find(session[:usuario_id])
     @recomendados = Usuario.busqueda(@usuario.facebook_id, 3)
   end
-
+  
   def myprofile
     redirect_to "/" and return unless session[:at]
     @myprofile_active = ACTIVE

@@ -1,13 +1,13 @@
 LunchRabbit::Application.routes.draw do
-  get "display/register"
+  get "register", :to => 'display#register'
 
-  get "display/index"
+  get "index", :to => 'display#index'
 
-  get "display/home", :as => :home
+  get "home", :to => 'display#home', :as => :home
 
-  get "display/myprofile", :as => :myprofile
+  get "help", :to => 'display#help', :as => :help
 
-  get "display/help", :as => :help
+  get 'myprofile', :to => 'display#myprofile', :as => :myprofile
 
   resources :invitaciones
 
@@ -23,7 +23,9 @@ LunchRabbit::Application.routes.draw do
 
   match 'usuarios/busqueda/:id' => 'usuarios#busqueda'
 
-  match 'usuarios/actualiza/:id' => 'usuarios#actualiza'
+  match 'usuarios/actualiza/:id', :to => 'usuarios#actualiza', :as => :actualiza
+    
+  #get 'myprofile', :to => 'usuarios#myprofile', :as => :myprofile
 
   match 'invitaciones/por_usuario/:id' => 'invitaciones#por_usuario'
 
@@ -37,8 +39,6 @@ LunchRabbit::Application.routes.draw do
 
   get 'oauth/create', :to => 'oauth#create', :as => :oauth_callback
   
-  #match '/oauth/show', :to => 'oauth#show', :via => 'get', :as => :show
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

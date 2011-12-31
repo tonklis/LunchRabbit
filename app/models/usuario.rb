@@ -41,7 +41,7 @@ class Usuario < ActiveRecord::Base
       
     if zona = params[:zona]
       usuario.zonas.destroy_all
-      usuario.zonas << Zona.new(zona) 
+      usuario.zonas << Zona.new(ActiveSupport::JSON.decode(zona)) 
     end
 
     usuario.save!
