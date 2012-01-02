@@ -15,7 +15,7 @@
     </div>
     <div class="row">
       <div class="span3">
-        <div id="map-canvas" data-longitude="<%= @zona.longitude %>" data-latitude="<%= @zona.latitude %>" data-radius="<%= @zona.radio %>"></div>
+        <div id="map-canvas" data-longitude="<%= @zona.longitude if @zona %>" data-latitude="<%= @zona.latitude if @zona %>" data-radius="<%= @zona.radio if @zona %>"></div>
         <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
         <script type="text/javascript" src="/javascripts/jquery.json-2.3.min.js"></script>
 	<script type="text/javascript" src="/javascripts/distancewidget.js"></script>
