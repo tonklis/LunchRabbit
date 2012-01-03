@@ -29,10 +29,10 @@
       window.fbAsyncInit = function() {
         FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
         FB.getLoginStatus(function(response) {
-          if (response.status != 'connected') {
+            alert(response.status);
+            if (response.status != 'connected') {
             top.location = HOST;
 	  }
-          alert(response.status);
         });
         FB.Event.subscribe('auth.logout', function(response){
           //top.location = HOST + $("#app_paths")[0].getAttribute("data-logout-path");
