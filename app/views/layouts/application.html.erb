@@ -15,6 +15,18 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/stylesheets/bootstrap.css">
 
+    <script>
+      window.fbAsyncInit = function() {
+      FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
+      FB.Event.subscribe('auth.login', function(response) {
+        top.location = HOST + $("#app_paths")[0].getAttribute("data-oauth-path");
+      });
+      FB.Event.subscribe('auth.logout', function(response) {
+        top.location = HOST;
+      });
+    };    
+    </script>
+    
 </head>
 <body>
 <div id="fb-root"></div>
