@@ -14,8 +14,8 @@ class OauthController < ApplicationController
 
   def authenticator
     # VERSION_PROD
-    # @authenticator ||= Mogli::Authenticator.new('316932864999658', '25b7c93ff48f139e55984887babf1351', oauth_callback_url)
-    @authenticator ||= Mogli::Authenticator.new('185077511587462', '3b2cc63f9dadfaae16ff3b10db7cd8e8', oauth_callback_url)
+    @authenticator ||= Mogli::Authenticator.new('316932864999658', '25b7c93ff48f139e55984887babf1351', oauth_callback_url)
+    # @authenticator ||= Mogli::Authenticator.new('185077511587462', '3b2cc63f9dadfaae16ff3b10db7cd8e8', oauth_callback_url)
   end
 
 end
