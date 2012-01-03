@@ -27,6 +27,7 @@
     
 </head>
 <body>
+  <div id="fb-root"></div>
   <script>
       window.fbAsyncInit = function() {
         FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
@@ -42,7 +43,6 @@
         });
       };   
   </script>
-  <div id="fb-root"></div>
   <div id="app_paths" data-oauth-path="<%= oauth_new_path %>" data-home-path="<%= home_path %>" data-logout-path="<%= logout_path %>" />
   <div>      
         <div class="container-fluid">
