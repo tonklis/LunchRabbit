@@ -30,7 +30,7 @@
         FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
         FB.getLoginStatus(function(response) {
           if (response.status != 'connected') {
-            top.location = HOST + $("#app_paths")[0].getAttribute("data-home-path");
+            top.location = HOST;
 	  }
         });
         FB.Event.subscribe('auth.logout', function(response){
