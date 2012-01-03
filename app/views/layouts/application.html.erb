@@ -17,20 +17,20 @@
 
     <script>
       window.fbAsyncInit = function() {
-      FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
-      FB.Event.subscribe('auth.login', function(response) {
-        top.location = HOST + $("#app_paths")[0].getAttribute("data-oauth-path");
-      });
-      FB.Event.subscribe('auth.logout', function(response) {
-        top.location = HOST;
-      });
-    };    
+        FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true,  oauth: true});
+        FB.Event.subscribe('auth.login', function(response) {
+          top.location = HOST + $("#app_paths")[0].getAttribute("data-oauth-path");
+        });
+        FB.Event.subscribe('auth.logout', function(response) {
+          top.location = HOST + $("#app_paths")[0].getAttribute("data-logout-path");
+        });
+      };    
     </script>
     
 </head>
 <body>
 <div id="fb-root"></div>
-<div id="app_paths" data-oauth-path="<%= oauth_new_path %>" />
+<div id="app_paths" data-oauth-path="<%= oauth_new_path %>" data-logout-path="<%= logout_path %>" />
 
 <div class="content">
 

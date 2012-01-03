@@ -28,4 +28,9 @@ class DisplayController < ApplicationController
     @help_active = ACTIVE
   end
 
+  def logout
+    session[:at] = nil
+    redirect_to "/"
+  end
+
 end

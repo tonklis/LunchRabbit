@@ -34,7 +34,7 @@
 	  }
         });
         FB.Event.subscribe('auth.logout', function(response){
-          top.location = HOST;
+          top.location = HOST + $("#app_paths")[0].getAttribute("data-logout-path");
         });
       };   
     </script>
@@ -42,7 +42,7 @@
 </head>
 <body>
   <div id="fb-root"></div>
-  <div id="app_paths" data-oauth-path="<%= oauth_new_path %>" data-home-path="<%= home_path %>" />
+  <div id="app_paths" data-oauth-path="<%= oauth_new_path %>" data-home-path="<%= home_path %>" data-logout-path="<%= logout_path %>" />
   <div>      
         <div class="container-fluid">
         	<img class="brand" src="http://swdf.in2teck.com/images/lunch_logo_thumb.jpg">

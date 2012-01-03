@@ -9,6 +9,8 @@ LunchRabbit::Application.routes.draw do
 
   get 'myprofile', :to => 'display#myprofile', :as => :myprofile
 
+  get 'logout', :to => 'display#logout', :as => :logout 
+
   resources :invitaciones
 
   resources :intereses
@@ -25,8 +27,6 @@ LunchRabbit::Application.routes.draw do
 
   match 'usuarios/actualiza/:id', :to => 'usuarios#actualiza', :as => :actualiza
     
-  #get 'myprofile', :to => 'usuarios#myprofile', :as => :myprofile
-
   match 'invitaciones/por_usuario/:id' => 'invitaciones#por_usuario'
 
   match 'invitaciones/desde_para/:id' => 'invitaciones#desde_para'
