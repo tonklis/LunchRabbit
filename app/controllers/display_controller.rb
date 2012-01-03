@@ -20,8 +20,7 @@ class DisplayController < ApplicationController
     redirect_to "/" and return unless session[:at]
     @myprofile_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
-    client = Mogli::User.find("me", Mogli::Client.new(session[:at]))
-    @intereses = client.likes
+    @intereses = @usuario.intereses
     @zona = @usuario.zonas.first
   end
 

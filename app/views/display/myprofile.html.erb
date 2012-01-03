@@ -11,25 +11,21 @@
         <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
         <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
         <!-- aqui va el hidden field de zonas-->
+        <%= hidden_field_tag :zona%>
       </div>
     </div>
     <div class="row">
       <div class="span3">
-        <div id="map-canvas" data-longitude="<%= @zona.longitude if @zona %>" data-latitude="<%= @zona.latitude if @zona %>" data-radius="<%= @zona.radio if @zona %>"></div>
+        <div id="map-canvas" data-longitude="<%= @zona.longitude %>" data-latitude="<%= @zona.latitude %>" data-radius="<%= @zona.radio %>"></div>
         <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
         <script type="text/javascript" src="/javascripts/jquery.json-2.3.min.js"></script>
 	<script type="text/javascript" src="/javascripts/distancewidget.js"></script>
         <script>
                         var map;
 			var distanceWidget;
-                        var lectura_radius = $("#map-canvas")[0].getAttribute("data-radius");
-                        var radius = (lectura_radius != "" && lectura_radius != null) ? lectura_radius : 3;
-				
-                        function init_geolocation(position){
-				var lat = position ? position.coords.latitude : 37.790234970864;
-				var lon = position ? position.coords.longitude : -122.39031314844;
-                                pinta_mapa(lat, lon, radius);
-                        }
+                        var radius = $("#map-canvas")[0].getAttribute("data-radius");
+			var latitude = $("#map-canvas")[0].getAttribute("data-latitude"); 
+                        var longitude = $("#map-canvas")[0].getAttribute("data-longitude");
 	
 			function pinta_mapa(lat, lon, rad) {
 				var mapDiv = document.getElementById('map-canvas');
@@ -45,29 +41,11 @@
 					maxDistance: 15
 				});
 			}
-			
-			function errorMessage(error) {
-			   var errors = { 
-				  1: 'Permission denied',
-				  2: 'Position unavailable',
-				  3: 'Request timeout'
-			   };
-			   alert("Error: " + errors[error.code]);
-			   init();
-			}
-			
-                        if (lectura_radius != null && lectura_radius != ""){
-                          var latitude = $("#map-canvas")[0].getAttribute("data-latitude"); 
-                          var longitude = $("#map-canvas")[0].getAttribute("data-longitude");
-                          pinta_mapa(latitude, longitude, radius); 
-                        }
-                        else if (navigator.geolocation) {
-			  var timeoutVal = 8000;
-			  navigator.geolocation.getCurrentPosition(init_geolocation, errorMessage);
-			}
-			else {
-			  init_geolocation();
-			}
+                        function agrega_posicion(){
+                          $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});
+                        }                
+                        
+                        pinta_mapa(latitude, longitude, radius);
 
         </script> 
       </div>
@@ -77,13 +55,11 @@
   <h5>Interests</h5>
     <ul>
     <% @intereses.each do |interes|%>
-      <% if ["Tv show", "Musician/band", "Movie", "Book", "Interest"].index(interes.category) %>
-      <li><%= interes.name %></li>
-      <% end %> 
+      <li><%= interes.nombre %></li>
     <% end %>
     </ul>
   </div>
 </div>
 <br/>
-<p><%= submit_tag "Save", :class => "btn primary" %></p>
+<p><%= submit_tag "Save", :class => "btn primary", :onclick => "agrega_posicion()" %></p>
 <% end %>

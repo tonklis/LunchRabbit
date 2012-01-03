@@ -5,7 +5,7 @@ class CreateZonas < ActiveRecord::Migration
       t.string :nombre
       t.float :longitude
       t.float :latitude
-      t.integer :radio
+      t.float :radio
 
       t.timestamps
     end
