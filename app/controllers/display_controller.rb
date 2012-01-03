@@ -10,14 +10,14 @@ class DisplayController < ApplicationController
   end
 
   def home
-    # redirect_to "/" and return unless session[:at]
+    redirect_to "/" and return if session[:at].nil?
     @home_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
     @recomendados = Usuario.busqueda(@usuario.facebook_id, 3)
   end
   
   def myprofile
-    # redirect_to "/" and return unless session[:at]
+    redirect_to "/" and return if session[:at].nil?
     @myprofile_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
     @intereses = @usuario.intereses
@@ -30,6 +30,8 @@ class DisplayController < ApplicationController
 
   def logout
     session[:at] = nil
+    session.delete('at')
+    reset_session
     redirect_to "/"
   end
 

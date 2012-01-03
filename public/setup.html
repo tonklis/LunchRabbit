@@ -23,7 +23,7 @@
 		<script type="text/javascript">
 			// VERSION_PROD
 			var HOST = "http://glowing-moon-5161.heroku.com/"
-			//var HOST = "http://localhost:3000/"
+			// var HOST = "http://localhost:3000/"
 	
 			var APP_ID = "316932864999658";	
 			// var APP_ID = "185077511587462";
@@ -34,7 +34,6 @@
 				if (navigator.geolocation) {
 					var timeoutVal = 8000;
 					navigator.geolocation.getCurrentPosition(init, errorMessage);/*,*/
-					/*{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 });*/
 				}
 				else {
 					init();
@@ -77,12 +76,6 @@
 				FB.api('/me', function(response) {
 					usuarioFB = response;
 					$.getJSON(HOST + "usuarios/encuentra_o_crea/" + usuarioFB.id + ".json", function(data) {
-						/*data.usuario.nombre = usuarioFB.name;
-						data.usuario.genero = usuarioFB.gender;
-						data.usuario.email = usuarioFB.email;
-						data.usuario.intereses = Array.new;
-						data.usuario.thumbnail = "https://graph.facebook.com/" + usuarioFB.id + "/picture";*/
-						
 						post.usuario = {};
 						post.usuario.nombre = usuarioFB.name;
 						post.usuario.genero = usuarioFB.gender;
