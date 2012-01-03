@@ -10,7 +10,7 @@
 
     <!-- Include support librarys first -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+    <!-- <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script> -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/stylesheets/bootstrap.css">    
@@ -41,7 +41,15 @@
           //top.location = HOST + $("#app_paths")[0].getAttribute("data-logout-path");
           alert("ya me sali");
         });
-      };   
+      };
+      (function() {
+        var e = document.createElement('script');
+	e.type = 'text/javascript';
+	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+	e.async = true;
+	document.getElementById('fb-root').appendChild(e);
+	}());
+  
   </script>
   <div id="app_paths" data-oauth-path="<%= oauth_new_path %>" data-home-path="<%= home_path %>" data-logout-path="<%= logout_path %>" />
   <div>      
