@@ -32,9 +32,11 @@
           if (response.status != 'connected') {
             top.location = HOST;
 	  }
+          alert(response.status);
         });
         FB.Event.subscribe('auth.logout', function(response){
-          top.location = HOST + $("#app_paths")[0].getAttribute("data-logout-path");
+          //top.location = HOST + $("#app_paths")[0].getAttribute("data-logout-path");
+          alert("ya me sali");
         });
       };   
     </script>
