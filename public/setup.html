@@ -33,7 +33,7 @@
 			$(document).ready(function(){
 				if (navigator.geolocation) {
 					var timeoutVal = 8000;
-					navigator.geolocation.getCurrentPosition(init, errorMessage);/*,*/
+					navigator.geolocation.getCurrentPosition(init, errorMessage, {timeout:timeoutVal});/*,*/
 				}
 				else {
 					init();
