@@ -43,7 +43,7 @@ class DisplayController < ApplicationController
   end
 
   def profile
-	redirect_to "/" and return if session[:at].nil?
+    redirect_to "/" and return if session[:at].nil?
     @myprofile_active = ACTIVE
     @usuario = Usuario.find(params[:id])
     @intereses = @usuario.intereses

@@ -11,6 +11,7 @@ gem 'jquery-rails'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'ruby-mysql'
+gem 'geocoder'
 
 # Use unicorn as the web server
 # gem 'unicorn'
