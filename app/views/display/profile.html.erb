@@ -1,6 +1,6 @@
 <%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post} do |usuario| %>
 <div class="row">
-  <div class="span8"> 
+  <div class="span16"> 
     <div class="row">
       <div class="span2">
         <%= image_tag @usuario.thumbnail %> 
@@ -15,10 +15,10 @@
       <div class="span3">
       </div>
     </div>
-	<div class="span5">
+	
 	  <h5>Interests</h5>
 		  Music: <% @interesesMusica.each do |musica|%> <%= musica.nombre %>,<% end %>
-	  </div>
+	 
 	</div>
 </div>
 <br/>
