@@ -46,13 +46,11 @@ class DisplayController < ApplicationController
 	redirect_to "/" and return if session[:at].nil?
     @myprofile_active = ACTIVE
     @usuario = Usuario.find(params[:id])
-    @intereses = @usuario.intereses
 	@intereses_music = @usuario.intereses.where("categoria = 'Musician/band'")
 	@intereses_movies = @usuario.intereses.where("categoria = 'Movie'")
 	@intereses_tv = @usuario.intereses.where("categoria = 'Tv show'")
 	@intereses_books = @usuario.intereses.where("categoria = 'Book'")
 	@intereses_other = @usuario.intereses.where("categoria = 'Interest'")
-    @zona = @usuario.zonas.first
   end
   
   def help
