@@ -17,8 +17,11 @@
     </div>
 	
 	  <h5>Interests</h5>
-		  Music: <% @interesesMusica.each do |musica|%> <%= musica.nombre %>,<% end %>
-	 
+		<b>Music:</b> <% @intereses_music.each do |music|%> <%= music.nombre %>,<% end %><br>
+		<b>Movies:</b> <% @intereses_movies.each do |movie|%> <%= movie.nombre %>,<% end %><br>
+		<b>TV:</b> <% @intereses_tv.each do |tv|%> <%= tv.nombre %>,<% end %><br>
+		<b>Books:</b> <% @intereses_books.each do |book|%> <%= movie.book %>,<% end %><br>
+		<b>Other:</b> <% @intereses_other.each do |other|%> <%= other.nombre %>,<% end %><br>
 	</div>
 </div>
 <br/>
