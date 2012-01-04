@@ -42,6 +42,14 @@ class DisplayController < ApplicationController
     @zona = @usuario.zonas.first
   end
 
+  def profile
+	redirect_to "/" and return if session[:at].nil?
+    @myprofile_active = ACTIVE
+    @usuario = Usuario.find(params[:id])
+    @intereses = @usuario.intereses
+    @zona = @usuario.zonas.first
+  end
+  
   def help
     @help_active = ACTIVE
   end

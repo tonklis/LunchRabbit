@@ -8,6 +8,8 @@ LunchRabbit::Application.routes.draw do
   get "help", :to => 'display#help', :as => :help
 
   get 'myprofile', :to => 'display#myprofile', :as => :myprofile
+  
+  match 'profile/:id', :to => 'display#profile', :as => :profile
 
   get 'logout', :to => 'display#logout', :as => :logout 
 
