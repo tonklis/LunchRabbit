@@ -5,7 +5,7 @@
       <div class="span2">
         <%= image_tag @usuario.thumbnail %> 
       </div>
-      <div class="span5" style="vertical-align:bottom"> 
+      <div class="span5"> 
         <h3><%= @usuario.nombre %> </h3>
         <p>Lunches from <%= @usuario.hora_lunch_inicio%> hrs to <%= @usuario.hora_lunch_fin%> hrs. </p>
       </div>
@@ -15,7 +15,7 @@
 		<div class="row"><div class="span1"><b>Music:</b></div> <div class="span13"><% @intereses_music.each do |music|%> <%= music.nombre %>,<% end %><br><br></div></div>
 		<div class="row"><div class="span1"><b>Movies:</b></div> <div class="span13"><% @intereses_movies.each do |movie|%> <%= movie.nombre %>,<% end %><br><br></div></div>
 		<div class="row"><div class="span1"><b>TV:</b></div> <div class="span13"><% @intereses_tv.each do |tv|%> <%= tv.nombre %>,<% end %><br><br></div></div>
-		<div class="row"><div class="span1"><b>Books:</b></div> <div class="span13"><% @intereses_books.each do |book|%> <%= movie.book %>,<% end %><br><br></div></div>
+		<div class="row"><div class="span1"><b>Books:</b></div> <div class="span13"><% @intereses_books.each do |book|%> <%= book.nombre %>,<% end %><br><br></div></div>
 		<div class="row"><div class="span1"><b>Other:</b></div> <div class="span13"><% @intereses_other.each do |other|%> <%= other.nombre %>,<% end %><br><br></div></div>
 	</div>
 </div>
