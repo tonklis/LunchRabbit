@@ -1,5 +1,5 @@
 LunchRabbit::Application.routes.draw do
-  get "register", :to => 'display#register'
+  get "register", :to => 'display#register', :as => :register
 
   get "index", :to => 'display#index'
 

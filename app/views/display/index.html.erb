@@ -2,13 +2,3 @@
     <iframe width="398" height="299" frameborder="0" src="http://player.vimeo.com/video/32129225?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0"></iframe>
   </div>
   <%= button_to "Login with Facebook", {:controller => 'oauth', :action =>'new'}, {:method => :get} %>
-
-    <script>
-    (function() {
-      var e = document.createElement('script');
-      e.type = 'text/javascript';
-      e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-      e.async = true;
-      document.getElementById('fb-root').appendChild(e);
-    }());
-    </script>

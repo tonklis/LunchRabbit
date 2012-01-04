@@ -6,11 +6,10 @@
         <%= image_tag @usuario.thumbnail %> 
         <p><a href="">Change</a></p>
       </div>
-      <div class="span5">
+      <div class="span5"> 
         <h3><%= @usuario.nombre %> </h3>
         <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
         <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
-        <!-- aqui va el hidden field de zonas-->
         <%= hidden_field_tag :zona%>
       </div>
     </div>
@@ -41,9 +40,10 @@
 					maxDistance: 15
 				});
 			}
+                       
                         function agrega_posicion(){
                           $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});
-                        }                
+                        }
                         
                         pinta_mapa(latitude, longitude, radius);
 

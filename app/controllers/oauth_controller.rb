@@ -8,8 +8,13 @@ class OauthController < ApplicationController
     mogli_client = Mogli::Client.create_from_code_and_authenticator(params[:code], authenticator)
     session[:at] = mogli_client.access_token
     client = Mogli::User.find("me", Mogli::Client.new(session[:at]))
-    session[:usuario_id] = Usuario.encuentra_o_crea(client.id).id
-    redirect_to home_path
+    usuario = Usuario.encuentra_o_crea(client.id)
+    session[:usuario_id] = usuario.id
+    if usuario.intereses.empty?
+      redirect_to register_path
+    else
+      redirect_to home_path
+    end
   end
 
   def authenticator

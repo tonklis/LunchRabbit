@@ -1,2 +1,99 @@
-<h1>Display#register</h1>
-<p>Find me in app/views/display/register.html.erb</p>
+<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post} do |usuario| %>
+<div class="row">
+  <div class="span8"> 
+    <div class="row">
+      <div class="span3">
+        <%= image_tag "https://graph.facebook.com/#{@client.id}/picture?type=normal" %> 
+      </div>
+      <div class="span5">
+        <h3><%= @client.name %> </h3>
+        <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
+        <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
+        <%= usuario.hidden_field :nombre, :value => @client.name%>
+        <%= usuario.hidden_field :genero, :value => @client.gender%>
+        <%= usuario.hidden_field :email, :value => @client.email%>
+        <%= usuario.hidden_field :thumbnail, :value => "https://graph.facebook.com/#{@client.id}/picture?type=normal" %>
+        <%= hidden_field_tag :zona%>
+        <%= hidden_field_tag :intereses, ActiveSupport::JSON.encode(@intereses)%>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span3">
+        <div id="map-canvas"></div>
+        <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
+        <script type="text/javascript" src="/javascripts/jquery.json-2.3.min.js"></script>
+	<script type="text/javascript" src="/javascripts/distancewidget.js"></script>
+        <script>
+                        var map;
+			var distanceWidget;
+                        var radius = 3;
+	                var geolocationReponse = false;
+			var timerID = null;
+			var secs = 5;
+
+                        function init_geolocation(position){
+				var lat = position ? position.coords.latitude : 37.790234970864;
+				var lon = position ? position.coords.longitude : -122.39031314844;
+                                pinta_mapa(lat, lon, radius);
+                        }
+
+			function pinta_mapa(lat, lon, rad) {
+				var mapDiv = document.getElementById('map-canvas');
+				map = new google.maps.Map(mapDiv, {
+					center: new google.maps.LatLng(lat, lon),
+					zoom: 12,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				});
+				distanceWidget = new DistanceWidget({
+					map: map,
+					distance: rad,
+					minDistance: 1,
+					maxDistance: 15
+				});
+			}
+
+                        function agrega_valores(){
+                          $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});
+                        }
+
+			function errorMessage(error) {
+			   var errors = { 
+				  1: 'Permission denied',
+				  2: 'Position unavailable',
+				  3: 'Request timeout'
+			   };
+			   alert("Error: " + errors[error.code]);
+			   init_geolocation();
+			}
+
+                        function startTimer() {
+				if (secs == 0) {
+					clearTimeout(timerID);
+					if (geolocationReponse == false)
+						init_geolocation();
+				}	
+				self.status = secs;
+				secs = secs -1;
+				timerID = self.setTimeout("startTimer()", 1000)
+			}
+
+
+                        if (navigator.geolocation) {
+			  var timeoutVal = 5000;
+			  startTimer();
+			  navigator.geolocation.getCurrentPosition(init_geolocation, errorMessage);
+			}
+			else {
+			  init_geolocation();
+			}
+
+        </script> 
+      </div>
+    </div>
+  </div>
+  <div class="span4">
+  </div>
+</div>
+<br/>
+<p><%= submit_tag "Save", :class => "btn primary", :onclick => "agrega_valores()" %></p>
+<% end %>

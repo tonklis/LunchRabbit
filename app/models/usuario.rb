@@ -5,6 +5,8 @@ class Usuario < ActiveRecord::Base
   has_many :invitaciones_recibidas, :class_name => "Invitacion", :foreign_key => "usuario_para_id", :order => ["created_at desc limit 10"]
   has_many :zonas
 
+  validates_numericality_of :hora_lunch_fin, :greater_than => Proc.new { |r| r.hora_lunch_inicio }, :allow_blank => true
+
   def invitaciones_mezcladas
     invitaciones = self.invitaciones_enviadas + self.invitaciones_recibidas
     invitaciones.sort!{|a,b| b.updated_at <=> a.updated_at}[0..9]    
@@ -25,17 +27,15 @@ class Usuario < ActiveRecord::Base
     usuario = Usuario.find_by_facebook_id (params[:id])
     usuario.update_attributes(params[:usuario])
     intereses = params[:intereses]
-    
+
     if intereses
-      if not intereses.respond_to?('each')
-        intereses = ActiveSupport::JSON.decode(intereses)
-      end
+      intereses = ActiveSupport::JSON.decode(intereses)
       usuario.intereses = []
       intereses.each do |interes|
-        interes = Interes.find_or_create_by_facebook_id(interes["facebook_id"]){|u|
-                                                                                 u.nombre = interes["nombre"]
-                                                                                 u.categoria = interes["categoria"]}
-        usuario.intereses << interes
+        usuario.intereses << Interes.find_or_create_by_facebook_id(interes["interes"]["facebook_id"]){|u|
+          u.nombre = interes["interes"]["nombre"]
+          u.categoria = interes["interes"]["categoria"]
+        }
       end
     end
       

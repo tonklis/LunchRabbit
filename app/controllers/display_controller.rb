@@ -7,6 +7,24 @@ class DisplayController < ApplicationController
   end
 
   def register
+    redirect_to "/" and return if session[:at].nil?
+    @register_active = ACTIVE
+    @usuario = Usuario.find(session[:usuario_id])
+    @client = Mogli::User.find("me", Mogli::Client.new(session[:at]))
+    intereses = @client.likes
+    @zona = @usuario.zonas.first
+    @intereses = []
+    
+    intereses.each do |interes|
+      if ["Tv show", "Musician/band", "Movie", "Book", "Interest"].index(interes.category)
+        @intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|
+                                                                                 u.nombre = interes.name
+                                                                                 u.categoria = interes.category}
+      
+      end 
+    end
+    
+
   end
 
   def home
