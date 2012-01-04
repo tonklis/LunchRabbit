@@ -29,11 +29,16 @@
 			// var APP_ID = "185077511587462";
 			var map;
 			var distanceWidget;
+			var geolocationReponse = false;
+			var timerID = null;
+			var secs = 8;
 			
 			$(document).ready(function(){
+				geolocationReponse = false;
 				if (navigator.geolocation) {
 					var timeoutVal = 8000;
-					navigator.geolocation.getCurrentPosition(init, errorMessage, {timeout:timeoutVal});/*,*/
+					startTimer();
+					navigator.geolocation.getCurrentPosition(init, errorMessage);/*,*/
 				}
 				else {
 					init();
@@ -43,6 +48,7 @@
 			});
 			
 			function init(position) {
+				geolocationReponse = true;
 				var lat = position ? position.coords.latitude : 37.790234970864;
 				var lon = position ? position.coords.longitude : -122.39031314844; 
 				var mapDiv = document.getElementById('map-canvas');
@@ -67,6 +73,17 @@
 			   };
 			   alert("Error: " + errors[error.code]);
 			   init();
+			}
+			
+			function startTimer() {
+				if (secs == 0) {
+					clearTimeout(timerID);
+					if (geolocationReponse == false)
+						init();
+				}	
+				self.status = secs;
+				secs = secs -1;
+				timerID = self.setTimeout("startTimer()", 1000)
 			}
 			
 			function saveUser() {
