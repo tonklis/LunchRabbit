@@ -47,6 +47,7 @@ class DisplayController < ApplicationController
     @myprofile_active = ACTIVE
     @usuario = Usuario.find(params[:id])
     @intereses = @usuario.intereses
+	@interesesMusica = @usuario.intereses.where("categoria == 'Musician/band'")
     @zona = @usuario.zonas.first
   end
   
