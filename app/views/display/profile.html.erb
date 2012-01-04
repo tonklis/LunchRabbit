@@ -8,46 +8,12 @@
       </div>
       <div class="span5"> 
         <h3><%= @usuario.nombre %> </h3>
-        <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
-        <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
+        <p>Lunches from <%= @usuario.hora_lunch_inicio%> hrs to <%= @usuario.hora_lunch_fin%> hrs. </p>
         <%= hidden_field_tag :zona%>
       </div>
     </div>
     <div class="row">
       <div class="span3">
-        <div id="map-canvas" data-longitude="<%= @zona.longitude %>" data-latitude="<%= @zona.latitude %>" data-radius="<%= @zona.radio %>"></div>
-        <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
-        <script type="text/javascript" src="/javascripts/jquery.json-2.3.min.js"></script>
-	<script type="text/javascript" src="/javascripts/distancewidget.js"></script>
-        <script>
-                        var map;
-			var distanceWidget;
-                        var radius = $("#map-canvas")[0].getAttribute("data-radius");
-			var latitude = $("#map-canvas")[0].getAttribute("data-latitude"); 
-                        var longitude = $("#map-canvas")[0].getAttribute("data-longitude");
-	
-			function pinta_mapa(lat, lon, rad) {
-				var mapDiv = document.getElementById('map-canvas');
-				map = new google.maps.Map(mapDiv, {
-					center: new google.maps.LatLng(lat, lon),
-					zoom: 12,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				});
-				distanceWidget = new DistanceWidget({
-					map: map,
-					distance: rad,
-					minDistance: 1,
-					maxDistance: 15
-				});
-			}
-                       
-                        function agrega_posicion(){
-                          $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});
-                        }
-                        
-                        pinta_mapa(latitude, longitude, radius);
-
-        </script> 
       </div>
     </div>
   </div>
