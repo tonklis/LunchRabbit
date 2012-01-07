@@ -1,19 +1,17 @@
 <%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post} do |usuario| %>
 <div class="row">
-  <div class="span8"> 
+  <div class="span16"> 
     <div class="row">
-      <div class="span3">
+      <div class="span2">
         <%= image_tag @usuario.thumbnail %> 
-        <p><a href="">Change</a></p>
+        <p><a class="mini_font" href="">Change</a></p>
       </div>
-      <div class="span5"> 
+      <div class="span4"> 
         <h3><%= @usuario.nombre %> </h3>
         <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
         <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
         <%= hidden_field_tag :zona%>
       </div>
-    </div>
-    <div class="row">
       <div class="span3">
         <div id="map-canvas" data-longitude="<%= @zona.longitude %>" data-latitude="<%= @zona.latitude %>" data-radius="<%= @zona.radio %>"></div>
         <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
@@ -50,14 +48,12 @@
         </script> 
       </div>
     </div>
-  </div>
-  <div class="span4">
-  <h5>Interests</h5>
-    <ul>
-    <% @intereses.each do |interes|%>
-      <li><%= interes.nombre %></li>
-    <% end %>
-    </ul>
+    <h4>Interests</h4>
+    <div class="row"><div class="span1"><b>Music:</b></div> <div class="span13"><%= Interes.to_html(@intereses_music) %> <a class="mini_font" href="">change</a><br><br></div></div>
+    <div class="row"><div class="span1"><b>Movies:</b></div> <div class="span13"><%= Interes.to_html(@intereses_movies) %> <a class="mini_font" href="">change</a><br><br></div></div>
+    <div class="row"><div class="span1"><b>TV:</b></div> <div class="span13"><%= Interes.to_html(@intereses_tv) %> <a class="mini_font" href="">change</a><br><br></div></div>
+    <div class="row"><div class="span1"><b>Books:</b></div> <div class="span13"><%= Interes.to_html(@intereses_books) %> <a class="mini_font" href="">change</a><br><br></div></div>
+    <div class="row"><div class="span1"><b>Other:</b></div> <div class="span13"><%= Interes.to_html(@intereses_other) %> <a class="mini_font" href="">change</a><br><br></div></div>
   </div>
 </div>
 <br/>

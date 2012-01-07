@@ -1,24 +1,21 @@
-<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post} do |usuario| %>
 <div class="row">
   <div class="span16"> 
     <div class="row">
       <div class="span2">
-        <%= image_tag @usuario.thumbnail %> 
+        <%= image_tag @usuario_perfil.thumbnail %> 
       </div>
       <div class="span5"> 
-        <h3><%= @usuario.nombre %> </h3>
-        <p>Lunches from <%= @usuario.hora_lunch_inicio%> hrs to <%= @usuario.hora_lunch_fin%> hrs. </p>
+        <h3><%= @usuario_perfil.nombre %> </h3>
+        <p>Lunches from <%= @usuario_perfil.hora_lunch_inicio%>:00 to <%= @usuario_perfil.hora_lunch_fin%>:00 </p>
       </div>
     </div>
-
-	  <h4>Interests</h4>
-		<div class="row"><div class="span1"><b>Music:</b></div> <div class="span13"><% @intereses_music.each do |music|%> <%= music.nombre %>,<% end %><br><br></div></div>
-		<div class="row"><div class="span1"><b>Movies:</b></div> <div class="span13"><% @intereses_movies.each do |movie|%> <%= movie.nombre %>,<% end %><br><br></div></div>
-		<div class="row"><div class="span1"><b>TV:</b></div> <div class="span13"><% @intereses_tv.each do |tv|%> <%= tv.nombre %>,<% end %><br><br></div></div>
-		<div class="row"><div class="span1"><b>Books:</b></div> <div class="span13"><% @intereses_books.each do |book|%> <%= book.nombre %>,<% end %><br><br></div></div>
-		<div class="row"><div class="span1"><b>Other:</b></div> <div class="span13"><% @intereses_other.each do |other|%> <%= other.nombre %>,<% end %><br><br></div></div>
-	</div>
+    <h4>Interests</h4>
+    <div class="row"><div class="span1"><b>Music:</b></div> <div class="span13"><%= Interes.to_html(@intereses_music) %><br><br></div></div>
+    <div class="row"><div class="span1"><b>Movies:</b></div> <div class="span13"><%= Interes.to_html(@intereses_movies) %><br><br></div></div>
+    <div class="row"><div class="span1"><b>TV:</b></div> <div class="span13"><%= Interes.to_html(@intereses_tv) %><br><br></div></div>
+    <div class="row"><div class="span1"><b>Books:</b></div> <div class="span13"><%= Interes.to_html(@intereses_books) %><br><br></div></div>
+    <div class="row"><div class="span1"><b>Other:</b></div> <div class="span13"><%= Interes.to_html(@intereses_other) %><br><br></div></div>
+  </div>
 </div>
 <br/>
-<p><%= submit_tag "Let's have lunch", :class => "btn primary", :onclick => "enviar_invitacion()" %></p>
-<% end %>
+<p><%= button_to "Let's have lunch!", desde_para_invitaciones_path(:id => @usuario.facebook_id, :para => @usuario_perfil.facebook_id), :class => "btn primary" %></p>

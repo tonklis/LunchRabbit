@@ -84,41 +84,45 @@ class InvitacionesController < ApplicationController
 
 
   # GET /invitaciones/por_usuario/1.json
+  # todo: usar id normal, usa facebook_id
   def por_usuario
     @invitaciones = Invitacion.por_usuario(params[:id])
     respond_to do |format|
       format.xml {render :xml => @invitaciones}
       format.json {render :json => @invitaciones}
     end
-
   end
 
   # GET /invitaciones/desde_para/1.json?para=2
+  # todo: usar id normal, usa facebook_id
   def desde_para
-
     @invitacion = Invitacion.desde_para(params[:id], params[:para])
     respond_to do |format|
-      format.xml {render :xml => @invitacion}
-      format.json {render :json => @invitacion}
+      format.html { redirect_to(home_path) }
+      format.xml { render :xml => @invitacion }
+      format.json { render :json => @invitacion }
     end
   end
 
   def acepta
     @invitacion = Invitacion.acepta(params[:id])
     respond_to do |format|
-      format.html { redirect_to("/display/home") }
+      format.html { redirect_to(home_path) }
       format.xml  { render :xml => @invitacion }
       format.json { render :json => @invitacion }
     end
-
   end
 
   def rechaza
     @invitacion = Invitacion.rechaza(params[:id])
    respond_to do |format|
-      format.html { redirect_to("/display/home") }
+      format.html { redirect_to(home_path) }
     end
- 
   end 
+
+  def muestra_todas
+    @usuario = Usuario.find(params[:id])
+    render :layout => "navigation"
+  end
 
 end

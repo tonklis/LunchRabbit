@@ -3,7 +3,7 @@ LunchRabbit::Application.routes.draw do
 
   get "index", :to => 'display#index'
 
-  get "home", :to => 'display#home', :as => :home
+  get "home(/:limit)", :to => 'display#home', :as => :home
 
   get "help", :to => 'display#help', :as => :help
 
@@ -25,17 +25,19 @@ LunchRabbit::Application.routes.draw do
 
   match 'usuarios/encuentra_o_crea/:id' => 'usuarios#encuentra_o_crea'
 
-  match 'usuarios/busqueda/:id' => 'usuarios#busqueda'
+  match 'usuarios/busqueda/:id' => 'usuarios#busqueda', :as => :busqueda_usuarios
 
   match 'usuarios/actualiza/:id', :to => 'usuarios#actualiza', :as => :actualiza
     
   match 'invitaciones/por_usuario/:id' => 'invitaciones#por_usuario'
 
-  match 'invitaciones/desde_para/:id' => 'invitaciones#desde_para'
+  match 'invitaciones/desde_para/:id' => 'invitaciones#desde_para', :as => :desde_para_invitaciones
 
   match 'invitaciones/acepta/:id' => 'invitaciones#acepta'
 
   match 'invitaciones/rechaza/:id' => 'invitaciones#rechaza'
+
+  match 'invitaciones/muestra_todas/:id' => 'invitaciones#muestra_todas', :as => :muestra_invitaciones
 
   get 'oauth/new', :as => :oauth_new
 

@@ -1,9 +1,11 @@
 class Usuario < ActiveRecord::Base
   has_and_belongs_to_many :intereses
   has_and_belongs_to_many :grupos
-  has_many :invitaciones_enviadas, :class_name => "Invitacion", :foreign_key => "usuario_desde_id", :order => ["created_at desc limit 10"]
-  has_many :invitaciones_recibidas, :class_name => "Invitacion", :foreign_key => "usuario_para_id", :order => ["created_at desc limit 10"]
+  has_many :invitaciones_enviadas, :class_name => "Invitacion", :foreign_key => "usuario_desde_id", :order => ["created_at desc"]
+  has_many :invitaciones_recibidas, :class_name => "Invitacion", :foreign_key => "usuario_para_id", :order => ["created_at desc"]
   has_many :zonas
+
+  KILOMETER_TO_MILE = 0.62
 
   validates_numericality_of :hora_lunch_fin, :greater_than => Proc.new { |r| r.hora_lunch_inicio }, :allow_blank => true
 
@@ -60,12 +62,13 @@ class Usuario < ActiveRecord::Base
     usuarios_sin_interes_comun = []
 
     usuarios_destino = Usuario.find(:all, :conditions => [consulta, usuario_origen.id, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin], :order => order_by)
-    
+    #usuarios_destino = Usuario.all
+
     usuarios_destino.each do |usuario_destino|    
       zona_destino = usuario_destino.zonas.first
       usuario_destino[:distancia] = zona_destino.distance_from([zona_origen.latitude, zona_origen.longitude]).round(2)
       # si esta fuera del rango, avanzar al siguiente usuario
-      next if usuario_destino[:distancia] > (zona_origen.radio + zona_destino.radio)
+      next if usuario_destino[:distancia] > (zona_origen.radio + zona_destino.radio) * KILOMETER_TO_MILE
 
       # se registra para dar preferencia a usuarios que tienen intereses en comun
       interes_comun = false
@@ -95,8 +98,10 @@ class Usuario < ActiveRecord::Base
     # todo: ordenar por distancia
     usuarios_result += usuarios_sin_interes_comun.sort_by{rand}
 
-    if limit
-      usuarios_result = usuarios_result[0..(limit-1)]
+    if limit.nil?
+      usuarios_result = usuarios_result.take(3)
+    else
+      usuarios_result = usuarios_result.take(limit.to_i)
     end
     return usuarios_result
   end

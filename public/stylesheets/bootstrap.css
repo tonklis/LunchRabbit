@@ -357,7 +357,7 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
 .media-grid a:hover{border-color:#0069d6;-webkit-box-shadow:0 1px 4px rgba(0, 105, 214, 0.25);-moz-box-shadow:0 1px 4px rgba(0, 105, 214, 0.25);box-shadow:0 1px 4px rgba(0, 105, 214, 0.25);}
 
 /* elementos de la barra de arriba */
-.menu-pull-right{float:right; margin: 30px 200px; }
+.menu-pull-right{float:right; margin: -50px 250px; }
 .menu-pull-right ul{position:absolute; margin:0 5px 0 5px; padding:0; height:30px; }
 .menu-pull-right ul li{padding:0; margin:0; list-style:none; float:left; height:30px display:inline;  padding:0 17px 0 0; }
 .menu-pull-right ul li a{font:20px Arial, Helvetica, sans-serif; color:rgb(188,67,41); text-decoration:none; line-height:30px; display:block; }
@@ -395,18 +395,18 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
   background: url("http://swdf.in2teck.com/images/acepta.png") bottom;
 }
 
-#imagen_centrada_outer{
+.imagen_centrada_outer{
   width: 100%;
   height: 150px;
   display: table;
-  background-color: #AAAAAA;
+  /*background-color: #AAAAAA;*/
 }
-#imagen_centrada_inner{
+.imagen_centrada_inner{
   display: table-cell;
   text-align: center;
   vertical-align: middle;
 }
-#imagen_centrada_inner>img{
+.imagen_centrada_inner>img{
   max-width: 150px;
   max-height: 150px; 
   margin-left: auto; 
@@ -422,4 +422,8 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.mini_font{
+  font: 10px Arial;
 }

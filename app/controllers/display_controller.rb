@@ -18,9 +18,8 @@ class DisplayController < ApplicationController
     intereses.each do |interes|
       if ["Tv show", "Musician/band", "Movie", "Book", "Interest"].index(interes.category)
         @intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|
-                                                                                 u.nombre = interes.name
-                                                                                 u.categoria = interes.category}
-      
+          u.nombre = interes.name
+          u.categoria = interes.category}
       end 
     end
     
@@ -31,22 +30,27 @@ class DisplayController < ApplicationController
     redirect_to "/" and return if session[:at].nil?
     @home_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
-    @recomendados = Usuario.busqueda(@usuario.facebook_id, 3)
+    @recomendados = Usuario.busqueda(@usuario.facebook_id, params[:limit])
   end
   
   def myprofile
     redirect_to "/" and return if session[:at].nil?
     @myprofile_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
-    @intereses = @usuario.intereses
+    intereses = @usuario.intereses
+    @intereses_music = intereses.find_all{|interes| interes.categoria == 'Musician/band'}
+    @intereses_movies = intereses.find_all{|interes| interes.categoria == 'Movie'}
+    @intereses_tv = intereses.find_all{|interes| interes.categoria == 'Tv show'}
+    @intereses_books = intereses.find_all{|interes| interes.categoria == 'Book'}
+    @intereses_other = intereses.find_all{|interes| interes.categoria == 'Interest'}
     @zona = @usuario.zonas.first
   end
 
   def profile
     redirect_to "/" and return if session[:at].nil?
-    @myprofile_active = ACTIVE
-    @usuario = Usuario.find(params[:id])
-    intereses = @usuario.intereses
+    @usuario = Usuario.find(session[:usuario_id])
+    @usuario_perfil = Usuario.find(params[:id])
+    intereses = @usuario_perfil.intereses
     @intereses_music = intereses.find_all{|interes| interes.categoria == 'Musician/band'}
     @intereses_movies = intereses.find_all{|interes| interes.categoria == 'Movie'}
     @intereses_tv = intereses.find_all{|interes| interes.categoria == 'Tv show'}
