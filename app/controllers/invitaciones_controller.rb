@@ -93,10 +93,11 @@ class InvitacionesController < ApplicationController
     end
   end
 
-  # GET /invitaciones/desde_para/1.json?para=2
+  # POST /invitaciones/desde_para/1.json
+  # para y body son parametros del post
   # todo: usar id normal, usa facebook_id
   def desde_para
-    @invitacion = Invitacion.desde_para(params[:id], params[:para])
+    @invitacion = Invitacion.desde_para(params[:id], params[:para], params[:body])
     respond_to do |format|
       format.html { redirect_to(home_path) }
       format.xml { render :xml => @invitacion }

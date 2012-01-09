@@ -43,7 +43,11 @@ class Usuario < ActiveRecord::Base
       
     if zona = params[:zona]
       uz = usuario.zonas.where("nombre = 'web'").first
-      uz.update_attributes(ActiveSupport::JSON.decode(zona))
+      if uz.nil?
+        usuario.zonas << Zona.new(ActiveSupport::JSON.decode(zona))
+      else
+        uz.update_attributes(ActiveSupport::JSON.decode(zona))
+      end
     end
 
     usuario.save!
@@ -64,7 +68,7 @@ class Usuario < ActiveRecord::Base
     usuarios_destino = Usuario.find(:all, :conditions => [consulta, usuario_origen.id, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin], :order => order_by)
     #usuarios_destino = Usuario.all
 
-    usuarios_destino.each do |usuario_destino|    
+    usuarios_destino.each do |usuario_destino| 
       zona_destino = usuario_destino.zonas.first
       usuario_destino[:distancia] = zona_destino.distance_from([zona_origen.latitude, zona_origen.longitude]).round(2)
       # si esta fuera del rango, avanzar al siguiente usuario
