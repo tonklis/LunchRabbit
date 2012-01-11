@@ -8,4 +8,12 @@ class Interes < ActiveRecord::Base
     end
     return html[0..(html.size-3)]
   end
+
+  def Interes.kv_to_html lista_intereses
+    html = ""
+    lista_intereses.each do |key, value|
+      html += "#{value}, "
+    end
+    return html[0..(html.size-3)]
+  end
 end

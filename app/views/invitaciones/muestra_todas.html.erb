@@ -2,7 +2,7 @@
   <div class="span5" style="margin-left: 30px;">
     <h4>Received</h4>
     <ul class="unstyled">
-      <% @usuario.invitaciones_recibidas.each do |invitacion_recibida| %>
+      <% @invitaciones_recibidas.each do |invitacion_recibida| %>
         <li>
           <div style="float:left;">
             <a href="<%= profile_path(invitacion_recibida.usuario_desde_id)%>"><%= Usuario.find(invitacion_recibida.usuario_desde_id).nombre %></a>
@@ -23,7 +23,7 @@
   <div class="span5">
     <h4>Sent</h4>
     <ul class="unstyled">
-      <% @usuario.invitaciones_enviadas.each do |invitacion_enviada| %>
+      <% @invitaciones_enviadas.each do |invitacion_enviada| %>
         <div>
           <li>
             <div style="float: left;">

@@ -72,7 +72,7 @@
           <h5>My Lunch Requests</h5> </br>
           <p>Received</p>
           <ul class="unstyled" style="margin-left: 10px;">
-            <% @usuario.invitaciones_recibidas.take(6).each do |invitacion|%>
+            <% @invitaciones_recibidas.take(6).each do |invitacion|%>
             <li>
               <div style="float:left;">
                 <a href="<%= profile_path(invitacion.usuario_desde_id)%>"><%= Usuario.find(invitacion.usuario_desde_id).nombre[0..14] %></a>
@@ -92,7 +92,7 @@
           <br/>
           <p>Sent</p>
           <ul class="unstyled" style="margin-left: 10px;">
-            <% @usuario.invitaciones_enviadas.take(6).each do |invitacion|%>
+            <% @invitaciones_enviadas.take(6).each do |invitacion|%>
             <li>
               <div style="float: left;">
                 <a href="<%= profile_path(invitacion.usuario_para_id)%>"><%= Usuario.find(invitacion.usuario_para_id).nombre[0..14] %></a>

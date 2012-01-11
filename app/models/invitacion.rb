@@ -28,7 +28,9 @@ class Invitacion < ActiveRecord::Base
 
   def Invitacion.rechaza (invitacion_id)
     invitacion = Invitacion.find(invitacion_id)
-    invitacion.destroy 
+    invitacion.aceptada = nil;
+    invitacion.save!
+    return invitacion
   end
 
 end

@@ -123,6 +123,9 @@ class InvitacionesController < ApplicationController
 
   def muestra_todas
     @usuario = Usuario.find(params[:id])
+    @invitaciones_recibidas = Invitacion.find(:all, :conditions => ["usuario_para_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+    @invitaciones_enviadas = Invitacion.find(:all, :conditions => ["usuario_desde_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+
     render :layout => "navigation"
   end
 

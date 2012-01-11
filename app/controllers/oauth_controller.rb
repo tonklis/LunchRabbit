@@ -1,7 +1,7 @@
 class OauthController < ApplicationController
   def new
     session[:at]=nil
-    redirect_to authenticator.authorize_url(:scope => 'publish_stream,email,user_interests,user_birthday', :display => 'page')
+    redirect_to authenticator.authorize_url(:scope => 'publish_stream,email,user_interests,user_likes,user_activities,user_birthday', :display => 'page')
   end
 
   def create
