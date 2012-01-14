@@ -48,7 +48,7 @@ class DisplayController < ApplicationController
     @intereses_tv = intereses.find_all{|interes| interes.categoria == 'Tv show'}
     @intereses_books = intereses.find_all{|interes| interes.categoria == 'Book'}
     @intereses_other = intereses.find_all{|interes| interes.categoria == 'Interest' or interes.categoria. == 'Sport'}
-    @zona = @usuario.zonas.first
+    @zona = @usuario.zonas.first 
   end
 
   def profile
@@ -61,6 +61,9 @@ class DisplayController < ApplicationController
     @intereses_tv = intereses.find_all{|interes| interes.categoria == 'Tv show'}
     @intereses_books = intereses.find_all{|interes| interes.categoria == 'Book'}
     @intereses_other = intereses.find_all{|interes| interes.categoria == 'Interest' or interes.categoria. == 'Sport'}
+    @invitaciones_recibidas = Invitacion.find(:all, :conditions => ["usuario_para_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+    @invitaciones_enviadas = Invitacion.find(:all, :conditions => ["usuario_desde_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+
   end
   
   def help

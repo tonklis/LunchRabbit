@@ -1,13 +1,26 @@
+<script type="text/javascript" src="/javascripts/bootstrap-modal.js"></script>
 <div class="row">
-  <div class="span5" style="margin-left: 30px;">
+  <div class="span6" style="margin-left: 30px;">
     <h4>Received</h4>
     <ul class="unstyled">
       <% @invitaciones_recibidas.each do |invitacion_recibida| %>
         <li>
-          <div style="float:left;">
-            <a href="<%= profile_path(invitacion_recibida.usuario_desde_id)%>"><%= Usuario.find(invitacion_recibida.usuario_desde_id).nombre %></a>
+          <div style="float:left;" class="span3">
+            <%= link_to Usuario.find(invitacion_recibida.usuario_desde_id).nombre, profile_path(invitacion_recibida.usuario_desde_id) %>
           </div>
-          <div style="float:right; width: 50px; height: 15px;">
+          <div style="float: left; margin-top: 3px; margin-left: 15px;" class="mini_font">
+            <%= link_to "message", nil, "data-controls-modal"=>"modal-for-#{invitacion_recibida.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%>
+          </div>
+          <div id="modal-for-<%= invitacion_recibida.id %>" class="modal hide fade">
+            <div class="modal-header">
+              <a href="#" class="close">&times;</a>
+              <h3>Lunch request received</h3>
+            </div>
+            <div class="modal-body">
+              <%= text_area_tag "body", invitacion_recibida.body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+            </div>
+          </div>
+          <div style="float:right; width: 50px; height: 15px;" class="span2">
             <% if invitacion_recibida.aceptada %>
               Confirmed
             <% else %>
@@ -20,18 +33,27 @@
     </ul>
   </div>
   <div class="span2"><br/></div>
-  <div class="span5">
+  <div class="span6">
     <h4>Sent</h4>
     <ul class="unstyled">
       <% @invitaciones_enviadas.each do |invitacion_enviada| %>
-        <div>
-          <li>
-            <div style="float: left;">
-              <a href="<%= profile_path(invitacion_enviada.usuario_desde_id)%>"><%= Usuario.find(invitacion_enviada.usuario_desde_id).nombre %></a>
-            </div>
-          </li>
+      <li>
+        <div style="float: left;" class="span3">
+          <%= link_to Usuario.find(invitacion_enviada.usuario_desde_id).nombre, profile_path(invitacion_enviada.usuario_desde_id)%>
         </div>
-        <div style="float: right; width: 50px; height: 15px;">
+        <div style="float: left; margin-top: 3px; margin-right: 15px;" class="mini_font">
+          <%= link_to "message", nil, "data-controls-modal"=>"modal-for-#{invitacion_enviada.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%>
+          <div id="modal-for-<%= invitacion_enviada.id %>" class="modal hide fade">
+            <div class="modal-header">
+              <a href="#" class="close">&times;</a>
+              <h3>Lunch request sent</h3>
+            </div>
+            <div class="modal-body">
+              <%= text_area_tag "body", invitacion_enviada.body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+            </div>
+          </div>
+        </div>
+        <div style="float: right; width: 50px; height: 15px;" class="span2">
           <% if invitacion_enviada.aceptada %>
             Confirmed
           <% else %>

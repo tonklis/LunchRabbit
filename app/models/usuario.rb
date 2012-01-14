@@ -65,14 +65,10 @@ class Usuario < ActiveRecord::Base
     consulta = "id <> #{usuario_origen.id}
                 AND #{hora_inicial + diferencia_hora} >= hora_lunch_inicio AND #{hora_final - diferencia_hora} <= hora_lunch_fin
                 AND #{hora_final} > hora_lunch_inicio AND #{hora_inicial} < hora_lunch_fin"
-    #           AND ((hora_lunch_inicio >= ? and hora_lunch_fin <= ?) OR (hora_lunch_inicio <= ? and hora_lunch_fin >= ?) OR ())"
-    #           AND id NOT IN (SELECT usuario_para_id FROM invitaciones WHERE usuario_para_id <> #{usuario_origen.id})
-    #           AND id NOT IN (SELECT usuario_desde_id FROM invitaciones WHERE usuario_desde_id <> #{usuario_origen.id})
-
 
     # VERSION_PROD
-    order_by = "RANDOM()"
-    # order_by = "RAND()"
+    # order_by = "RANDOM()"
+    order_by = "RAND()"
     usuarios_interes_comun = []
     usuarios_sin_interes_comun = []
 

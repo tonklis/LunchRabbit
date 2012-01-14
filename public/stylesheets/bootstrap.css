@@ -139,7 +139,7 @@ form .clearfix.success .input-prepend .add-on,form .clearfix.success .input-appe
 .input-medium,input.medium,textarea.medium,select.medium{width:150px;}
 .input-large,input.large,textarea.large,select.large{width:210px;}
 .input-xlarge,input.xlarge,textarea.xlarge,select.xlarge{width:270px;}
-.input-xxlarge,input.xxlarge,textarea.xxlarge,select.xxlarge{width:530px;}
+.input-xxlarge,input.xxlarge,textarea.xxlarge,select.xxlarge{width:520px;}
 textarea.xxlarge{overflow-y:auto;}
 input.span1,textarea.span1{display:inline-block;float:none;width:30px;margin-left:0;}
 input.span2,textarea.span2{display:inline-block;float:none;width:90px;margin-left:0;}

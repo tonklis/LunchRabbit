@@ -44,7 +44,6 @@ $(function() {
       <div style="margin-left: auto; marign-right: auto; text-align: center; ">
           <% if @invitaciones_recibidas.select{|invitacion| invitacion.usuario_desde_id == recomendado.id and invitacion.aceptada == false and @invitacion = invitacion}.size > 0 %>
             <p><%= link_to 'Accept lunch!', "/invitaciones/acepta/#{@invitacion.id}", :method => :acepta, :class => 'btn primary' %></p>
-
           <% elsif @invitaciones_enviadas.select{|invitacion| invitacion.usuario_para_id == recomendado.id and invitacion.aceptada == false }.size > 0%>
             <p><%= button_to "Pending", nil, :disabled => true, :class => "btn primary" %></p>
           <% else %>
@@ -57,8 +56,8 @@ $(function() {
               <h3>Send lunch request</h3>
             </div>
             <div class="modal-body">
-              <% @invitaciones_body[recomendado.id] = "Hello #{recomendado.nombre}! <br> We have interests in common, let's have lunch some day!"%>
-              <%= text_area_tag "body", @invitaciones_body[recomendado.id]%>
+              <% @invitaciones_body[recomendado.id] = "Hello #{recomendado.nombre}! Let's have lunch some day!"%>
+              <%= text_area_tag "body", @invitaciones_body[recomendado.id], :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
               <%= hidden_field_tag "para", recomendado.facebook_id%>
             </div>
             <div class="modal-footer">
