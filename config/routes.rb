@@ -15,6 +15,8 @@ LunchRabbit::Application.routes.draw do
   
   get 'intereses/busqueda', :to => 'intereses#busqueda', :as => :busqueda_intereses
 
+  get 'items', :to => 'items#busqueda', :as => :busqueda_items
+
   resources :invitaciones
 
   resources :intereses

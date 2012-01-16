@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
 
-  def search_page
-    @items = Item.search(params[:query], nil, {:type => :page}])
+  def busqueda
+    @items = Item.search(params[:term], nil, {:type => "page", :fields => "category,name,picture"}).select{|item| ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(item.category)}
+    render :json => @items
   end
 
   def fql_query
