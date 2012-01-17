@@ -67,8 +67,8 @@ class Usuario < ActiveRecord::Base
                 AND #{hora_final} > hora_lunch_inicio AND #{hora_inicial} < hora_lunch_fin"
 
     # VERSION_PROD
-    # order_by = "RANDOM()"
-    order_by = "RAND()"
+    order_by = "RANDOM()"
+    # order_by = "RAND()"
     usuarios_interes_comun = []
     usuarios_sin_interes_comun = []
 
