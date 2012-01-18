@@ -29,7 +29,7 @@
 							{
 									"method": "GET",
 									"depends_on":"search-interest",
-									"relative_url":"fql?q=select+page_id,+type,+name,+pic_square+from+page+where+page_id+in+(select+page_id,+uid+from+page_fan+where+uid+in+(528755713,100000389125405)+and+page_id+in+("+"{result=search-interest:$.data.*.id}"+"))"
+									"relative_url":"fql?q=select page_id, type, name, pic_square from page where page_id in (select page_id, uid from page_fan where uid in (528755713,100000389125405) and page_id in ("+"{result=search-interest:$.data.*.id}"+"))"
 							}
 					]
 			}, function(response) {
