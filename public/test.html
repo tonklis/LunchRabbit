@@ -17,14 +17,14 @@
 			var APP_ID = "316932864999658";
 			
 			function init() {
-				alert('diego');
 				FB.api("/", "POST", {
 					batch:[
 							{
 									"method":"GET",
 									"name":"search-interest",
 									"omit_response_on_success": true,
-									"relative_url":"search?query=mamegoma&type=page"
+									"relative_url":"me"
+									//"relative_url":"search?query=mamegoma&type=page"
 							}/*,
 							{
 									"method": "GET",
