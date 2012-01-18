@@ -28,16 +28,17 @@ class Usuario < ActiveRecord::Base
 
     usuario = Usuario.find_by_facebook_id (params[:id])
     usuario.update_attributes(params[:usuario])
-    intereses = params[:intereses]
 
-    if intereses
-      intereses = ActiveSupport::JSON.decode(intereses)
+    if params[:intereses] == "true"
+
       usuario.intereses = []
+      intereses = Mogli::User.find("me", Mogli::Client.new(params[:at])).likes
       intereses.each do |interes|
-        usuario.intereses << Interes.find_or_create_by_facebook_id(interes["interes"]["facebook_id"]){|u|
-          u.nombre = interes["interes"]["nombre"]
-          u.categoria = interes["interes"]["categoria"]
-        }
+        if ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(interes.category)
+          usuario.intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|
+            u.nombre = interes.name
+            u.categoria = interes.category}
+          end 
       end
     end
       
@@ -54,7 +55,11 @@ class Usuario < ActiveRecord::Base
     usuario
   end
 
-  def Usuario.busqueda (facebook_id, limit = nil)
+  def Usuario.busqueda_por_interes (interes_id)
+   # todo: hacer esta funcionalidad 
+  end
+
+  def Usuario.busqueda (facebook_id, limit = nil, interes_id = nil)
 
     usuario_origen = Usuario.find_by_facebook_id (facebook_id)
     zona_origen = usuario_origen.zonas.first
@@ -67,13 +72,13 @@ class Usuario < ActiveRecord::Base
                 AND #{hora_final} > hora_lunch_inicio AND #{hora_inicial} < hora_lunch_fin"
 
     # VERSION_PROD
-    order_by = "RANDOM()"
-    # order_by = "RAND()"
+    # order_by = "RANDOM()"
+    order_by = "RAND()"
     usuarios_interes_comun = []
     usuarios_sin_interes_comun = []
 
     usuarios_destino = Usuario.find(:all, :conditions => consulta, :order => order_by)
-
+    
     usuarios_destino.each do |usuario_destino| 
       zona_destino = usuario_destino.zonas.first
       usuario_destino[:distancia] = zona_destino.distance_from([zona_origen.latitude, zona_origen.longitude]).round(2)

@@ -82,11 +82,13 @@ class InteresesController < ApplicationController
   end
 
   def busqueda
-    if params[:search].nil? or params[:search] == ""
+    if params[:term].nil? or params[:term] == ""
       @intereses = []
     else
-      @intereses = Interes.search(params[:search])
+      @intereses = Interes.search(params[:term])
     end
+    ActiveRecord::Base.include_root_in_json = false
+    render :json => @intereses
 
   end
 end

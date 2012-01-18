@@ -94,6 +94,7 @@ class UsuariosController < ApplicationController
 
   # GET /usuarios/actualiza/[facebook_id]
   def actualiza
+    params[:at] = session[:at]
     @usuario = Usuario.actualiza params
     respond_to do |format|
       format.html { redirect_to(myprofile_path)}
@@ -108,6 +109,13 @@ class UsuariosController < ApplicationController
     respond_to do |format|
       format.xml {render :xml => @usuarios}
       format.json {render :json => @usuarios}
+    end
+  end
+
+  def busqueda_por_interes
+    @usuarios = Usuario.busqueda_por_interes(params[:id])
+    respond_to do |format|
+      format.json { render :json => @usuarios}
     end
   end
 

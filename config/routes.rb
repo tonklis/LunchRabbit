@@ -30,6 +30,8 @@ LunchRabbit::Application.routes.draw do
   match 'usuarios/encuentra_o_crea/:id' => 'usuarios#encuentra_o_crea'
 
   match 'usuarios/busqueda/:id' => 'usuarios#busqueda', :as => :busqueda_usuarios
+  
+  match 'usuarios/busqueda_por_interes/:id' => 'usuarios#busqueda_por_interes', :as => :busqueda_usuarios_por_interes
 
   match 'usuarios/actualiza/:id', :to => 'usuarios#actualiza', :as => :actualiza
 

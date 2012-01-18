@@ -11,17 +11,7 @@ class DisplayController < ApplicationController
     @register_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
     @client = Mogli::User.find("me", Mogli::Client.new(session[:at]))
-    intereses = @client.likes
     @zona = @usuario.zonas.first
-    @intereses = []
-    
-    intereses.each do |interes|
-      if ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(interes.category)
-        @intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|
-          u.nombre = interes.name
-          u.categoria = interes.category}
-      end 
-    end
     @invitaciones_recibidas = []
     @invitaciones_enviadas = []
 
@@ -31,7 +21,7 @@ class DisplayController < ApplicationController
     redirect_to "/" and return if session[:at].nil?
     @home_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
-    @recomendados = Usuario.busqueda(@usuario.facebook_id, params[:limit])
+    @recomendados = Usuario.busqueda(@usuario.facebook_id, params[:limit], params[:interes_id])
     @invitaciones_recibidas = Invitacion.find(:all, :conditions => ["usuario_para_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
     @invitaciones_enviadas = Invitacion.find(:all, :conditions => ["usuario_desde_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
   end
@@ -48,7 +38,7 @@ class DisplayController < ApplicationController
     @intereses_tv = intereses.find_all{|interes| interes.categoria == 'Tv show'}
     @intereses_books = intereses.find_all{|interes| interes.categoria == 'Book'}
     @intereses_other = intereses.find_all{|interes| interes.categoria == 'Interest' or interes.categoria. == 'Sport'}
-    @zona = @usuario.zonas.first 
+    @zona = @usuario.zonas.first
   end
 
   def profile

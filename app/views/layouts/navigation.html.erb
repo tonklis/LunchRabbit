@@ -9,8 +9,6 @@
     <%= csrf_meta_tag %>
 
     <!-- Include support librarys first -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.js"></script> 
     <script type="text/javascript" src="/javascripts/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
@@ -43,37 +41,13 @@
 	e.async = true;
 	document.getElementById('fb-root').appendChild(e);
       }());
-      $(document).ready(function(){ 
-       $("#search").autocomplete({  
-  
-            //define callback to format results  
-            source: function(req, add){  
-  
-                //pass request to server  
-                $.getJSON("items?", req, function(data) {  
-  
-                    //create array for response objects  
-                    var suggestions = [];  
-  
-                    //process response  
-                    $.each(data, function(i, val){  
-                    suggestions.push(val.name);  
-                });  
-  
-                //pass array to callback  
-                add(suggestions);  
-            });  
-            }
-        });  
-      })
   </script>
   <div id="app_paths" data-oauth-path="<%= oauth_new_path %>" data-home-path="<%= home_path %>" data-logout-path="<%= logout_path %>" />
-  <div>      
+  <div>
         <div class="container-fluid">
         	<img class="brand" src="http://swdf.in2teck.com/images/lunch_logo_thumb.jpg">
-		<div style="float: right; margin-right: 300px;">
-                <%= text_field_tag :search, params[:search], :placeholder => "Search interests...", :class=>"medium", :style => "float: left; margin-top: 40px; margin-right: 25px;"%>
-                <%= button_to "Find a lunch now »", home_path(:limit => 100), :class => "btn", :style => "margin-top: 40px;", :method => :get %>
+		<div style="float: right; margin-right: 50px;">
+                <%= button_to "Find a lunch now!", home_path(:limit => 100), :class => "btn", :style => "float: left; margin-top: 40px; margin-right: 10px;", :method => :get %>
                   <div class="menu-pull-right">
     			<span class="left"></span>
     			<ul>

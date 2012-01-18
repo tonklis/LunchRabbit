@@ -12,6 +12,7 @@
         <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
         <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
         <%= hidden_field_tag :zona%>
+        <%= hidden_field_tag :intereses, false%>
       </div>
       <div class="span3">
         <div id="map-canvas" data-longitude="<%= @zona.longitude %>" data-latitude="<%= @zona.latitude %>" data-radius="<%= @zona.radio %>"></div>
@@ -43,58 +44,36 @@
                         function agrega_posicion(){
                           $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});
                         }
+
+                        function agrega_posicion_e_intereses(){
+                          agrega_posicion();
+                          $("#intereses")[0].value = true;
+                        }
                         
                         pinta_mapa(latitude, longitude, radius);
- 
-$(function(){
-  $("#busqueda_musica").submit(function() {
-    $.get(this.action, $(this).serialize(), null, "script");
-    return false;
-  });
-  $("#busqueda_musica input").keyup(function() {
-    $.get($("#busqueda_musica").attr("action"), $("#busqueda_musica").serialize(), null, "script");
-    return false;
-  });
-
-});
 
         </script> 
       </div>
     </div>
-    <p><%= submit_tag "Save", :class => "btn primary", :onclick => "agrega_posicion()" %></p>
+    <p>
+      <%= submit_tag "Save", :class => "btn primary", :onclick => "agrega_posicion()" %>
+      <%= submit_tag "Save and update interests", :class => "btn primary", :onclick => "agrega_posicion_e_intereses()"%>
+    </p>
 <% end %>
     <h4>Interests</h4>
-    <div class="row"><div class="span1"><b>Music:</b></div> <div class="span13"><%= @intereses_music = Interes.to_html(@intereses_music) %> 
-      <%= link_to "change", nil, :class=> "mini_font", "data-controls-modal"=>"modal-for-music", "data-backdrop"=>"static", "data-keyboard"=>"true"%> <br><br></div>
-      <%= form_tag busqueda_intereses_path, :method => :get, :id => "busqueda_musica" do %>
-      <div>
-        <div class="modal-header">
-          <a href="#" class="close">&times;</a>
-          <h3>Change music interests</h3>
-        </div>
-        <div class="modal-body">
-          <%= text_field_tag :search, params[:search], :placeholder => "Search music...", :class=>"medium" %> icono
-          <div style="overflow-y: auto; height: 150px; margin-top: 20px;" id="music-list">
-            <%= render :partial => 'intereses/busqueda', :locals => { :intereses => @intereses_music, :type => "Musician/band" } %>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <%= submit_tag "Done", :class=>"btn secondary" %>
-        </div>
-      </div>
-      <% end %>
+    <div class="row"><div class="span1"><b>Music:</b></div> <div class="span13"><%= @intereses_music = Interes.to_html(@intereses_music) %> <br><br></div>
     </div>
     <div class="row"><div class="span1"><b>Movies:</b></div> <div class="span13"><%= Interes.to_html(@intereses_movies) %>
-      <%= link_to "change", nil, :class=> "mini_font", "data-controls-modal"=>"modal-for-movies", "data-backdrop"=>"static", "data-keyboard"=>"true"%> <br><br></div>
+      <br><br></div>
     </div>
     <div class="row"><div class="span1"><b>TV:</b></div> <div class="span13"><%= Interes.to_html(@intereses_tv) %>
-      <%= link_to "change", nil, :class=> "mini_font", "data-controls-modal"=>"modal-for-tv", "data-backdrop"=>"static", "data-keyboard"=>"true"%> <br><br></div>
+       <br><br></div>
     </div>
     <div class="row"><div class="span1"><b>Books:</b></div> <div class="span13"><%= Interes.to_html(@intereses_books) %>
-      <%= link_to "change", nil, :class=> "mini_font", "data-controls-modal"=>"modal-for-books", "data-backdrop"=>"static", "data-keyboard"=>"true"%> <br><br></div>
+       <br><br></div>
     </div>
     <div class="row"><div class="span1"><b>Other:</b></div> <div class="span13"><%= Interes.to_html(@intereses_other) %>
-      <%= link_to "change", nil, :class=> "mini_font", "data-controls-modal"=>"modal-for-other", "data-backdrop"=>"static", "data-keyboard"=>"true"%> <br><br></div>
+       <br><br></div>
     </div>
   </div>
 </div>

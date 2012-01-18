@@ -38,7 +38,7 @@ $(function() {
     </div>
       <p>Lunch time: <%= recomendado.hora_lunch_inicio.to_s + ":00" %> to <%= recomendado.hora_lunch_fin.to_s + ":00" %></p>
       <p>Distance: <%= recomendado.distancia %> miles</p>
-      <p style="height: 65px; ">Interests: 
+      <p style="height: 65px; width: 250px;">Interests: 
         <%= Interes.kv_to_html(recomendado.lista_intereses) %>
       </p>
       <div style="margin-left: auto; marign-right: auto; text-align: center; ">

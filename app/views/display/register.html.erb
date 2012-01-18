@@ -14,7 +14,7 @@
         <%= usuario.hidden_field :email, :value => @client.email%>
         <%= usuario.hidden_field :thumbnail, :value => "https://graph.facebook.com/#{@client.id}/picture?type=normal" %>
         <%= hidden_field_tag :zona%>
-        <%= hidden_field_tag :intereses, ActiveSupport::JSON.encode(@intereses)%>
+        <%= hidden_field_tag :intereses%>
       </div>
     </div>
     <div class="row">
@@ -55,6 +55,7 @@
 
                         function agrega_valores(){
                           $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});
+                          $("#intereses")[0].value = true;
                         }
 
 			function errorMessage(error) {
