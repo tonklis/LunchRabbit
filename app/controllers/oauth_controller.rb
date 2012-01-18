@@ -1,13 +1,14 @@
 class OauthController < ApplicationController
   def new
     session[:at]=nil
-    redirect_to authenticator.authorize_url(:scope => 'publish_stream,email,user_interests,user_birthday', :display => 'page')
+    redirect_to authenticator.authorize_url(:scope => 'publish_stream,email,user_interests,user_likes,user_activities,user_birthday', :display => 'page')
   end
 
   def create
     mogli_client = Mogli::Client.create_from_code_and_authenticator(params[:code], authenticator)
     session[:at] = mogli_client.access_token
     client = Mogli::User.find("me", Mogli::Client.new(session[:at]))
+    session[:mogli_client] = mogli_client
     usuario = Usuario.encuentra_o_crea(client.id)
     session[:usuario_id] = usuario.id
     if usuario.intereses.empty?

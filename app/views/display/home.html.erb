@@ -1,22 +1,84 @@
+<script type="text/javascript" src="/javascripts/jcarousellite_1.0.1.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap-modal.js"></script>
+<script>
+$(function() {
+    $("#carousel").jCarouselLite({
+        btnNext: ".next",
+        btnPrev: ".prev",
+        visible: <%= @recomendados.size > 3 ? 3 : @recomendados.size %>
+    });
+});
+</script>
 <div class="row">
-  <% @recomendados.each do |recomendado| %> 
-    <div class="span5">
-      <div id="imagen_centrada_outer">
-        <div id="imagen_centrada_inner">
-        <%= image_tag recomendado.thumbnail %>
+  <div class="span1">
+    <% if @recomendados.size > 3%>
+      <div class="imagen_centrada_outer">
+        <div class="imagen_centrada_inner">
+          <button class="prev"><</button>
         </div>
       </div>
-      <br/>
-      <div class="texto_centrado">
-        <p><a href=""><%= recomendado.nombre %></a></p>
-        <p><%= recomendado.hora_lunch_inicio.to_s + ":00" %> - <%= recomendado.hora_lunch_fin.to_s + ":00" %></p>
-        <ul>
-        <% recomendado.intereses_comun.each do |key, value| %>
-          <li><%= value %></li>
-        <% end %>
-        </ul>
-        <p><button class="btn primary">Let's have lunch!</button></p>
+    <% else %>
+     <p/> 
+    <% end %>
+  </div>
+  <div id="carousel" class="span4">  
+  <ul id="lista">
+  <% @invitaciones_body = {} %>
+  <% @recomendados.each do |recomendado| %> 
+    <li>
+    <div class="span5">
+      <div class="imagen_centrada_outer">
+        <div class="imagen_centrada_inner">
+          <%= image_tag recomendado.thumbnail %>
+        </div>
       </div>
     </div>
+    <div class="texto_centrado">
+      <p><a href="<%= profile_path(recomendado.id) %>"><%= recomendado.nombre %></a></p>
+    </div>
+      <p>Lunch time: <%= recomendado.hora_lunch_inicio.to_s + ":00" %> to <%= recomendado.hora_lunch_fin.to_s + ":00" %></p>
+      <p>Distance: <%= recomendado.distancia %> miles</p>
+      <p style="height: 65px; ">Interests: 
+        <%= Interes.kv_to_html(recomendado.lista_intereses) %>
+      </p>
+      <div style="margin-left: auto; marign-right: auto; text-align: center; ">
+          <% if @invitaciones_recibidas.select{|invitacion| invitacion.usuario_desde_id == recomendado.id and invitacion.aceptada == false and @invitacion = invitacion}.size > 0 %>
+            <p><%= link_to 'Accept lunch!', "/invitaciones/acepta/#{@invitacion.id}", :method => :acepta, :class => 'btn primary' %></p>
+          <% elsif @invitaciones_enviadas.select{|invitacion| invitacion.usuario_para_id == recomendado.id and invitacion.aceptada == false }.size > 0%>
+            <p><%= button_to "Pending", nil, :disabled => true, :class => "btn primary" %></p>
+          <% else %>
+            <p><%= link_to "Let's have lunch!", nil, :class => "btn primary", "data-controls-modal"=>"modal-for-#{recomendado.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%></p>
+          <% end %>
+          <div id="modal-for-<%= recomendado.id %>" class="modal hide fade">
+          <%= form_tag(desde_para_invitaciones_path(@usuario.facebook_id), :method => :post) do %>
+            <div class="modal-header">
+              <a href="#" class="close">&times;</a>
+              <h3>Send lunch request</h3>
+            </div>
+            <div class="modal-body">
+              <% @invitaciones_body[recomendado.id] = "Hello #{recomendado.nombre}! Let's have lunch some day!"%>
+              <%= text_area_tag "body", @invitaciones_body[recomendado.id], :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+              <%= hidden_field_tag "para", recomendado.facebook_id%>
+            </div>
+            <div class="modal-footer">
+              <%= submit_tag "Send", :class=>"btn secondary" %>
+            </div>
+          <% end %>
+          </div>
+      </div>
+    </li>
   <% end %>
+  </ul>
+  </div>
+  <div class="span1">
+    <% if @recomendados.size > 3%>
+      <div class="imagen_centrada_outer">
+        <div class="imagen_centrada_inner">
+          <button class="next">></button>
+        </div>
+      </div>
+    <% else %>
+      <p/>
+    <% end %>
+  </div> 
 </div>

@@ -27,11 +27,12 @@
                         var map;
 			var distanceWidget;
                         var radius = 3;
-	                var geolocationReponse = false;
+	                var geolocationResponse = false;
 			var timerID = null;
 			var secs = 5;
 
                         function init_geolocation(position){
+                                geolocationResponse = true;
 				var lat = position ? position.coords.latitude : 37.790234970864;
 				var lon = position ? position.coords.longitude : -122.39031314844;
                                 pinta_mapa(lat, lon, radius);
@@ -69,7 +70,7 @@
                         function startTimer() {
 				if (secs == 0) {
 					clearTimeout(timerID);
-					if (geolocationReponse == false)
+					if (geolocationResponse == false)
 						init_geolocation();
 				}	
 				self.status = secs;

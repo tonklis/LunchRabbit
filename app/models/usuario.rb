@@ -1,9 +1,11 @@
 class Usuario < ActiveRecord::Base
   has_and_belongs_to_many :intereses
   has_and_belongs_to_many :grupos
-  has_many :invitaciones_enviadas, :class_name => "Invitacion", :foreign_key => "usuario_desde_id", :order => ["created_at desc limit 10"]
-  has_many :invitaciones_recibidas, :class_name => "Invitacion", :foreign_key => "usuario_para_id", :order => ["created_at desc limit 10"]
+  has_many :invitaciones_enviadas, :class_name => "Invitacion", :foreign_key => "usuario_desde_id", :order => ["created_at desc"]
+  has_many :invitaciones_recibidas, :class_name => "Invitacion", :foreign_key => "usuario_para_id", :order => ["created_at desc"]
   has_many :zonas
+
+  KILOMETER_TO_MILE = 0.62
 
   validates_numericality_of :hora_lunch_fin, :greater_than => Proc.new { |r| r.hora_lunch_inicio }, :allow_blank => true
 
@@ -40,8 +42,12 @@ class Usuario < ActiveRecord::Base
     end
       
     if zona = params[:zona]
-      usuario.zonas.destroy_all
-      usuario.zonas << Zona.new(ActiveSupport::JSON.decode(zona)) 
+      uz = usuario.zonas.where("nombre = 'web'").first
+      if uz.nil?
+        usuario.zonas << Zona.new(ActiveSupport::JSON.decode(zona))
+      else
+        uz.update_attributes(ActiveSupport::JSON.decode(zona))
+      end
     end
 
     usuario.save!
@@ -51,32 +57,63 @@ class Usuario < ActiveRecord::Base
   def Usuario.busqueda (facebook_id, limit = nil)
 
     usuario_origen = Usuario.find_by_facebook_id (facebook_id)
-    consulta = "id <> ? and ((hora_lunch_inicio >= ? and hora_lunch_fin <= ?) or (hora_lunch_inicio <= ? and hora_lunch_fin >= ?))"
+    zona_origen = usuario_origen.zonas.first
+    hora_inicial = usuario_origen.hora_lunch_inicio
+    hora_final = usuario_origen.hora_lunch_fin
+    diferencia_hora = hora_final - hora_inicial
+
+    consulta = "id <> #{usuario_origen.id}
+                AND #{hora_inicial + diferencia_hora} >= hora_lunch_inicio AND #{hora_final - diferencia_hora} <= hora_lunch_fin
+                AND #{hora_final} > hora_lunch_inicio AND #{hora_inicial} < hora_lunch_fin"
+
     # VERSION_PROD
     order_by = "RANDOM()"
     # order_by = "RAND()"
+    usuarios_interes_comun = []
+    usuarios_sin_interes_comun = []
 
-    # todo: incluir zona
+    usuarios_destino = Usuario.find(:all, :conditions => consulta, :order => order_by)
 
-    usuarios_destino = Usuario.find(:all, :conditions => [consulta, usuario_origen.id, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin, usuario_origen.hora_lunch_inicio, usuario_origen.hora_lunch_fin], :order => order_by)
-    
-    usuarios_destino.each do |usuario_destino|
-      usuario_destino[:intereses_comun] = {}
+    usuarios_destino.each do |usuario_destino| 
+      zona_destino = usuario_destino.zonas.first
+      usuario_destino[:distancia] = zona_destino.distance_from([zona_origen.latitude, zona_origen.longitude]).round(2)
+      # si esta fuera del rango, avanzar al siguiente usuario
+      next if usuario_destino[:distancia] > (zona_origen.radio + zona_destino.radio) * KILOMETER_TO_MILE
+
+      # se registra para dar preferencia a usuarios que tienen intereses en comun
+      interes_comun = false
+      usuario_destino[:lista_intereses] = {}
+      # se priorizan por orden los intereses en comun
       usuario_destino.intereses.each do |interes_destino|
-        if usuario_destino[:intereses_comun].size < 3 and usuario_origen.intereses.include?(interes_destino)
-          usuario_destino[:intereses_comun][interes_destino.id] = interes_destino.nombre
+        if usuario_destino[:lista_intereses].size < 3 and usuario_origen.intereses.include?(interes_destino)
+          usuario_destino[:lista_intereses][interes_destino.id] = interes_destino.nombre
+          interes_comun = true
         end
       end
-      while usuario_destino[:intereses_comun].size < 3 and usuario_destino[:intereses_comun].size < usuario_destino.intereses.size
+      while usuario_destino[:lista_intereses].size < 3 and usuario_destino[:lista_intereses].size < usuario_destino.intereses.size
         interes = usuario_destino.intereses[0..10].sort_by{rand}[0]
-        usuario_destino[:intereses_comun][interes.id] = interes.nombre
+        usuario_destino[:lista_intereses][interes.id] = interes.nombre
+      end
+
+      if interes_comun
+        usuarios_interes_comun << usuario_destino
+      else
+        usuarios_sin_interes_comun << usuario_destino
       end
     end
 
-    if limit
-      usuarios_destino = usuarios_destino[0..(limit-1)]
+    usuarios_result = []
+    # todo: ordenar por numero de intereses en comun y despues por distancia
+    usuarios_result += usuarios_interes_comun.sort_by{rand}
+    # todo: ordenar por distancia
+    usuarios_result += usuarios_sin_interes_comun.sort_by{rand}
+
+    if limit.nil?
+      usuarios_result = usuarios_result.take(3)
+    else
+      usuarios_result = usuarios_result.take(limit.to_i)
     end
-    return usuarios_destino
+    return usuarios_result
   end
 
 end

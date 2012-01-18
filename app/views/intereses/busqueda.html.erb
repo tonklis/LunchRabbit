@@ -1,0 +1,28 @@
+<h1>Listing intereses</h1>
+
+<script>
+$(function(){
+  $("#intereses_search").submit(function() {
+    $.get(this.action, $(this).serialize(), null, "script");
+    return false;
+  });
+  $("#intereses_search input").keyup(function() {
+    $.get($("#intereses_search").attr("action"), $("#intereses_search").serialize(), null, "script");
+    return false;
+  });
+
+});
+</script>
+
+<%= form_tag busqueda_intereses_path, :method => 'get', :id=>"intereses_search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
+<div id='intereses'><%= render :partial => 'busqueda' %></div>
+
+<br />
+
+<%= link_to 'New Interes', new_interes_path %>

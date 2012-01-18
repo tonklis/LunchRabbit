@@ -4,6 +4,7 @@ development:
   adapter: mysql
   host: localhost
   user: root
+  encoding: utf8
   password: root
   database: lunch_dev
 
@@ -14,6 +15,7 @@ test:
   adapter: mysql
   host: localhost
   user: root
+  encoding: utf8
   password: root
   database: lunch_test
 
@@ -21,5 +23,6 @@ production:
   adapter: mysql
   host: localhost
   user: root
+  encoding: utf8
   password: root
   database: lunch_prod

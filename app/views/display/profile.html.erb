@@ -1,16 +1,15 @@
-<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post} do |usuario| %>
+<script type="text/javascript" src="/javascripts/bootstrap-modal.js"></script>
 <div class="row">
   <div class="span16"> 
     <div class="row">
       <div class="span2">
-        <%= image_tag @usuario.thumbnail %> 
+        <%= image_tag @usuario_perfil.thumbnail %> 
       </div>
       <div class="span5"> 
-        <h3><%= @usuario.nombre %> </h3>
-        <p>Lunches from <%= @usuario.hora_lunch_inicio%> hrs to <%= @usuario.hora_lunch_fin%> hrs. </p>
+        <h3><%= @usuario_perfil.nombre %> </h3>
+        <p>Lunches from <%= @usuario_perfil.hora_lunch_inicio%>:00 to <%= @usuario_perfil.hora_lunch_fin%>:00 </p>
       </div>
     </div>
-
 	  <h4>Interested in</h4>
 		<div class="row"><div class="span1"><b>Music:</b></div> <div class="span13"><% @intereses_music.each do |music|%> <%= music.nombre %>,<% end %><br><br></div></div>
 		<div class="row"><div class="span1"><b>Movies:</b></div> <div class="span13"><% @intereses_movies.each do |movie|%> <%= movie.nombre %>,<% end %><br><br></div></div>
@@ -20,5 +19,26 @@
 	</div>
 </div>
 <br/>
-<p><%= submit_tag "Let's have lunch", :class => "btn primary", :onclick => "enviar_invitacion()" %></p>
+<% if @invitaciones_recibidas.select{|invitacion| invitacion.usuario_desde_id == @usuario_perfil.id and invitacion.aceptada == false and @invitacion = invitacion}.size > 0 %>
+  <p><%= link_to 'Accept lunch!', "/invitaciones/acepta/#{@invitacion.id}", :method => :acepta, :class => 'btn primary' %></p>
+<% elsif @invitaciones_enviadas.select{|invitacion| invitacion.usuario_para_id == @usuario_perfil.id and invitacion.aceptada == false }.size > 0%>
+  <p><%= button_to "Pending", nil, :disabled => true, :class => "btn primary" %></p>
+<% else %>
+  <p><%= link_to "Let's have lunch!", nil, :class => "btn primary", "data-controls-modal"=>"modal-for-#{@usuario_perfil.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%></p>
 <% end %>
+<div id="modal-for-<%= @usuario_perfil.id %>" class="modal hide fade">
+  <%= form_tag(desde_para_invitaciones_path(@usuario.facebook_id), :method => :post) do %>
+    <div class="modal-header">
+      <a href="#" class="close">&times;</a>
+      <h3>Send lunch request</h3>
+    </div>
+    <div class="modal-body">
+      <% @invitaciones_body = "Hello #{@usuario_perfil.nombre}! Let's have lunch some day!"%>
+      <%= text_area_tag "body", @invitaciones_body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+      <%= hidden_field_tag "para", @usuario_perfil.facebook_id%>
+    </div>
+    <div class="modal-footer">
+      <%= submit_tag "Send", :class=>"btn secondary" %>
+    </div>
+  <% end %>
+</div>

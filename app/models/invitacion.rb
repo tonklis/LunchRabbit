@@ -11,9 +11,9 @@ class Invitacion < ActiveRecord::Base
     return invitaciones
   end
 
-  def Invitacion.desde_para (desde_facebook_id, para_facebook_id)
+  def Invitacion.desde_para (desde_facebook_id, para_facebook_id, body)
 
-    invitacion = Invitacion.new(:usuario_desde => Usuario.find_by_facebook_id(desde_facebook_id), :usuario_para => Usuario.find_by_facebook_id(para_facebook_id), :aceptada => false)
+    invitacion = Invitacion.new(:usuario_desde => Usuario.find_by_facebook_id(desde_facebook_id), :usuario_para => Usuario.find_by_facebook_id(para_facebook_id), :aceptada => false, :body => body)
     invitacion.save!
 
     return invitacion
@@ -28,7 +28,9 @@ class Invitacion < ActiveRecord::Base
 
   def Invitacion.rechaza (invitacion_id)
     invitacion = Invitacion.find(invitacion_id)
-    invitacion.destroy 
+    invitacion.aceptada = nil;
+    invitacion.save!
+    return invitacion
   end
 
 end

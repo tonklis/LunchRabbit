@@ -36,15 +36,16 @@ ActiveRecord::Schema.define(:version => 20111208213423) do
     t.integer "usuario_id"
   end
 
+  add_index "intereses_usuarios", ["interes_id", "usuario_id"], :name => "index_intereses_usuarios_on_interes_id_and_usuario_id", :unique => true
+
   create_table "invitaciones", :force => true do |t|
     t.boolean  "aceptada"
     t.integer  "usuario_desde_id"
     t.integer  "usuario_para_id"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "invitaciones", ["usuario_desde_id", "usuario_para_id"], :name => "index_invitaciones_on_usuario_desde_id_and_usuario_para_id", :unique => true
 
   create_table "usuarios", :force => true do |t|
     t.integer  "facebook_id",       :limit => 8
@@ -61,9 +62,9 @@ ActiveRecord::Schema.define(:version => 20111208213423) do
   create_table "zonas", :force => true do |t|
     t.integer  "usuario_id"
     t.string   "nombre"
-    t.float    "longitud"
-    t.float    "latitud"
-    t.integer  "radio"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.float    "radio"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

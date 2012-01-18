@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<%if @intereses
+  @intereses.each do |interes| %>
+  <tr>
+    <td><%= interes.nombre %></td>
+    <td><%= link_to 'Show', interes %></td>
+    <td><%= link_to 'Edit', edit_interes_path(interes) %></td>
+    <td><%= link_to 'Destroy', interes, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end 
+end%>
+</table>

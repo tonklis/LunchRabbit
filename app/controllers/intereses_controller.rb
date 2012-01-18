@@ -3,7 +3,6 @@ class InteresesController < ApplicationController
   # GET /intereses.xml
   def index
     @intereses = Interes.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @intereses }
@@ -80,5 +79,14 @@ class InteresesController < ApplicationController
       format.html { redirect_to(intereses_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def busqueda
+    if params[:search].nil? or params[:search] == ""
+      @intereses = []
+    else
+      @intereses = Interes.search(params[:search])
+    end
+
   end
 end

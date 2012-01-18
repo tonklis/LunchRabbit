@@ -16,14 +16,14 @@ class DisplayController < ApplicationController
     @intereses = []
     
     intereses.each do |interes|
-      if ["Tv show", "Musician/band", "Movie", "Book", "Interest"].index(interes.category)
+      if ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(interes.category)
         @intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|
-                                                                                 u.nombre = interes.name
-                                                                                 u.categoria = interes.category}
-      
+          u.nombre = interes.name
+          u.categoria = interes.category}
       end 
     end
-    
+    @invitaciones_recibidas = []
+    @invitaciones_enviadas = []
 
   end
 
@@ -31,26 +31,39 @@ class DisplayController < ApplicationController
     redirect_to "/" and return if session[:at].nil?
     @home_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
-    @recomendados = Usuario.busqueda(@usuario.facebook_id, 3)
+    @recomendados = Usuario.busqueda(@usuario.facebook_id, params[:limit])
+    @invitaciones_recibidas = Invitacion.find(:all, :conditions => ["usuario_para_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+    @invitaciones_enviadas = Invitacion.find(:all, :conditions => ["usuario_desde_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
   end
   
   def myprofile
     redirect_to "/" and return if session[:at].nil?
     @myprofile_active = ACTIVE
     @usuario = Usuario.find(session[:usuario_id])
-    @intereses = @usuario.intereses
-    @zona = @usuario.zonas.first
+    @invitaciones_recibidas = Invitacion.find(:all, :conditions => ["usuario_para_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+    @invitaciones_enviadas = Invitacion.find(:all, :conditions => ["usuario_desde_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+    intereses = @usuario.intereses
+    @intereses_music = intereses.find_all{|interes| interes.categoria == 'Musician/band'}
+    @intereses_movies = intereses.find_all{|interes| interes.categoria == 'Movie'}
+    @intereses_tv = intereses.find_all{|interes| interes.categoria == 'Tv show'}
+    @intereses_books = intereses.find_all{|interes| interes.categoria == 'Book'}
+    @intereses_other = intereses.find_all{|interes| interes.categoria == 'Interest' or interes.categoria. == 'Sport'}
+    @zona = @usuario.zonas.first 
   end
 
   def profile
-	redirect_to "/" and return if session[:at].nil?
-    @myprofile_active = ACTIVE
-    @usuario = Usuario.find(params[:id])
-	@intereses_music = @usuario.intereses.where("categoria = 'Musician/band'")
-	@intereses_movies = @usuario.intereses.where("categoria = 'Movie'")
-	@intereses_tv = @usuario.intereses.where("categoria = 'Tv show'")
-	@intereses_books = @usuario.intereses.where("categoria = 'Book'")
-	@intereses_other = @usuario.intereses.where("categoria = 'Interest'")
+    redirect_to "/" and return if session[:at].nil?
+    @usuario = Usuario.find(session[:usuario_id])
+    @usuario_perfil = Usuario.find(params[:id])
+    intereses = @usuario_perfil.intereses
+    @intereses_music = intereses.find_all{|interes| interes.categoria == 'Musician/band'}
+    @intereses_movies = intereses.find_all{|interes| interes.categoria == 'Movie'}
+    @intereses_tv = intereses.find_all{|interes| interes.categoria == 'Tv show'}
+    @intereses_books = intereses.find_all{|interes| interes.categoria == 'Book'}
+    @intereses_other = intereses.find_all{|interes| interes.categoria == 'Interest' or interes.categoria. == 'Sport'}
+    @invitaciones_recibidas = Invitacion.find(:all, :conditions => ["usuario_para_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+    @invitaciones_enviadas = Invitacion.find(:all, :conditions => ["usuario_desde_id = ? AND aceptada is not null", @usuario.id], :order => "created_at desc")
+
   end
   
   def help

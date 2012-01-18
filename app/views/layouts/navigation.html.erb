@@ -11,8 +11,10 @@
     <!-- Include support librarys first -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.js"></script> 
+    <script type="text/javascript" src="/javascripts/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">    
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css"> 
 
     <style type="text/css">
       body {
@@ -41,14 +43,38 @@
 	e.async = true;
 	document.getElementById('fb-root').appendChild(e);
       }());
+      $(document).ready(function(){ 
+       $("#search").autocomplete({  
+  
+            //define callback to format results  
+            source: function(req, add){  
+  
+                //pass request to server  
+                $.getJSON("items?", req, function(data) {  
+  
+                    //create array for response objects  
+                    var suggestions = [];  
+  
+                    //process response  
+                    $.each(data, function(i, val){  
+                    suggestions.push(val.name);  
+                });  
+  
+                //pass array to callback  
+                add(suggestions);  
+            });  
+            }
+        });  
+      })
   </script>
   <div id="app_paths" data-oauth-path="<%= oauth_new_path %>" data-home-path="<%= home_path %>" data-logout-path="<%= logout_path %>" />
   <div>      
         <div class="container-fluid">
         	<img class="brand" src="http://swdf.in2teck.com/images/lunch_logo_thumb.jpg">
 		<div style="float: right; margin-right: 300px;">
-                <button class="btn" style="margin-top: 30px;">FIND A LUNCH NOW  &raquo;</button>
-                <div class="menu-pull-right">
+                <%= text_field_tag :search, params[:search], :placeholder => "Search interests...", :class=>"medium", :style => "float: left; margin-top: 40px; margin-right: 25px;"%>
+                <%= button_to "Find a lunch now »", home_path(:limit => 100), :class => "btn", :style => "margin-top: 40px;", :method => :get %>
+                  <div class="menu-pull-right">
     			<span class="left"></span>
     			<ul>
       				<li><a href="/home" <%= @home_active =%> target="_self">Home</a></li>
@@ -60,7 +86,7 @@
       					<li><a href="/logout" target="_self">Logout</a></li>
        				</ul>
                         </ul>
-  		</div>
+  		  </div>
 	        </div>
         </div>
       
@@ -72,10 +98,10 @@
           <h5>My Lunch Requests</h5> </br>
           <p>Received</p>
           <ul class="unstyled" style="margin-left: 10px;">
-            <% @usuario.invitaciones_recibidas.each do |invitacion|%>
+            <% @invitaciones_recibidas.take(6).each do |invitacion|%>
             <li>
               <div style="float:left;">
-                <a href=""><%= Usuario.find(invitacion.usuario_desde_id).nombre[0..14] %></a>
+                <a href="<%= profile_path(invitacion.usuario_desde_id)%>"><%= Usuario.find(invitacion.usuario_desde_id).nombre[0..14] %></a>
               </div>
               <div style="float:right; width: 50px; height: 15px;">
               <% if invitacion.aceptada %>
@@ -92,10 +118,10 @@
           <br/>
           <p>Sent</p>
           <ul class="unstyled" style="margin-left: 10px;">
-            <% @usuario.invitaciones_enviadas.each do |invitacion|%>
+            <% @invitaciones_enviadas.take(6).each do |invitacion|%>
             <li>
               <div style="float: left;">
-                <a href=""><%= Usuario.find(invitacion.usuario_para_id).nombre[0..14] %></a>
+                <a href="<%= profile_path(invitacion.usuario_para_id)%>"><%= Usuario.find(invitacion.usuario_para_id).nombre[0..14] %></a>
               </div>
               <div style="float: right; width: 50px;">
                 <% if invitacion.aceptada %>
@@ -110,7 +136,7 @@
           </ul>
           <br/>
           <div style="text-align: center;">
-            <a href="">view all</a>
+            <a href="<%= muestra_invitaciones_path(@usuario.id) %>">view all</a>
           </div>
         </div>
       </div>
