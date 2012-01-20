@@ -26,6 +26,8 @@ LunchRabbit::Application.routes.draw do
   resources :zonas
 
   resources :usuarios
+  
+  devise_for :usuarios, :controllers => { :omniauth_callbacks => "usuarios/omniauth_callbacks"}
 
   match 'usuarios/encuentra_o_crea/:id' => 'usuarios#encuentra_o_crea'
 
@@ -45,10 +47,6 @@ LunchRabbit::Application.routes.draw do
 
   match 'invitaciones/muestra_todas/:id' => 'invitaciones#muestra_todas', :as => :muestra_invitaciones
 
-  get 'oauth/new', :as => :oauth_new
-
-  get 'oauth/create', :to => 'oauth#create', :as => :oauth_callback
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

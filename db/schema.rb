@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111208213423) do
+ActiveRecord::Schema.define(:version => 20120119004258) do
 
   create_table "grupos", :force => true do |t|
     t.string   "nombre"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20111208213423) do
   end
 
   create_table "usuarios", :force => true do |t|
-    t.integer  "facebook_id",       :limit => 8
+    t.integer  "facebook_id",            :limit => 8
     t.string   "genero"
     t.string   "email"
     t.string   "nombre"
@@ -57,7 +57,18 @@ ActiveRecord::Schema.define(:version => 20111208213423) do
     t.string   "thumbnail"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                       :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
+
+  add_index "usuarios", ["email"], :name => "index_usuarios_on_email", :unique => true
+  add_index "usuarios", ["reset_password_token"], :name => "index_usuarios_on_reset_password_token", :unique => true
 
   create_table "zonas", :force => true do |t|
     t.integer  "usuario_id"

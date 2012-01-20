@@ -6,6 +6,8 @@ gem 'json'
 
 gem 'rails', '3.0.4'
 gem 'jquery-rails'
+gem 'devise'
+gem 'omniauth-facebook'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

@@ -1,4 +1,4 @@
   <div style="float: left"> <img height="230" src="http://a6.sphotos.ak.fbcdn.net/hphotos-ak-ash4/304246_256876421027927_256875991027970_687621_275817708_n.jpg" alt="lunch rabbit logo" title="Lunch Rabbit" />
     <iframe width="398" height="299" frameborder="0" src="http://player.vimeo.com/video/32129225?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0"></iframe>
   </div>
-  <%= button_to "Login with Facebook", {:controller => 'oauth', :action =>'new'}, {:method => :get} %>
+  <%= link_to "Sign in with Facebook", usuario_omniauth_authorize_path(:facebook) %>

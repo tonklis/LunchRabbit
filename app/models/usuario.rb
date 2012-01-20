@@ -1,4 +1,8 @@
 class Usuario < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable, :validatable, :database_authenticatable
+  devise :registerable, :recoverable, :rememberable, :trackable, :omniauthable
+
   has_and_belongs_to_many :intereses
   has_and_belongs_to_many :grupos
   has_many :invitaciones_enviadas, :class_name => "Invitacion", :foreign_key => "usuario_desde_id", :order => ["created_at desc"]
@@ -7,6 +11,15 @@ class Usuario < ActiveRecord::Base
 
   KILOMETER_TO_MILE = 0.62
 
+  def password_required?
+    false
+  end
+
+  def self.find_for_facebook_oauth(access_token, signed_in_resource = nil)
+    data = access_token.extra.raw_info
+    encuentra_o_crea(data.id, data.email)
+  end
+
   validates_numericality_of :hora_lunch_fin, :greater_than => Proc.new { |r| r.hora_lunch_inicio }, :allow_blank => true
 
   def invitaciones_mezcladas
@@ -14,11 +27,14 @@ class Usuario < ActiveRecord::Base
     invitaciones.sort!{|a,b| b.updated_at <=> a.updated_at}[0..9]    
   end
 
-  def Usuario.encuentra_o_crea (facebook_id)
+  def Usuario.encuentra_o_crea (facebook_id, email=nil)
     usuario = Usuario.find_by_facebook_id facebook_id
     if not usuario
       usuario = Usuario.new
       usuario.facebook_id = facebook_id
+      if email 
+        usuario.email = email
+      end 
       usuario.save
     end
     return usuario

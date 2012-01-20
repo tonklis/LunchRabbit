@@ -94,7 +94,7 @@ class UsuariosController < ApplicationController
 
   # GET /usuarios/actualiza/[facebook_id]
   def actualiza
-    params[:at] = session[:at]
+    params[:at] = session["devise.at"]
     @usuario = Usuario.actualiza params
     respond_to do |format|
       format.html { redirect_to(myprofile_path)}
