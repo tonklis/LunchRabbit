@@ -12,7 +12,6 @@
         <%= usuario.hidden_field :nombre, :value => @client.name%>
         <%= usuario.hidden_field :genero, :value => @client.gender%>
         <%= usuario.hidden_field :email, :value => @client.email%>
-        <%= usuario.hidden_field :thumbnail, :value => "https://graph.facebook.com/#{@client.id}/picture?type=normal" %>
         <%= hidden_field_tag :zona%>
         <%= hidden_field_tag :intereses%>
       </div>

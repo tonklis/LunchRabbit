@@ -45,10 +45,13 @@ class Usuario < ActiveRecord::Base
     usuario = Usuario.find_by_facebook_id (params[:id])
     usuario.update_attributes(params[:usuario])
 
-    if params[:intereses] == "true"
+    if params[:actualiza] == "true"
 
+      fb_user = Mogli::User.find("me", Mogli::Client.new(params[:at]))
+      usuario.thumbnail = "https://graph.facebook.com/#{fb_user.id}/picture?type=normal"  
+ 
       usuario.intereses = []
-      intereses = Mogli::User.find("me", Mogli::Client.new(params[:at])).likes
+      intereses = fb_user.likes
       intereses.each do |interes|
         if ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(interes.category)
           usuario.intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|

@@ -5,14 +5,13 @@
     <div class="row">
       <div class="span2">
         <%= image_tag @usuario.thumbnail %> 
-        <p><a class="mini_font" href="">Change</a></p>
       </div>
       <div class="span4"> 
         <h3><%= @usuario.nombre %> </h3>
         <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
         <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
         <%= hidden_field_tag :zona%>
-        <%= hidden_field_tag :intereses, false%>
+        <%= hidden_field_tag :actualiza, false%>
       </div>
       <div class="span3">
         <div id="map-canvas" data-longitude="<%= @zona.longitude %>" data-latitude="<%= @zona.latitude %>" data-radius="<%= @zona.radio %>"></div>
@@ -45,9 +44,9 @@
                           $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});
                         }
 
-                        function agrega_posicion_e_intereses(){
+                        function agrega_posicion_y_actualiza(){
                           agrega_posicion();
-                          $("#intereses")[0].value = true;
+                          $("#actualiza")[0].value = true;
                         }
                         
                         pinta_mapa(latitude, longitude, radius);
@@ -57,7 +56,7 @@
     </div>
     <p>
       <%= submit_tag "Save", :class => "btn primary", :onclick => "agrega_posicion()" %>
-      <%= submit_tag "Save and update interests", :class => "btn primary", :onclick => "agrega_posicion_e_intereses()"%>
+      <%= submit_tag "Save and update", :class => "btn primary", :onclick => "agrega_posicion_y_actualiza()"%>
     </p>
 <% end %>
     <h4>Interests</h4>
