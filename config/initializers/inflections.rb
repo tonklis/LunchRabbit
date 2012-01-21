@@ -7,5 +7,6 @@ ActiveSupport::Inflector.inflections do |inflect|
 #   inflect.singular /^(ox)en/i, '\1'
   inflect.irregular 'invitacion', 'invitaciones'
   inflect.irregular 'interes', 'intereses'
+  inflect.irregular 'intencion', 'intenciones'
 #   inflect.uncountable %w( fish sheep )
 end

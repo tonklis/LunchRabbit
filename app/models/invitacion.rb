@@ -1,6 +1,7 @@
 class Invitacion < ActiveRecord::Base
   belongs_to :usuario_desde, :class_name => "Usuario", :foreign_key => :usuario_desde_id
   belongs_to :usuario_para, :class_name => "Usuario", :foreign_key => :usuario_para_id
+  belongs_to :intencion
 
   def Invitacion.por_usuario (facebook_id)
     invitaciones = {}
@@ -11,11 +12,10 @@ class Invitacion < ActiveRecord::Base
     return invitaciones
   end
 
-  def Invitacion.desde_para (desde_facebook_id, para_facebook_id, body)
+  def Invitacion.desde_para (desde_facebook_id, para_facebook_id, body, intencion_id)
 
-    invitacion = Invitacion.new(:usuario_desde => Usuario.find_by_facebook_id(desde_facebook_id), :usuario_para => Usuario.find_by_facebook_id(para_facebook_id), :aceptada => false, :body => body)
+    invitacion = Invitacion.new(:usuario_desde => Usuario.find_by_facebook_id(desde_facebook_id), :usuario_para => Usuario.find_by_facebook_id(para_facebook_id), :aceptada => false, :body => body, :intencion_id => intencion_id)
     invitacion.save!
-
     return invitacion
   end
 

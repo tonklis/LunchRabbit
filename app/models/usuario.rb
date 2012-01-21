@@ -20,6 +20,10 @@ class Usuario < ActiveRecord::Base
     encuentra_o_crea(data.id, data.email)
   end
 
+  def self.find_facebook_user access_token
+    Mogli::User.find("me", Mogli::Client.new(access_token))
+  end
+
   validates_numericality_of :hora_lunch_fin, :greater_than => Proc.new { |r| r.hora_lunch_inicio }, :allow_blank => true
 
   def invitaciones_mezcladas
@@ -27,7 +31,7 @@ class Usuario < ActiveRecord::Base
     invitaciones.sort!{|a,b| b.updated_at <=> a.updated_at}[0..9]    
   end
 
-  def Usuario.encuentra_o_crea (facebook_id, email=nil)
+  def self.encuentra_o_crea (facebook_id, email=nil)
     usuario = Usuario.find_by_facebook_id facebook_id
     if not usuario
       usuario = Usuario.new
@@ -40,14 +44,14 @@ class Usuario < ActiveRecord::Base
     return usuario
   end
   
-  def Usuario.actualiza (params)
+  def self.actualiza (params)
 
     usuario = Usuario.find_by_facebook_id (params[:id])
     usuario.update_attributes(params[:usuario])
 
     if params[:actualiza] == "true"
 
-      fb_user = Mogli::User.find("me", Mogli::Client.new(params[:at]))
+      fb_user = Usuario.find_facebook_user(params[:at])
       usuario.thumbnail = "https://graph.facebook.com/#{fb_user.id}/picture?type=normal"  
  
       usuario.intereses = []
@@ -74,11 +78,11 @@ class Usuario < ActiveRecord::Base
     usuario
   end
 
-  def Usuario.busqueda_por_interes (interes_id)
+  def self.busqueda_por_interes (interes_id)
    # todo: hacer esta funcionalidad 
   end
 
-  def Usuario.busqueda (facebook_id, limit = nil, interes_id = nil)
+  def self.busqueda (facebook_id, limit = nil, interes_id = nil)
 
     usuario_origen = Usuario.find_by_facebook_id (facebook_id)
     zona_origen = usuario_origen.zonas.first

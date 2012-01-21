@@ -14,7 +14,7 @@ $(function() {
     <% if @recomendados.size > 3%>
       <div class="imagen_centrada_outer">
         <div class="imagen_centrada_inner">
-          <button class="prev"><</button>
+          <%= link_to '', nil, :class => "prev", :id => "flecha_izquierda" %>
         </div>
       </div>
     <% else %>
@@ -57,8 +57,9 @@ $(function() {
             </div>
             <div class="modal-body">
               <% @invitaciones_body[recomendado.id] = "Hello #{recomendado.nombre}! Let's have lunch some day!"%>
-              <%= text_area_tag "body", @invitaciones_body[recomendado.id], :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+              <%= text_area_tag "body", @invitaciones_body[recomendado.id], :class => "xxlarge", :rows => 4, :style => "resize: none;"%>
               <%= hidden_field_tag "para", recomendado.facebook_id%>
+              Looking for: <%= select_tag "select", options_from_collection_for_select(Intencion.all, :id, :nombre), :class => "normalSelect"%>
             </div>
             <div class="modal-footer">
               <%= submit_tag "Send", :class=>"btn secondary" %>
@@ -74,7 +75,7 @@ $(function() {
     <% if @recomendados.size > 3%>
       <div class="imagen_centrada_outer">
         <div class="imagen_centrada_inner">
-          <button class="next">></button>
+          <%= link_to '', nil, :class => "next", :id => "flecha_derecha" %>
         </div>
       </div>
     <% else %>

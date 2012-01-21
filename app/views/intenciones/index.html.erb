@@ -1,0 +1,23 @@
+<h1>Listing intenciones</h1>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @intenciones.each do |intencion| %>
+  <tr>
+    <td><%= intencion.nombre %></td>
+    <td><%= link_to 'Show', intencion %></td>
+    <td><%= link_to 'Edit', edit_intencion_path(intencion) %></td>
+    <td><%= link_to 'Destroy', intencion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Intencion', new_intencion_path %>

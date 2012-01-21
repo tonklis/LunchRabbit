@@ -388,11 +388,47 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
   height: 15px;
   background: url("http://swdf.in2teck.com/images/acepta.png") top;
   text-indent: -99999px;
-
 }
 
 .inv_acepta:hover{
   background: url("http://swdf.in2teck.com/images/acepta.png") bottom;
+}
+
+.mensajes_acepta{
+  display:block;
+  width:15px;
+  height: 15px;
+  background: url("http://swdf.in2teck.com/images/mensaje.png") top;
+  text-indent: -99999px; 
+}
+
+.mensajes_acepta:hover{
+  background: url("http://swdf.in2teck.com/images/mensaje.png") bottom;
+}
+
+#flecha_izquierda{
+  display:block;
+  width:15px;
+  height: 15px;
+  background: url("http://swdf.in2teck.com/images/izquierda.png") top;
+  text-indent: -99999px; 
+}
+
+
+#flecha_izquierda:hover{
+  background: url("http://swdf.in2teck.com/images/izquierda.png") bottom;
+}
+
+#flecha_derecha{
+  display:block;
+  width:15px;
+  height: 15px;
+  background: url("http://swdf.in2teck.com/images/derecha.png") top;
+  text-indent: -99999px; 
+}
+
+#flecha_derecha:hover{
+  background: url("http://swdf.in2teck.com/images/derecha.png") bottom;
 }
 
 .imagen_centrada_outer{
@@ -426,4 +462,8 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
 
 .mini_font{
   font: 10px Arial;
+}
+
+.medium_font{
+  font: 12px Arial;
 }

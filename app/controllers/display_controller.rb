@@ -11,7 +11,7 @@ class DisplayController < ApplicationController
   def register
     @register_active = ACTIVE
     @usuario = Usuario.find(current_usuario.id)
-    @client = Mogli::User.find("me", Mogli::Client.new(session["devise.at"]))
+    @client = Usuario.find_facebook_user(session["devise.at"])
     @zona = @usuario.zonas.first
     @invitaciones_recibidas = []
     @invitaciones_enviadas = []

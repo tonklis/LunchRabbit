@@ -1,4 +1,6 @@
 LunchRabbit::Application.routes.draw do
+  resources :intenciones
+
   get "register", :to => 'display#register', :as => :register
 
   get "index", :to => 'display#index'

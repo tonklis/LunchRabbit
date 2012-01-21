@@ -8,9 +8,6 @@
           <div style="float:left;" class="span3">
             <%= link_to Usuario.find(invitacion_recibida.usuario_desde_id).nombre, profile_path(invitacion_recibida.usuario_desde_id) %>
           </div>
-          <div style="float: left; margin-top: 3px; margin-left: 15px;" class="mini_font">
-            <%= link_to "message", nil, "data-controls-modal"=>"modal-for-#{invitacion_recibida.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%>
-          </div>
           <div id="modal-for-<%= invitacion_recibida.id %>" class="modal hide fade">
             <div class="modal-header">
               <a href="#" class="close">&times;</a>
@@ -18,15 +15,19 @@
             </div>
             <div class="modal-body">
               <%= text_area_tag "body", invitacion_recibida.body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+              Looking for: <%= text_field_tag 'text_field', invitacion_recibida.intencion.nombre, :disabled => true%>
             </div>
           </div>
-          <div style="float:right; width: 50px; height: 15px;" class="span2">
-            <% if invitacion_recibida.aceptada %>
-              Confirmed
-            <% else %>
-              <%= link_to '', "/invitaciones/acepta/#{invitacion_recibida.id}", :method => :acepta, :class => 'inv_acepta' %>
-              <%= link_to '', "/invitaciones/rechaza/#{invitacion_recibida.id}", :confirm => 'Are you sure?', :method => :rechaza, :class => "inv_niega" %>
-            <% end %>
+          <div style="float:right; width: 75px; height: 15px;" class="mini_font" >
+            <%= link_to '', nil, "data-controls-modal"=>"modal-for-#{invitacion_recibida.id}", "data-backdrop"=>"static", "data-keyboard"=>"true", :class => 'mensajes_acepta' %>
+            <div style="margin-top: -15px; margin-left: 37px; width: 50px;" >
+              <% if invitacion_recibida.aceptada %>
+                Confirmed
+              <% else %>
+                <%= link_to '', "/invitaciones/acepta/#{invitacion_recibida.id}", :method => :acepta, :class => 'inv_acepta' %>
+                <%= link_to '', "/invitaciones/rechaza/#{invitacion_recibida.id}", :confirm => 'Are you sure?', :method => :rechaza, :class => "inv_niega" %>
+              <% end %>
+            </div>
           </div>
         </li>
       <% end %>
@@ -39,10 +40,9 @@
       <% @invitaciones_enviadas.each do |invitacion_enviada| %>
       <li>
         <div style="float: left;" class="span3">
-          <%= link_to Usuario.find(invitacion_enviada.usuario_desde_id).nombre, profile_path(invitacion_enviada.usuario_desde_id)%>
+          <%= link_to Usuario.find(invitacion_enviada.usuario_para_id).nombre, profile_path(invitacion_enviada.usuario_para_id)%>
         </div>
         <div style="float: left; margin-top: 3px; margin-right: 15px;" class="mini_font">
-          <%= link_to "message", nil, "data-controls-modal"=>"modal-for-#{invitacion_enviada.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%>
           <div id="modal-for-<%= invitacion_enviada.id %>" class="modal hide fade">
             <div class="modal-header">
               <a href="#" class="close">&times;</a>
@@ -50,15 +50,19 @@
             </div>
             <div class="modal-body">
               <%= text_area_tag "body", invitacion_enviada.body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+              Looking for: <%= text_field_tag 'text_field', invitacion_enviada.intencion.nombre, :disabled => true%>
             </div>
           </div>
         </div>
-        <div style="float: right; width: 50px; height: 15px;" class="span2">
-          <% if invitacion_enviada.aceptada %>
-            Confirmed
-          <% else %>
-            Pending
-          <% end %>  
+        <div style="float: right; width: 75px; height: 15px;" class="mini_font">
+          <%= link_to '', nil, "data-controls-modal"=>"modal-for-#{invitacion_enviada.id}", "data-backdrop"=>"static", "data-keyboard"=>"true", :class => 'mensajes_acepta' %>
+          <div style="margin-top: -15px; margin-left: 37px; width: 50px;">
+            <% if invitacion_enviada.aceptada %>
+              Confirmed
+            <% else %>
+              Pending
+            <% end %>
+          </div>  
         </div>
       <% end %>
     </ul>

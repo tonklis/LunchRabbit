@@ -77,13 +77,26 @@
               <div style="float:left;">
                 <a href="<%= profile_path(invitacion.usuario_desde_id)%>"><%= Usuario.find(invitacion.usuario_desde_id).nombre[0..14] %></a>
               </div>
-              <div style="float:right; width: 50px; height: 15px;">
-              <% if invitacion.aceptada %>
-                Confirmed
-              <% else %>
-                <%= link_to '', "/invitaciones/acepta/#{invitacion.id}", :method => :acepta, :class => 'inv_acepta' %>
-                <%= link_to '', "/invitaciones/rechaza/#{invitacion.id}", :confirm => 'Are you sure?', :method => :rechaza, :class => "inv_niega" %>
-              <% end %>
+              <div style="float:right; width: 73px; height: 15px;">
+
+                <%= link_to '', nil, "data-controls-modal"=>"modal-for-#{invitacion.id}", "data-backdrop"=>"static", "data-keyboard"=>"true", :class => 'mensajes_acepta' %>
+                <div id="modal-for-<%= invitacion.id %>" class="modal hide fade">
+                  <div class="modal-header">
+                  <a href="#" class="close">&times;</a>
+                  <h3>Lunch request sent</h3>
+                </div>
+                <div class="modal-body">
+                  <%= text_area_tag "body", invitacion.body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+                  Looking for: <%= text_field_tag 'text_field', invitacion.intencion.nombre, :disabled => true%>
+                </div>
+              </div>
+              <div style="margin-top: -15px; margin-left: 37px; width: 50px;" class="mini_font">
+                <% if invitacion.aceptada %>
+                  Confirmed
+                <% else %>
+                  <%= link_to '', "/invitaciones/acepta/#{invitacion.id}", :method => :acepta, :class => 'inv_acepta' %>
+                  <%= link_to '', "/invitaciones/rechaza/#{invitacion.id}", :confirm => 'Are you sure?', :method => :rechaza, :class => "inv_niega" %>
+                <% end %>
               </div>
             <br/>
             </li>
@@ -97,7 +110,19 @@
               <div style="float: left;">
                 <a href="<%= profile_path(invitacion.usuario_para_id)%>"><%= Usuario.find(invitacion.usuario_para_id).nombre[0..14] %></a>
               </div>
-              <div style="float: right; width: 50px;">
+              <div style="float: right; width: 73px;">
+                <%= link_to '', nil, "data-controls-modal"=>"modal-for-#{invitacion.id}", "data-backdrop"=>"static", "data-keyboard"=>"true", :class => 'mensajes_acepta' %>
+                <div id="modal-for-<%= invitacion.id %>" class="modal hide fade">
+                  <div class="modal-header">
+                  <a href="#" class="close">&times;</a>
+                  <h3>Lunch request sent</h3>
+                </div>
+                <div class="modal-body">
+                  <%= text_area_tag "body", invitacion.body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
+                  Looking for: <%= text_field_tag 'text_field', invitacion.intencion.nombre, :disabled => true%>
+                </div>
+              </div>
+              <div style="margin-top: -15px; margin-left: 37px; width:50px;" class="mini_font">
                 <% if invitacion.aceptada %>
                   Confirmed
                 <% else %>
