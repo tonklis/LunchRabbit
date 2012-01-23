@@ -21,7 +21,11 @@ class Usuario < ActiveRecord::Base
   end
 
   def self.find_facebook_user access_token
-    Mogli::User.find("me", Mogli::Client.new(access_token))
+    begin
+      Mogli::User.find("me", Mogli::Client.new(access_token))
+    rescue
+      raise "User session expired"
+    end
   end
 
   validates_numericality_of :hora_lunch_fin, :greater_than => Proc.new { |r| r.hora_lunch_inicio }, :allow_blank => true
@@ -63,6 +67,8 @@ class Usuario < ActiveRecord::Base
             u.categoria = interes.category}
           end 
       end
+    elsif intereses = params[:intereses]
+
     end
       
     if zona = params[:zona]

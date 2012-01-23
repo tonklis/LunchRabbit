@@ -5,7 +5,7 @@
     <ul class="unstyled">
       <% @invitaciones_recibidas.each do |invitacion_recibida| %>
         <li>
-          <div style="float:left;" class="span3">
+          <div style="float:left; width: 250px;" class="span3">
             <%= link_to Usuario.find(invitacion_recibida.usuario_desde_id).nombre, profile_path(invitacion_recibida.usuario_desde_id) %>
           </div>
           <div id="modal-for-<%= invitacion_recibida.id %>" class="modal hide fade">
@@ -39,7 +39,7 @@
     <ul class="unstyled">
       <% @invitaciones_enviadas.each do |invitacion_enviada| %>
       <li>
-        <div style="float: left;" class="span3">
+        <div style="float: left; width: 250px;" class="span3">
           <%= link_to Usuario.find(invitacion_enviada.usuario_para_id).nombre, profile_path(invitacion_enviada.usuario_para_id)%>
         </div>
         <div style="float: left; margin-top: 3px; margin-right: 15px;" class="mini_font">

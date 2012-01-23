@@ -5,7 +5,11 @@ class DisplayController < ApplicationController
   before_filter :authenticate_usuario!, :except => [:index]
 
   def index
-    render :layout => "application"
+    if signed_in?
+      redirect_to home_path
+    else
+      render :layout => "application"
+    end
   end
 
   def register
