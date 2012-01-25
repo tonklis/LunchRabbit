@@ -1,6 +1,4 @@
 LunchRabbit::Application.routes.draw do
-  resources :intenciones
-
   get "register", :to => 'display#register', :as => :register
 
   get "index", :to => 'display#index'
@@ -18,6 +16,8 @@ LunchRabbit::Application.routes.draw do
   get 'intereses/busqueda', :to => 'intereses#busqueda', :as => :busqueda_intereses
 
   get 'items', :to => 'items#busqueda', :as => :busqueda_items
+  
+  resources :intenciones
 
   resources :invitaciones
 
@@ -29,7 +29,7 @@ LunchRabbit::Application.routes.draw do
 
   resources :usuarios
   
-  devise_for :usuarios, :controllers => { :omniauth_callbacks => "usuarios/omniauth_callbacks"}
+  devise_for :usuarios, :controllers => {:omniauth_callbacks => "usuarios/omniauth_callbacks"}
 
   match 'usuarios/encuentra_o_crea/:id' => 'usuarios#encuentra_o_crea'
 

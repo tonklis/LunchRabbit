@@ -71,12 +71,19 @@ class Usuario < ActiveRecord::Base
 
     end
       
-    if zona = params[:zona]
-      uz = usuario.zonas.where("nombre = 'web'").first
+    if params[:zona]
+
+      begin
+        zona = ActiveSupport::JSON.decode(params[:zona])
+      rescue
+        zona = params[:zona]
+      end
+
+      uz = usuario.zonas.where("nombre = '#{zona["nombre"]}'").first
       if uz.nil?
-        usuario.zonas << Zona.new(ActiveSupport::JSON.decode(zona))
+        usuario.zonas << Zona.new(zona)
       else
-        uz.update_attributes(ActiveSupport::JSON.decode(zona))
+        uz.update_attributes(zona)
       end
     end
 

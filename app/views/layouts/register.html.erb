@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lunch Rabbit</title>
+    <meta property="og:title" content="Lunch Rabbit" />
+    <meta property="og:type" content="social" />
+    <meta property="og:url" content="http://glowing-moon-5161.heroku.com/" />
+    <%= javascript_include_tag :defaults %>
+    <%= csrf_meta_tag %>
+
+    <!-- Include support librarys first -->
+    <script type="text/javascript" src="/javascripts/jquery.js"></script> 
+    <script type="text/javascript" src="/javascripts/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css"> 
+
+    <style type="text/css">
+      body {
+        padding-top: 15px;
+      }
+      #map-canvas {
+        height: 300px;
+	width:	450px;
+      }
+    </style>
+    
+</head>
+<body>
+  <div id="fb-root"></div>
+  <div id="app_paths" data-home-path="<%= home_path %>" data-logout-path="<%= logout_path %>" />
+    <div>
+        <div class="container-fluid">
+        	<img class="brand" src="http://swdf.in2teck.com/images/lunch_logo_thumb.jpg" style="float: left; margin-right: 20px;">
+                <h2 style="margin-top: 30px; ">Complete your registration </h2>
+        </div>
+      
+    </div>
+    <div class="content" style="margin-left: 15px; margin-top: 15px;">
+    <br/>
+      <%= yield %>
+      <footer>
+        <p>&copy; Lunch Rabbit 2011</p>
+      </footer>
+    </div>
+
+</body>
+</html>

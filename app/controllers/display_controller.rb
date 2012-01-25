@@ -1,6 +1,6 @@
 class DisplayController < ApplicationController
   ACTIVE = "class='active'"
-  layout "navigation", :except => [:index]
+  layout "navigation", :except => [:index, :register]
 
   before_filter :authenticate_usuario!, :except => [:index]
 
@@ -19,6 +19,8 @@ class DisplayController < ApplicationController
     @zona = @usuario.zonas.first
     @invitaciones_recibidas = []
     @invitaciones_enviadas = []
+
+    render :layout => "register"
   end
 
   def home

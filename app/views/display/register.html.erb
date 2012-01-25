@@ -12,6 +12,7 @@
         <%= usuario.hidden_field :nombre, :value => @client.name%>
         <%= usuario.hidden_field :genero, :value => @client.gender%>
         <%= usuario.hidden_field :email, :value => @client.email%>
+        <%= usuario.hidden_field :thumbnail, :value => "https://graph.facebook.com/#{@client.id}/picture?type=normal"%>
         <%= hidden_field_tag :zona%>
         <%= hidden_field_tag :intereses%>
       </div>
@@ -96,5 +97,8 @@
   </div>
 </div>
 <br/>
-<p><%= submit_tag "Save", :class => "btn primary", :onclick => "agrega_valores()" %></p>
+<p style="float:left;">
+  <%= submit_tag "Continue", :class => "btn primary", :onclick => "agrega_valores()", :style=>"margin-right: 20px;"%>
+  <%= button_to "Cancel", logout_path, :class => "btn primary" %>
+</p>
 <% end %>
