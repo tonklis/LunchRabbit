@@ -1,5 +1,5 @@
 <script type="text/javascript" src="/javascripts/bootstrap-modal.js"></script>
-<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post} do |usuario| %>
+<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post, :onsubmit => 'return validate();'} do |usuario| %>
 <div class="row">
   <div class="span16"> 
     <div class="row">
@@ -39,6 +39,15 @@
 					maxDistance: 15
 				});
 			}
+
+                        function validate(){
+                          if ($("#usuario_hora_lunch_inicio")[0].value < $("#usuario_hora_lunch_fin")[0].value) {
+                            return true;
+                          } else {
+                            alert("Please select a valid lunch time.");
+                            return false;
+                          }
+                        }
                        
                         function agrega_posicion(){
                           $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});

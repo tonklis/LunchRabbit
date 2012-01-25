@@ -1,4 +1,4 @@
-<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post} do |usuario| %>
+<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post, :onsubmit => 'return validate();'} do |usuario| %>
 <div class="row">
   <div class="span8"> 
     <div class="row">
@@ -58,6 +58,15 @@
                           $("#intereses")[0].value = true;
                         }
 
+                        function validate(){
+                          if ($("#usuario_hora_lunch_inicio")[0].value < $("#usuario_hora_lunch_fin")[0].value) {
+                            return true;
+                          } else {
+                            alert("Please select a valid lunch time.");
+                            return false;
+                          }
+                        }
+
 			function errorMessage(error) {
 			   var errors = { 
 				  1: 'Permission denied',
@@ -98,7 +107,7 @@
 </div>
 <br/>
 <p style="float:left;">
-  <%= submit_tag "Continue", :class => "btn primary", :onclick => "agrega_valores()", :style=>"margin-right: 20px;"%>
-  <%= button_to "Cancel", logout_path, :class => "btn primary" %>
-</p>
+  <%= submit_tag "Continue", :class => "btn primary", :onclick => "agrega_valores()", :style=>"margin-right: 20px; margin-top: 18px;"%>
 <% end %>
+<%= button_to "Cancel", logout_path, :class => "btn primary", :method => :get %>
+</p>
