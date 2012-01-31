@@ -3,28 +3,60 @@
 		<title>Test</title>
 		<meta property="og:title" content="Lunch Rabbit" />
 		<meta property="og:type" content="social" />
-		<meta property="og:url" content="http://swdf.in2teck.com/" />
+		<meta property="og:url" content="http://swdf.in2teck.com/"/>
+
 		
 	 	<!-- Include support librarys first -->
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>	
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="javascripts/jquery.json-2.3.min.js"></script>
+		
 		
 		<script type="text/javascript">
-			$(document).ready(function() {
-				registraUsuario();
+			// VERSION_PROD
+			var HOST = "http://glowing-moon-5161.heroku.com/"
+			var APP_ID = "316932864999658";
+			
+			function init() {
+				FB.api("/", "POST", {
+					batch:[
+							{
+									"method":"GET",
+									"name":"search-interest",
+									"omit_response_on_success": true,
+									"relative_url":"search?q=killers&type=page"
+							},
+							{
+									"method": "GET",
+									"depends_on":"search-interest",
+									"relative_url":"fql?q=select page_id, type, name, pic_square from page where page_id in (select page_id, uid from page_fan where uid in (528755713,100000389125405) and page_id in ({result=search-interest:$.data.*.id}))"
+							}
+					]
+			}, function(response) {
+					  
 			});
-						
-			function registraUsuario() {
-				$.getJSON("http://glowing-moon-5161.heroku.com/usuarios/encuentra_o_crea/702141098.json", function(data) {
-					data.usuario.nombre = 'diego';
-					$.post("http://glowing-moon-5161.heroku.com/usuarios/actualiza/702141098.json", data, function(result) {
-						alert('success');
-					});
-				});
 			}
 		</script>
   </head>
   
 	<body>
-		<div id="box"></div>
+		<div id="fb-root"></div>
+		<script type="text/javascript">
+			window.fbAsyncInit = function() {
+				FB.init({appId: APP_ID, status: true, cookie: true, xfbml: true});
+				FB.getLoginStatus(function(response) {
+						if (response.status == 'connected') {
+							init();
+						}
+					});
+			};
+			(function() {
+				var e = document.createElement('script');
+				e.type = 'text/javascript';
+				e.src = document.location.protocol +
+					'//connect.facebook.net/en_US/all.js';
+				e.async = true;
+				document.getElementById('fb-root').appendChild(e);
+			}());
+		</script>
 	</body>
 </html>
