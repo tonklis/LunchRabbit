@@ -81,7 +81,9 @@ class Usuario < ActiveRecord::Base
 
       uz = usuario.zonas.where("nombre = '#{zona["nombre"]}'").first
       if uz.nil?
-        usuario.zonas << Zona.new(zona)
+        zona = Zona.new(zona)
+        zona.save!
+        usuario.zonas << zona
       else
         uz.update_attributes(zona)
       end
