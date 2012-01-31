@@ -42,7 +42,7 @@ class DisplayController < ApplicationController
     @intereses_tv = intereses.find_all{|interes| interes.categoria == 'Tv show'}
     @intereses_books = intereses.find_all{|interes| interes.categoria == 'Book'}
     @intereses_other = intereses.find_all{|interes| interes.categoria == 'Interest' or interes.categoria. == 'Sport'}
-    @zona = @usuario.zonas.first
+    @zona = @usuario.zonas.where("nombre = 'web'").first OR @usuario.zonas.first
   end
 
   def profile
