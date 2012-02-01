@@ -19,7 +19,6 @@ class DisplayController < ApplicationController
     @zona = @usuario.zonas.first
     @invitaciones_recibidas = []
     @invitaciones_enviadas = []
-
     render :layout => "register"
   end
 

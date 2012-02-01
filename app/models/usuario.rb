@@ -61,14 +61,21 @@ class Usuario < ActiveRecord::Base
       usuario.intereses = []
       intereses = fb_user.likes
       intereses.each do |interes|
-        if ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(interes.category)
+        #if ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(interes.category)
           usuario.intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|
             u.nombre = interes.name
             u.categoria = interes.category}
-          end 
+        #end 
       end
     elsif intereses = params[:intereses]
-
+      
+      usuario.intereses = []
+      intereses.each do |interes|
+        usuario.intereses << Interes.find_or_create_by_facebook_id(interes["facebook_id"]){|u|
+          u.nombre = interes["nombre"]
+          u.categoria = interes["categoria"]
+        }
+      end
     end
       
     if params[:zona]
@@ -109,13 +116,10 @@ class Usuario < ActiveRecord::Base
                 AND #{hora_inicial + diferencia_hora} >= hora_lunch_inicio AND #{hora_final - diferencia_hora} <= hora_lunch_fin
                 AND #{hora_final} > hora_lunch_inicio AND #{hora_inicial} < hora_lunch_fin"
 
-    # VERSION_PROD
-    order_by = "RANDOM()"
-    # order_by = "RAND()"
     usuarios_interes_comun = []
     usuarios_sin_interes_comun = []
 
-    usuarios_destino = Usuario.find(:all, :conditions => consulta, :order => order_by)
+    usuarios_destino = Usuario.find(:all, :conditions => consulta, :order => ORDER_BY )
     
     usuarios_destino.each do |usuario_destino| 
       zona_destino = usuario_destino.zonas.first

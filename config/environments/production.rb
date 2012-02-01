@@ -48,4 +48,7 @@ LunchRabbit::Application.configure do
   config.active_support.deprecation = :notify
 
   config.action_mailer.default_url_options = { :host => 'glowing-moon-5161.heroku.com' }
+
+  ORDER_BY = "RANDOM()"
+
 end
