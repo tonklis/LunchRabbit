@@ -26,5 +26,7 @@ LunchRabbit::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   ORDER_BY = "RAND()"
+  APP_KEY = "185077511587462"
+  APP_SECRET = "3b2cc63f9dadfaae16ff3b10db7cd8e8"
 end
 

@@ -199,7 +199,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
 
   require "omniauth-facebook"
-  config.omniauth :facebook, '185077511587462', '3b2cc63f9dadfaae16ff3b10db7cd8e8', {:scope =>'publish_stream,email,user_interests,user_likes,user_activities,user_birthday', :client_options => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}} 
+  config.omniauth :facebook, APP_KEY, APP_SECRET, {:scope =>'publish_stream,email,user_interests,user_likes,user_activities,user_birthday', :client_options => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}} 
   # config.omniauth :facebook, '316932864999658', '25b7c93ff48f139e55984887babf1351', {:scope =>'publish_stream,email,user_interests,user_likes,user_activities,user_birthday', :client_options => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}} 
   # produccion
   # provider :facebook, '316932864999658', '25b7c93ff48f139e55984887babf1351'

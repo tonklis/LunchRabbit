@@ -50,5 +50,7 @@ LunchRabbit::Application.configure do
   config.action_mailer.default_url_options = { :host => 'glowing-moon-5161.heroku.com' }
 
   ORDER_BY = "RANDOM()"
+  APP_KEY = "316932864999658"
+  APP_SECRET = "25b7c93ff48f139e55984887babf1351"
 
 end
