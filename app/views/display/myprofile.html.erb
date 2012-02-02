@@ -53,6 +53,7 @@
                           $("#zona")[0].value = $.toJSON({"latitude":distanceWidget.get('position').lat(), "longitude":distanceWidget.get('position').lng(), "nombre":"web", "radio":distanceWidget.get('distance')});
                         }
 
+                        // No utilizada
                         function agrega_posicion_y_actualiza(){
                           agrega_posicion();
                           $("#actualiza")[0].value = true;
@@ -65,7 +66,6 @@
     </div>
     <p>
       <%= submit_tag "Save", :class => "btn primary", :onclick => "agrega_posicion()" %>
-      <%= submit_tag "Save and update", :class => "btn primary", :onclick => "agrega_posicion_y_actualiza()"%>
     </p>
 <% end %>
     <h4>Interests</h4>

@@ -17,12 +17,12 @@ class Usuario < ActiveRecord::Base
 
   def self.find_for_facebook_oauth(access_token, signed_in_resource = nil)
     data = access_token.extra.raw_info
-    encuentra_o_crea(data.id, data.email)
+    encuentra_o_crea(data.id, data.email, access_token.credentials.token)
   end
 
-  def self.find_facebook_user access_token
+  def self.find_facebook_user token
     begin
-      Mogli::User.find("me", Mogli::Client.new(access_token))
+      Mogli::User.find("me", Mogli::Client.new(token))
     rescue
       raise "User session expired"
     end
@@ -35,27 +35,9 @@ class Usuario < ActiveRecord::Base
     invitaciones.sort!{|a,b| b.updated_at <=> a.updated_at}[0..9]    
   end
 
-  def self.encuentra_o_crea (facebook_id, email=nil)
-    usuario = Usuario.find_by_facebook_id facebook_id
-    if not usuario
-      usuario = Usuario.new
-      usuario.facebook_id = facebook_id
-      if email 
-        usuario.email = email
-      end 
-      usuario.save
-    end
-    return usuario
-  end
-  
-  def self.actualiza (params)
-
-    usuario = Usuario.find_by_facebook_id (params[:id])
-    usuario.update_attributes(params[:usuario])
-
-    if params[:actualiza] == "true"
-
-      fb_user = Usuario.find_facebook_user(params[:at])
+  def self.sincroniza_con_facebook usuario, token
+    
+      fb_user = Usuario.find_facebook_user(token)
       usuario.thumbnail = "https://graph.facebook.com/#{fb_user.id}/picture?type=normal"  
  
       usuario.intereses = []
@@ -67,6 +49,34 @@ class Usuario < ActiveRecord::Base
             u.categoria = interes.category}
         #end 
       end
+  end
+
+  def self.encuentra_o_crea (facebook_id, email=nil, access_token=nil)
+    usuario = Usuario.find_by_facebook_id facebook_id
+    if not usuario
+      usuario = Usuario.new
+      usuario.facebook_id = facebook_id
+      if email 
+        usuario.email = email
+      end 
+      usuario.save
+    end
+    if access_token 
+      sincroniza_con_facebook(usuario, access_token)
+    end
+    return usuario
+  end
+ 
+  
+  def self.actualiza (params)
+
+    usuario = Usuario.find_by_facebook_id (params[:id])
+    usuario.update_attributes(params[:usuario])
+
+    if params[:actualiza] == "true"
+
+      sincroniza_con_facebook(usuario, params[:at])
+
     elsif intereses = params[:intereses]
       
       usuario.intereses = []
