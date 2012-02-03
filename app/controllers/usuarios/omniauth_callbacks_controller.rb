@@ -8,6 +8,7 @@ class Usuarios::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
       if @usuario.intereses.empty?
         redirect_to register_path
       else
+        Usuario.sincroniza_con_facebook(@usuario, session["devise.at"])
         redirect_to home_path
       end
     else

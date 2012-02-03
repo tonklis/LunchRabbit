@@ -17,7 +17,7 @@ class Usuario < ActiveRecord::Base
 
   def self.find_for_facebook_oauth(access_token, signed_in_resource = nil)
     data = access_token.extra.raw_info
-    encuentra_o_crea(data.id, data.email, access_token.credentials.token)
+    encuentra_o_crea(data.id, data.email)
   end
 
   def self.find_facebook_user token
@@ -37,21 +37,22 @@ class Usuario < ActiveRecord::Base
 
   def self.sincroniza_con_facebook usuario, token
     
-      fb_user = Usuario.find_facebook_user(token)
-      usuario.thumbnail = "https://graph.facebook.com/#{fb_user.id}/picture?type=normal"  
+    fb_user = Usuario.find_facebook_user(token)
+    usuario.thumbnail = "https://graph.facebook.com/#{fb_user.id}/picture?type=normal"  
  
-      usuario.intereses = []
-      intereses = fb_user.likes
-      intereses.each do |interes|
-        #if ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(interes.category)
-          usuario.intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|
-            u.nombre = interes.name
-            u.categoria = interes.category}
-        #end 
-      end
+    usuario.intereses = []
+    intereses = fb_user.likes
+    intereses.each do |interes|
+      #if ["Tv show", "Musician/band", "Movie", "Book", "Interest", "Sport"].index(interes.category)
+      usuario.intereses << Interes.find_or_create_by_facebook_id(interes.id){|u|
+      u.nombre = interes.name
+      u.categoria = interes.category}
+      #end 
+    end
+    return usuario
   end
 
-  def self.encuentra_o_crea (facebook_id, email=nil, access_token=nil)
+  def self.encuentra_o_crea (facebook_id, email=nil)
     usuario = Usuario.find_by_facebook_id facebook_id
     if not usuario
       usuario = Usuario.new
@@ -60,9 +61,6 @@ class Usuario < ActiveRecord::Base
         usuario.email = email
       end 
       usuario.save
-    end
-    if access_token 
-      sincroniza_con_facebook(usuario, access_token)
     end
     return usuario
   end
@@ -75,7 +73,7 @@ class Usuario < ActiveRecord::Base
 
     if params[:actualiza] == "true"
 
-      sincroniza_con_facebook(usuario, params[:at])
+      usuario = sincroniza_con_facebook(usuario, params[:at])
 
     elsif intereses = params[:intereses]
       
@@ -140,16 +138,23 @@ class Usuario < ActiveRecord::Base
       # se registra para dar preferencia a usuarios que tienen intereses en comun
       interes_comun = false
       usuario_destino[:lista_intereses] = {}
+      
       # se priorizan por orden los intereses en comun
       usuario_destino.intereses.each do |interes_destino|
         if usuario_destino[:lista_intereses].size < 3 and usuario_origen.intereses.include?(interes_destino)
-          usuario_destino[:lista_intereses][interes_destino.id] = interes_destino.nombre
+          usuario_destino[:lista_intereses][interes_destino.id] = {:nombre => interes_destino.nombre, :interes_comun => true}
           interes_comun = true
         end
       end
-      while usuario_destino[:lista_intereses].size < 3 and usuario_destino[:lista_intereses].size < usuario_destino.intereses.size
-        interes = usuario_destino.intereses[0..10].sort_by{rand}[0]
-        usuario_destino[:lista_intereses][interes.id] = interes.nombre
+
+      # se filtran los intereses
+      intereses_usuario_destino_filtrados = usuario_destino.intereses.where("categoria in ('Tv show', 'Musician/band', 'Movie', 'Book', 'Interest', 'Sport')")
+
+      while usuario_destino[:lista_intereses].size < 3 and usuario_destino[:lista_intereses].size < intereses_usuario_destino_filtrados.size
+        interes = intereses_usuario_destino_filtrados[0..15].sort_by{rand}[0]
+        if usuario_destino[:lista_intereses][interes.id].nil?
+          usuario_destino[:lista_intereses][interes.id] = {:nombre => interes.nombre, :interes_comun => false}
+        end
       end
 
       if interes_comun

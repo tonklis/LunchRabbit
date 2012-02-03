@@ -8,6 +8,16 @@ $(function() {
         visible: <%= @recomendados.size > 3 ? 3 : @recomendados.size %>
     });
 });
+
+function validate(forma){
+  if(forma.body.value == ""){
+    alert("Please write a message.");
+    return false;
+  } else {
+    return true;
+  }
+}
+
 </script>
 <div class="row">
   <div class="span1">
@@ -50,7 +60,7 @@ $(function() {
             <p><%= link_to "Let's have lunch!", nil, :class => "btn primary", "data-controls-modal"=>"modal-invite-for-#{recomendado.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%></p>
           <% end %>
           <div id="modal-invite-for-<%= recomendado.id %>" class="modal hide fade">
-          <%= form_tag(desde_para_invitaciones_path(@usuario.facebook_id), :method => :post) do %>
+          <%= form_tag(desde_para_invitaciones_path(@usuario.facebook_id), :method => :post, :onsubmit => 'return validate(this);') do %>
             <div class="modal-header">
               <a href="#" class="close">&times;</a>
               <h3>Send lunch request</h3>

@@ -12,9 +12,13 @@ class Interes < ActiveRecord::Base
   def self.kv_to_html lista_intereses
     html = ""
     lista_intereses.each do |key, value|
-      html += "#{value}, "
+      if value[:interes_comun]
+        html += "<b>#{value[:nombre]}</b>, " 
+      else
+        html += "#{value[:nombre]}, "
+      end
     end
-    return html[0..(html.size-3)]
+    return html[0..(html.size-3)].html_safe
   end
 
   def self.search(search)
