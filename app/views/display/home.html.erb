@@ -47,9 +47,9 @@ $(function() {
           <% elsif @invitaciones_enviadas.select{|invitacion| invitacion.usuario_para_id == recomendado.id and invitacion.aceptada == false }.size > 0%>
             <p><%= button_to "Pending", nil, :disabled => true, :class => "btn primary" %></p>
           <% else %>
-            <p><%= link_to "Let's have lunch!", nil, :class => "btn primary", "data-controls-modal"=>"modal-for-#{recomendado.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%></p>
+            <p><%= link_to "Let's have lunch!", nil, :class => "btn primary", "data-controls-modal"=>"modal-invite-for-#{recomendado.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%></p>
           <% end %>
-          <div id="modal-for-<%= recomendado.id %>" class="modal hide fade">
+          <div id="modal-invite-for-<%= recomendado.id %>" class="modal hide fade">
           <%= form_tag(desde_para_invitaciones_path(@usuario.facebook_id), :method => :post) do %>
             <div class="modal-header">
               <a href="#" class="close">&times;</a>
@@ -59,7 +59,7 @@ $(function() {
               <% @invitaciones_body[recomendado.id] = "Hello #{recomendado.nombre}! Let's have lunch some day!"%>
               <%= text_area_tag "body", @invitaciones_body[recomendado.id], :class => "xxlarge", :rows => 4, :style => "resize: none;"%>
               <%= hidden_field_tag "para", recomendado.facebook_id%>
-              Looking for: <%= select_tag "select", options_from_collection_for_select(Intencion.all, :id, :nombre), :class => "normalSelect"%>
+              Looking for: <%= select_tag "select", options_from_collection_for_select(Intencion.all, :id, :nombre)%>
             </div>
             <div class="modal-footer">
               <%= submit_tag "Send", :class=>"btn secondary" %>
