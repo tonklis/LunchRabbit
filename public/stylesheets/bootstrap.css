@@ -378,6 +378,7 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
   float: right;
   margin-top: -15px;
 }
+
 .inv_niega:hover{
   background: url("http://swdf.in2teck.com/images/niega.png") bottom;
 }
@@ -437,11 +438,13 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
   display: table;
   /*background-color: #AAAAAA;*/
 }
+
 .imagen_centrada_inner{
   display: table-cell;
   text-align: center;
   vertical-align: middle;
 }
+
 .imagen_centrada_inner>img{
   max-width: 150px;
   max-height: 150px; 
