@@ -20,7 +20,8 @@ function validate(forma){
 
 </script>
 <div class="row">
-  <div class="span1">
+  <br/>
+  <div class="span1" style="margin-top: 60px; margin-right: 20px;">
     <% if @recomendados.size > 3%>
       <div class="imagen_centrada_outer">
         <div class="imagen_centrada_inner">
@@ -39,11 +40,11 @@ function validate(forma){
     <div class="span5">
       <div class="imagen_centrada_outer">
         <div class="imagen_centrada_inner">
-          <%= image_tag recomendado.thumbnail %>
+          <a href="<%= profile_path(recomendado.id) %>"><%= image_tag recomendado.thumbnail %></a>
         </div>
       </div>
     </div>
-    <div class="texto_centrado">
+    <div>
       <p><a href="<%= profile_path(recomendado.id) %>"><%= recomendado.nombre %></a></p>
     </div>
       <p>Lunch time: <%= recomendado.hora_lunch_inicio.to_s + ":00" %> to <%= recomendado.hora_lunch_fin.to_s + ":00" %></p>
@@ -51,13 +52,13 @@ function validate(forma){
       <p style="height: 65px; width: 250px;">Interests: 
         <%= Interes.kv_to_html(recomendado.lista_intereses) %>
       </p>
-      <div style="margin-left: auto; marign-right: auto; text-align: center; ">
+      <div>
           <% if @invitaciones_recibidas.select{|invitacion| invitacion.usuario_desde_id == recomendado.id and invitacion.aceptada == false and @invitacion = invitacion}.size > 0 %>
-            <p><%= link_to 'Accept lunch!', "/invitaciones/acepta/#{@invitacion.id}", :method => :acepta, :class => 'btn primary' %></p>
+            <p><%= link_to 'Accept lunch!', "/invitaciones/acepta/#{@invitacion.id}", :method => :acepta, :class => 'btn action' %></p>
           <% elsif @invitaciones_enviadas.select{|invitacion| invitacion.usuario_para_id == recomendado.id and invitacion.aceptada == false }.size > 0%>
-            <p><%= button_to "Pending", nil, :disabled => true, :class => "btn primary" %></p>
+            <p><%= button_to "Pending", nil, :disabled => true, :class => "btn action" %></p>
           <% else %>
-            <p><%= link_to "Let's have lunch!", nil, :class => "btn primary", "data-controls-modal"=>"modal-invite-for-#{recomendado.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%></p>
+            <p><%= link_to "Let's have lunch!", nil, :class => "btn action", "data-controls-modal"=>"modal-invite-for-#{recomendado.id}", "data-backdrop"=>"static", "data-keyboard"=>"true"%></p>
           <% end %>
           <div id="modal-invite-for-<%= recomendado.id %>" class="modal hide fade">
           <%= form_tag(desde_para_invitaciones_path(@usuario.facebook_id), :method => :post, :onsubmit => 'return validate(this);') do %>
@@ -71,7 +72,7 @@ function validate(forma){
               <%= hidden_field_tag "para", recomendado.facebook_id%>
             </div>
             <div class="modal-footer">
-              <%= submit_tag "Send", :class=>"btn secondary" %>
+              <%= submit_tag "Send", :class=>"btn action" %>
             </div>
           <% end %>
           </div>
@@ -80,7 +81,7 @@ function validate(forma){
   <% end %>
   </ul>
   </div>
-  <div class="span1">
+  <div class="span1" style="margin-top: 60px;">
     <% if @recomendados.size > 3%>
       <div class="imagen_centrada_outer">
         <div class="imagen_centrada_inner">

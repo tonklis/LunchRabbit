@@ -1,28 +1,6 @@
-<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post, :onsubmit => 'return validate();'} do |usuario| %>
-<div class="row">
-  <div class="span8"> 
-    <div class="row">
-      <div class="span3">
-        <%= image_tag "https://graph.facebook.com/#{@client.id}/picture?type=normal" %> 
-      </div>
-      <div class="span5">
-        <h3><%= @client.name %> </h3>
-        <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
-        <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
-        <%= usuario.hidden_field :nombre, :value => @client.name%>
-        <%= usuario.hidden_field :genero, :value => @client.gender%>
-        <%= usuario.hidden_field :email, :value => @client.email%>
-        <%= usuario.hidden_field :thumbnail, :value => "https://graph.facebook.com/#{@client.id}/picture?type=normal"%>
-        <%= hidden_field_tag :zona%>
-        <%= hidden_field_tag :actualiza%>
-      </div>
-    </div>
-    <div class="row">
-      <div class="span3">
-        <div id="map-canvas"></div>
-        <script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi?autoload={'modules':[{name:'maps',version:3,other_params:'sensor=false'}]}"></script>
         <script type="text/javascript" src="/javascripts/jquery.json-2.3.min.js"></script>
-	<script type="text/javascript" src="/javascripts/distancewidget.js"></script>
+	      <script type="text/javascript" src="/javascripts/distancewidget.js"></script>
         <script>
                         var map;
 			var distanceWidget;
@@ -99,15 +77,39 @@
 			}
 
         </script> 
+<%= form_for @usuario, :url => actualiza_path(@usuario.facebook_id), :html => {:method => :post, :onsubmit => 'return validate();'} do |usuario| %>
+<div class="row"> 
+  <div style="background-color: #F9D268;">
+    <img src="/images/logo300px.png" alt="lunch rabbit logo" title="Lunch Rabbit" style="margin: 10px 10px 10px 40px;"/>
+    <img src="/images/completeyour.png" alt="complete your registration" title="Complete your registration" style="margin: 0px 0px 35px 0px;"/>
+  </div>
+  <div class="container">
+    <div class="row" style="margin-top: 30px;">
+      <div class="span3">
+        <%= image_tag "https://graph.facebook.com/#{@client.id}/picture?type=normal" %> 
+      </div>
+      <div class="span5">
+        <h3><%= @client.name %> </h3>
+        <p>Lunch starts at: <%= usuario.select :hora_lunch_inicio, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_inicio), :style=>"width: 65px;"%> </p>
+        <p>Lunch ends at: <%= usuario.select :hora_lunch_fin, options_for_select([10,11,12,13,14,15,16,17,18], @usuario.hora_lunch_fin), :style=>"width:65px;"%> </p>
+        <%= usuario.hidden_field :nombre, :value => @client.name%>
+        <%= usuario.hidden_field :genero, :value => @client.gender%>
+        <%= usuario.hidden_field :email, :value => @client.email%>
+        <%= usuario.hidden_field :thumbnail, :value => "https://graph.facebook.com/#{@client.id}/picture?type=normal"%>
+        <%= hidden_field_tag :zona%>
+        <%= hidden_field_tag :actualiza%>
+      </div>
+      <div class="span3">
+        <div id="map-canvas"></div>
       </div>
     </div>
-  </div>
-  <div class="span4">
+    <br/>
+    <div>
+      <p style="float:left;">
+  <%= submit_tag "Continue", :class => "btn primary", :onclick => "agrega_valores()", :style=>"margin-right: 30px;"%>
+<% end %>
+    <%= button_to "Cancel", logout_path, :class => "btn primary", :method => :get %>
+      </p>
+    </div>
   </div>
 </div>
-<br/>
-<p style="float:left;">
-  <%= submit_tag "Continue", :class => "btn primary", :onclick => "agrega_valores()", :style=>"margin-right: 20px; margin-top: 18px;"%>
-<% end %>
-<%= button_to "Cancel", logout_path, :class => "btn primary", :method => :get %>
-</p>
