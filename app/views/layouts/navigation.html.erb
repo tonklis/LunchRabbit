@@ -15,9 +15,6 @@
     <link rel="stylesheet" href="/stylesheets/bootstrap.css"> 
 
     <style type="text/css">
-      body {
-        padding-top: 15px;
-      }
       #map-canvas {
         height: 300px;
 	width:	450px;
@@ -25,13 +22,13 @@
     </style>
     
 </head>
-<body>
+<body style="background-color: #FAF2A7;">
   <div id="fb-root"></div>
   <div id="app_paths" data-home-path="<%= home_path %>" data-logout-path="<%= logout_path %>" />
-  <div>
-        <div class="container-fluid">
-        	<img class="brand" src="http://swdf.in2teck.com/images/lunch_logo_thumb.jpg">
-		<div style="float: right; margin-right: 50px;">
+  <div style="background-color: #F9D268; padding-top: 15px; padding-bottom: 10px;">
+      <div class="container-fluid">
+        	<img class="brand" src="/images/logo150px.png">
+		  <div style="float: right; margin-right: 50px;">
                 <%= button_to "Find a lunch now!", home_path(:limit => 100), :class => "btn", :style => "float: left; margin-top: 40px; margin-right: 10px;", :method => :get %>
                   <div class="menu-pull-right">
     			<span class="left"></span>
@@ -53,7 +50,7 @@
 
     <div class="container-fluid">
       <div class="sidebar">
-        <div class="well">
+        <div class="well" style="height: 450px;">
           <h5>My Lunch Requests</h5> </br>
           <p>Received</p>
           <ul class="unstyled">
@@ -72,7 +69,6 @@
                 </div>
                 <div class="modal-body">
                   <%= text_area_tag "body", invitacion.body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
-                  Looking for: <%= text_field_tag 'text_field', invitacion.intencion.nombre, :disabled => true%>
                 </div>
               </div>
               <div style="margin-top: -15px; margin-left: 37px; width: 50px;" class="mini_font">
@@ -86,6 +82,7 @@
             </li>
             <% end %>  
           </ul>
+          <br/>
           <br/>
           <p>Sent</p>
           <ul class="unstyled">
@@ -103,7 +100,6 @@
                 </div>
                 <div class="modal-body">
                   <%= text_area_tag "body", invitacion.body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
-                  Looking for: <%= text_field_tag 'text_field', invitacion.intencion.nombre, :disabled => true%>
                 </div>
               </div>
               <div style="margin-top: -15px; width: 50px; margin-left: 37px; " class="mini_font">
@@ -116,11 +112,10 @@
             </li>
             <% end %>
           </ul>
-          <br/>
-          <br/>
-          <br/>
+          <br/> <br/>
+          <br/> <br/>
           <div style="text-align: center;">
-            <a href="<%= muestra_invitaciones_path(@usuario.id) %>">view all</a>
+            <p><a href="<%= muestra_invitaciones_path(@usuario.id) %>">view all</a></p>
           </div>
         </div>
       </div>
@@ -128,8 +123,8 @@
 
         <%= yield %>
   
-        <footer>
-          <p>&copy; Lunch Rabbit 2011</p>
+        <footer style="margin-left: -200px;">
+          <p>&copy; Lunch Rabbit 2012, All Rights Reserved.</p>
         </footer>
       </div>
 

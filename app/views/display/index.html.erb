@@ -1,4 +1,34 @@
-  <div style="float: left"> <img height="230" src="http://a6.sphotos.ak.fbcdn.net/hphotos-ak-ash4/304246_256876421027927_256875991027970_687621_275817708_n.jpg" alt="lunch rabbit logo" title="Lunch Rabbit" />
-    <iframe width="398" height="299" frameborder="0" src="http://player.vimeo.com/video/32129225?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0"></iframe>
+<div class="row">
+  <div style="background-color: #F9D268;">
+    <img src="/images/logo300px.png" alt="lunch rabbit logo" title="Lunch Rabbit" style="margin: 10px 10px 10px 40px;"/>
+    <img src="/images/putsome.png" alt="put some hop in your day" title="Put Some Hop In Your Day" style="margin: 0px 0px 35px 0px;"/>
   </div>
-  <%= link_to "Sign in with Facebook", usuario_omniauth_authorize_path(:facebook) %>
+  <div class="row" style="margin-top: 30px;">
+    <div class="span6 offset1">
+      <h4>Tired of the same boring lunches everyday?</h4>
+      <br/>
+      <p style="font: 15px Arial;">With LunchRabbit you can:</p>
+      <br/>
+      <ul class="unstyled_margin">
+        <li>Meet new people who share your interests</li>
+        <li>Get benefits at your favorite restaurants</li>
+        <li>Have fun and enjoy your lunchtime!</li>
+      </ul>
+      <br/>
+      <img src="/images/watch-02.png" alt="watch video" title="watch the video to find out more!" style="margin: 10px 10px 10px 40px;"/>
+    </div>
+    <div class="span8 offset1">
+      <iframe width="398" height="299" frameborder="0" src="http://player.vimeo.com/video/32129225?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0"></iframe>
+    </div>
+    <div class="span4">
+      <h3>Hop in now!</h3>
+      <br/>
+      <%= link_to image_tag("/images/fb-connect-large.png"), usuario_omniauth_authorize_path(:facebook) %>
+      <br/> <br/> <br/> <br/>
+      <div>
+        <p style="font: 15px Arial;"> Got questions?</p>
+        <p style="font: 15px Arial;"> Check our <a href="">FAQ</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>

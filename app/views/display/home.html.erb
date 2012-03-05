@@ -69,7 +69,6 @@ function validate(forma){
               <% @invitaciones_body[recomendado.id] = "Hello #{recomendado.nombre}! Let's have lunch some day!"%>
               <%= text_area_tag "body", @invitaciones_body[recomendado.id], :class => "xxlarge", :rows => 4, :style => "resize: none;"%>
               <%= hidden_field_tag "para", recomendado.facebook_id%>
-              Looking for: <%= select_tag "select", options_from_collection_for_select(Intencion.all, :id, :nombre)%>
             </div>
             <div class="modal-footer">
               <%= submit_tag "Send", :class=>"btn secondary" %>

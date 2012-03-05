@@ -55,7 +55,6 @@ function validate(forma){
     <div class="modal-body">
       <% @invitaciones_body = "Hello #{@usuario_perfil.nombre}! Let's have lunch some day!"%>
       <%= text_area_tag "body", @invitaciones_body, :class => "xxlarge", :rows => 6, :style => "resize: none;"%>
-      Looking for: <%= select_tag "select", options_from_collection_for_select(Intencion.all, :id, :nombre)%>
       <%= hidden_field_tag "para", @usuario_perfil.facebook_id%>
     </div>
     <div class="modal-footer">
