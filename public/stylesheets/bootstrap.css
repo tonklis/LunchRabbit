@@ -415,25 +415,25 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
   display:block;
   width:40px;
   height: 37px;
-  background: url("/images/flechaizquierda.png") top;
+  background: url("http://swdf.in2teck.com/images/flechaizquierda.png") top;
   text-indent: -99999px; 
 }
 
 
 #flecha_izquierda:hover{
-  background: url("/images/flechaizquierda.png") bottom;
+  background: url("http://swdf.in2teck.com/images/flechaizquierda.png") bottom;
 }
 
 #flecha_derecha{
   display:block;
   width:40px;
   height: 37px;
-  background: url("/images/flechaderecha.png") top;
+  background: url("http://swdf.in2teck.com/images/flechaderecha.png") top;
   text-indent: -99999px; 
 }
 
 #flecha_derecha:hover{
-  background: url("/images/flechaderecha.png") bottom;
+  background: url("http://swdf.in2teck.com/images/flechaderecha.png") bottom;
 }
 
 .imagen_centrada_outer{
